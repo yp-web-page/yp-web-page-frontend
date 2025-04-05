@@ -45,6 +45,9 @@ const Header: React.FC = () => {
                                 <a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
                                     Contactanos
                                 </a>
+                                <a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                    Cotizar
+                                </a>
                             </div>
                         </div>
                         
