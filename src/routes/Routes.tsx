@@ -16,8 +16,6 @@ const router = createBrowserRouter([
         path: '/profile',
         Component: ProfilePage,
     }
-], {
-    basename: '/yanca-publicity',
-})
+])
 
 export { router };
