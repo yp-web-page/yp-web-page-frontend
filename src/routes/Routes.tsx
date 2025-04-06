@@ -5,8 +5,8 @@ import {
 import HomePage from '../pages/project/HomePage';
 import PageNotFound from '../pages/PageNotFound';
 import ProfilePage from '../pages/profile/ProfilePage';
-import LegalAdvicePage from '../pages/rules/LegalAdvicePage';
-import PrivacyPolicyPage from '../pages/rules/PrivacyPolicyPage';
+import LegalAdvicePage from '../pages/legal/LegalAdvicePage';
+import PrivacyPolicyPage from '../pages/legal/PrivacyPolicyPage';
 
 const router = createBrowserRouter([
     {
