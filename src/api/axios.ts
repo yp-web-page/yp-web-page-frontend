@@ -3,8 +3,6 @@ import { config } from "../config";
 
 const baseURL = config.baseURL;
 
-console.log("Base URL:", baseURL);
-
 const apiClient: AxiosInstance = axios.create({
     baseURL,
     headers: {
