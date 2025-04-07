@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '../../components/Header';
 import Carousel from '../../components/Carousel';
 import Footer from '../../components/Footer';
+import Carousel from '../../components/Carousel';
 
 const HomePage: React.FC = () => {
   return (
