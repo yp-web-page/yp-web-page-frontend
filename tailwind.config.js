@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        bahamas_bold: ['BahamasBold', 'sans-serif'],
+      },
+      colors: {
+      },
+    },
   },
-  plugins: [],
+  plugins: [],  
 }

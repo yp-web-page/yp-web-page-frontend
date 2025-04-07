@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
             <nav className="flex-col mx-auto px-0">
                 <div className='flex justify-between items-center py-4'>
                     <div className='flex items-center gap-x-2 px-4'>
-                        <p className='text-gray-600'>Copyright © 2025 YANCA PUBLICIDAD. Powered by YANCA PUBLICIDAD.</p>
+                        <p className='text-text-light'>Copyright © 2025 YANCA PUBLICIDAD. Powered by YANCA PUBLICIDAD.</p>
                     </div>
                     <div className='flex gap-x-2 md:gap-x-4 px-4'>
                         <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">

@@ -26,50 +26,52 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="bg-white shadow-md">
+            <header className="bg-background-secondary  shadow-md">
                 <nav className="mx-8 py-4">
                     <div className="flex justify-between items-center">
-                        <div className="flex items-center space-x-8">
-                            <a href="/yanca-publicity/" className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                        <div className="flex items-center justify-center space-x-8">
+                            <div className='flex items-center gap-2'>
                                 <img src="/logo_favicon.png" alt="Logo" className="h-8 w-auto" />
-                                YANCA PUBLICIDAD
-                            </a>
+                                <a href="/" className="text-2xl font-bold text-logo-light flex items-center gap-2 mt-1">
+                                    YANCA PUBLICIDAD
+                                </a>
+                            </div>
                             <div className="hidden md:flex space-x-8">
-                                <a href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                <a href="/" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Productos
                                 </a>
-                                <a href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                <a href="/about" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Servicios
                                 </a>
-                                <a href="/services" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                <a href="/services" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Quienes somos
                                 </a>
-                                <a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                <a href="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Contactanos
                                 </a>
-                                <a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                <a href="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Cotizar
                                 </a>
                             </div>
                         </div>
                         
                         <div className="hidden md:flex items-center space-x-6">
-                            <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d={SVG_PATHS.FACEBOOK}/>
                                 </svg>
                             </a>
-                            <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d={SVG_PATHS.INSTAGRAM}/>
                                 </svg>
                             </a>
-                            <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d={SVG_PATHS.LINKEDIN}/>
                                 </svg>
                             </a>
-                            <a href="#" onClick={handleProfileClick} className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.PROFILE} />
                                 </svg>
@@ -111,22 +113,22 @@ const Header: React.FC = () => {
                                 Contactanos
                             </a>
                             <div className="flex space-x-4 px-3 py-2">
-                                <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
+                                <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d={SVG_PATHS.FACEBOOK}/>
                                     </svg>
                                 </a>
-                                <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
+                                <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d={SVG_PATHS.INSTAGRAM}/>
                                     </svg>
                                 </a>
-                                <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
+                                <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d={SVG_PATHS.LINKEDIN}/>
                                     </svg>
                                 </a>
-                                <a href="#" onClick={handleProfileClick} className="text-gray-600 hover:text-gray-900">
+                                <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.PROFILE} />
                                     </svg>

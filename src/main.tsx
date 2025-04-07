@@ -5,6 +5,8 @@ import './index.css'
 import { router } from './routes/Routes.tsx'
 import { AuthProvider } from './context/AuthContext'
 
+import './styles/fonts.css'
+
 const root = document.getElementById('root')
 
 createRoot(root!).render(
