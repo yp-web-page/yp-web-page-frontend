@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '../../components/Header';
 import Carousel from '../../components/Carousel';
+import Footer from '../../components/Footer';
 
 const HomePage: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage: React.FC = () => {
         <h1 className="text-4xl font-bold text-gray-800">Welcome to Yanca Publicity</h1>
         <p className="mt-4 text-lg text-gray-600">Your one-stop solution for all your publicity needs.</p>
       </main>
+      <Footer />
     </>
   );
 }
