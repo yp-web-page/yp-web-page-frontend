@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                         <div className="flex items-center justify-center space-x-8">
                             <div className='flex items-center gap-2'>
                                 <img src="/logo_favicon.png" alt="Logo" className="h-8 w-auto" />
-                                <a href="/" className="text-2xl font-bold text-logo-light flex items-center gap-2 mt-1">
+                                <a href="/" className="text-2xl font-bold text-logo-light flex items-center gap-2">
                                     YANCA PUBLICIDAD
                                 </a>
                             </div>
