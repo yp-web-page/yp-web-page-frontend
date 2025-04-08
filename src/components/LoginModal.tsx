@@ -39,7 +39,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                     </svg>
                 </button>
                 
-                <h2 className="text-2xl font-bold text-center mb-6">Iniciar Sesión</h2>
+                <h2 className="text-2xl font-bold text-subtitle-light text-center mb-6">Iniciar Sesión</h2>
                 
                 <form onSubmit={handleLogin} className="space-y-4">
                     <div>

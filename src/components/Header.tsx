@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import LoginModal from './LoginModal';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
@@ -26,50 +26,52 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="bg-white shadow-md">
+            <header className="bg-background-secondary  shadow-md">
                 <nav className="mx-8 py-4">
                     <div className="flex justify-between items-center">
-                        <div className="flex items-center space-x-8">
-                            <a href="/yanca-publicity/" className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                        <div className="flex items-center justify-center space-x-8">
+                            <div className='flex items-center gap-2'>
                                 <img src="/logo_favicon.png" alt="Logo" className="h-8 w-auto" />
-                                YANCA PUBLICIDAD
-                            </a>
+                                <Link to="/" className="text-2xl font-bold text-logo-light flex items-center gap-2">
+                                    YANCA PUBLICIDAD
+                                </Link>
+                            </div>
                             <div className="hidden md:flex space-x-8">
-                                <a href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                <Link to="/" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Productos
-                                </a>
-                                <a href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                </Link>
+                                <Link to="/about" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Servicios
-                                </a>
-                                <a href="/services" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                </Link>
+                                <Link to="/services" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Quienes somos
-                                </a>
-                                <a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                </Link>
+                                <Link to="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Contactanos
-                                </a>
-                                <a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                </Link>
+                                <Link to="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
                                     Cotizar
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         
                         <div className="hidden md:flex items-center space-x-6">
-                            <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d={SVG_PATHS.FACEBOOK}/>
                                 </svg>
                             </a>
-                            <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d={SVG_PATHS.INSTAGRAM}/>
                                 </svg>
                             </a>
-                            <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d={SVG_PATHS.LINKEDIN}/>
                                 </svg>
                             </a>
-                            <a href="#" onClick={handleProfileClick} className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.PROFILE} />
                                 </svg>
@@ -98,35 +100,35 @@ const Header: React.FC = () => {
                     {/* Mobile Menu */}
                     <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
                         <div className="px-2 pt-2 pb-3 space-y-1">
-                            <a href="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
                                 Productos
-                            </a>
-                            <a href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            </Link>
+                            <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
                                 Servicios
-                            </a>
-                            <a href="/services" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            </Link>
+                            <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
                                 Quienes somos
-                            </a>
-                            <a href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            </Link>
+                            <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
                                 Contactanos
-                            </a>
+                            </Link>
                             <div className="flex space-x-4 px-3 py-2">
-                                <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
+                                <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d={SVG_PATHS.FACEBOOK}/>
                                     </svg>
                                 </a>
-                                <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
+                                <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d={SVG_PATHS.INSTAGRAM}/>
                                     </svg>
                                 </a>
-                                <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
+                                <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d={SVG_PATHS.LINKEDIN}/>
                                     </svg>
                                 </a>
-                                <a href="#" onClick={handleProfileClick} className="text-gray-600 hover:text-gray-900">
+                                <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-gray-900">
                                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.PROFILE} />
                                     </svg>

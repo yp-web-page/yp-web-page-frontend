@@ -1,8 +1,29 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import "./styles/fonts.css";
 
 :root {
   color-scheme: light dark;
+}
+
+@theme {
+  --color-title-light: rgb(32, 41, 55);
+  --color-subtitle-light: rgb(54, 63, 77);
+  --color-text-light: rgb(76, 85, 100);
+  --color-menu-light: rgb(255, 255, 255);
+  --color-menu-hover-light: rgb(173, 216, 230);
+  --color-logo-light: rgb(255, 255, 255);
+  --color-icon-light: rgb(255, 255, 255);
+  --color-icon-hover-light: rgb(173, 216, 230);
+}
+
+@theme {
+  --color-background-primary: rgb(16, 48, 102);
+  --color-background-secondary: rgb(20, 44, 85);
+  --color-background-tertiary: rgb(243, 244, 246);
+  
+}
+
+@theme {
+  --font-bahamas-bold: 'BahamasBold';
 }
