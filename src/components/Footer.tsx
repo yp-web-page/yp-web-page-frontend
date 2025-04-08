@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router';
+
 import { SVG_PATHS } from '../constants/svgPaths';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
 
@@ -29,12 +31,12 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
                 <div className='flex bg-gray-950 gap-x-2 md:gap-x-4 items-center justify-center py-1.5'>
-                    <a href="/aviso-legal" className='text-gray-200 hover:text-gray-300 transition-colors'>
+                    <Link to="/aviso-legal" className='text-gray-200 hover:text-gray-300 transition-colors'>
                         Aviso Legal
-                    </a>
-                    <a href="/politicas-privacidad" className='text-gray-200 hover:text-gray-300 transition-colors'>
+                    </Link>
+                    <Link to="/politicas-privacidad" className='text-gray-200 hover:text-gray-300 transition-colors'>
                         Políticas de Privacidad
-                    </a>
+                    </Link>
                 </div>
             </nav>
         </footer>
