@@ -20,8 +20,7 @@
 @theme {
   --color-background-primary: rgb(16, 48, 102);
   --color-background-secondary: rgb(20, 44, 85);
-  --color-background-tertiary: rgb(243, 244, 246);
-  
+  --color-background-tertiary: rgb(245, 247, 249);
 }
 
 @theme {
