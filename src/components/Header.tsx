@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../context/AuthContext';
-import LoginModal from './LoginModal';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
 import { SVG_PATHS } from '../constants/svgPaths';
+import { useModal } from '../context/ModalContext';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { isAuthenticated } = useAuth();
+    const { openModal } = useModal();
     const navigate = useNavigate();
 
     const toggleMenu = () => {
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
         if (isAuthenticated) {
             navigate('/profile');
         } else {
-            setIsLoginModalOpen(true);
+            openModal('login')
         }
     };
 
@@ -138,11 +138,6 @@ const Header: React.FC = () => {
                     </div>
                 </nav>
             </header>
-            
-            <LoginModal 
-                isOpen={isLoginModalOpen} 
-                onClose={() => setIsLoginModalOpen(false)} 
-            />
         </>
     )
 }

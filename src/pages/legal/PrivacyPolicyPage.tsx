@@ -1,12 +1,8 @@
 import React from 'react';
 
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-
 const PrivacyPolicyPage: React.FC = () => {
     return (
         <div className='bg-background-primary font-bahamas-bold'>
-            <Header />
             <div className="container bg-white mx-auto px-4 py-8 max-w-4xl text-gray-700 mt-6 mb-6">
                 <h1 className="text-3xl font-bold text-title-light mb-6">Política de Privacidad</h1>
                 
@@ -79,7 +75,6 @@ const PrivacyPolicyPage: React.FC = () => {
                     </section>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

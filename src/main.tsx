@@ -4,13 +4,14 @@ import { RouterProvider } from 'react-router';
 import './index.css';
 import { router } from './routes/Routes.tsx';
 import { AuthProvider } from './context/AuthContext';
+import RootLayout from './components/layout/RootLayout';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 
-import './styles/fonts.css'
+import './styles/fonts.css';
 
 const root = document.getElementById('root')
 
@@ -36,7 +37,9 @@ createRoot(root!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouterProvider router={router}/>
+        <RootLayout>
+          <RouterProvider router={router}/>
+        </RootLayout>
       </AuthProvider>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
