@@ -4,7 +4,6 @@ import { RouterProvider } from 'react-router';
 import './index.css';
 import { router } from './routes/Routes.tsx';
 import { AuthProvider } from './context/AuthContext';
-import RootLayout from './components/layout/RootLayout';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -37,9 +36,7 @@ createRoot(root!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RootLayout>
           <RouterProvider router={router}/>
-        </RootLayout>
       </AuthProvider>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>

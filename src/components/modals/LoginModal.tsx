@@ -68,9 +68,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
             onClose={handleClose}
             showIcon={true}
             iconContent={
-                <Icon
+                <Icon 
                     name="user"
-                    className='w-20 h-20 text-white'
+                    size={200}
+                    className="text-white"
+                    fill='currentColor'
                     viewBox="0 0 24 24"
                 />
             }
@@ -159,7 +161,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                         CREAR UNA CUENTA
                     </Button>
                     <Button
-                        type="button"
+                        type="submit"
                         className="text-[#1e3a8a] text-sm font-medium hover:underline"
                     >
                         ¿Se te olvidó tu contraseña?

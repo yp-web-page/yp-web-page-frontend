@@ -100,14 +100,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         <IconWithBadge 
           icon="user"
           badgeIcon="plus"
-          iconSize={80}
-          badgeSize={24}
-          badgeFill="#4263EB"
+          badgeFill="white"
           containerClassName="relative flex items-center justify-center"
-          iconClassName="w-20 h-20 tex-green-500"
-          badgeWrapperClassName="absolute -right-1 -bottom-1"
-          badgeContainerClassName="bg-white rounded-full p-1.5 shadow-lg"
-          badgeIconClassName="w-6 h-6 text-[#4263EB]"
+          iconClassName="text-white w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]"
+          badgeWrapperClassName="absolute -left-1 -bottom-1"
+          badgeContainerClassName="bg-[#4263EB] rounded-full p-1.5 shadow-lg w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] flex items-center justify-center"
+          badgeIconClassName="text-white w-5 h-5 sm:w-6 sm:h-6"
         />
       }
     >
@@ -146,7 +144,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[300px] mx-auto space-y-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[300px] mx-auto space-y-2 sm:space-y-3">
           <FormatInput<RegisterFormInputs>
             name="name"
             label="Nombre / Nombre de la Empresa"

@@ -1,4 +1,5 @@
 import { TypeNotification } from "../../types/TypeNotifcation";
+import Button from "../Button";
 import Icon from "../icon/Icon";
 import ModalWrapper from "./ModalWrapper";
 import { motion } from 'framer-motion';
@@ -145,14 +146,19 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                         )}
                     </motion.div>
                 </div>
-                <button
-                    onClick={onClose}
+                <Button
+                    type="button"
                     className="flex-shrink-0 ml-3 text-gray-400 hover:text-gray-600 focus:outline-none"
+                    onClick={onClose}
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                    <Icon 
+                        name="close"
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    />
+                </Button>
             </motion.div>
         </ModalWrapper>
     );

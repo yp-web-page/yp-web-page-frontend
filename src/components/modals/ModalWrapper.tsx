@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import Button from '../Button';
+import Icon from '../icon/Icon';
 
 interface ModalWrapperProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface ModalWrapperProps {
   wrapperClassName?: string;
   contentClassName?: string;
   isNotification?: boolean;
+  childrenClassName?:string;
 }
 
 const ModalWrapper: React.FC<ModalWrapperProps> = ({ 
@@ -22,7 +24,8 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   iconContent,
   wrapperClassName = "flex items-center justify-center",
   contentClassName = "relative my-1 sm:my-auto pointer-events-auto max-w-[95%] sm:max-w-md w-full mx-auto",
-  isNotification = false
+  isNotification = false,
+  childrenClassName= "px-7 sm:px-8 py-4 sm:py-5"
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -65,23 +68,27 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
             {!isNotification ? (
               <>
                 {showIcon && (
-                  <div className="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 z-10 w-20 sm:w-24">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#4263EB] border-3 sm:border-4 border-white shadow-xl flex items-center justify-center mx-auto">
+                  <div className="absolute -top-16 sm:-top-20 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-[#4263EB] border-[3px] sm:border-4 border-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex items-center justify-center">
                       {iconContent}
                     </div>
                   </div>
                 )}
-                <div className="w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-2xl bg-white shadow-xl overflow-hidden relative pt-8 sm:pt-10">
+                <div className="w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-2xl bg-white shadow-xl overflow-hidden relative pt-20 sm:pt-24">
                   <Button
                     type="reset"
                     onClick={onClose}
                     className="absolute top-4 sm:top-6 left-2 sm:left-3 text-gray-400 hover:text-gray-600 z-20"
                   >
-                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <Icon 
+                      name="close"
+                      className="h-4 w-4 sm:h-5 sm:w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    />
                   </Button>
-                  <div className={`px-7 sm:px-8 py-2 sm:py-3 mt-4 sm:mt-6`}>
+                  <div className={childrenClassName }>
                     {children}
                   </div>
                 </div>

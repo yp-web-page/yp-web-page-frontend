@@ -43,7 +43,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
         placeholder,
         accept = ".pdf",
         customButton = false,
-        className = "w-full py-1 px-3 rounded-lg bg-gray-200 text-gray-900 text-sm",
+        className = "w-full py-1 px-3 rounded-md bg-gray-200 text-gray-900 text-sm sm:text-base",
         helperText,
     } = props;
     const [ showPassword, setShowPassword ] = useState<boolean>(false);

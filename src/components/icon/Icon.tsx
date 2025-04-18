@@ -19,6 +19,8 @@ const Icon: React.FC<IconProps> = ({ name, className = "", viewBox = "0 0 24 24"
         className={className}
         viewBox={viewBox}
         fill={fill}
+        width={rest.size}
+        height={rest.size}
         {...rest}
       />
     );
