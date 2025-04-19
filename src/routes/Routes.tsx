@@ -7,25 +7,30 @@ import PageNotFound from '../pages/PageNotFound';
 import ProfilePage from '../pages/profile/ProfilePage';
 import LegalAdvicePage from '../pages/legal/LegalAdvicePage';
 import PrivacyPolicyPage from '../pages/legal/PrivacyPolicyPage';
+import RootLayout from '../layout/RootLayout';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
     {
-        path: '/',
-        Component: HomePage,
-        errorElement: <PageNotFound/>,
+      path: '/',
+      element: <RootLayout />, // 👈 wrap all child routes
+      errorElement: <PageNotFound />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: 'profile',
+          element: <ProfilePage />,
+        },
+        {
+          path: 'aviso-legal',
+          element: <LegalAdvicePage />,
+        },
+        {
+          path: 'politicas-privacidad',
+          element: <PrivacyPolicyPage />,
+        },
+      ],
     },
-    {
-        path: '/profile',
-        Component: ProfilePage,
-    },
-    {
-        path: '/aviso-legal',
-        Component: LegalAdvicePage,
-    },
-    {
-        path: '/politicas-privacidad',
-        Component: PrivacyPolicyPage,
-    },
-])
-
-export { router };
+  ]);

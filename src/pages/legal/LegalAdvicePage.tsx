@@ -1,12 +1,8 @@
 import React from 'react';
 
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-
 const LegalAdvicePage: React.FC = () => {
     return (
         <div className='bg-background-primary font-bahamas-bold'>
-            <Header />
             <div className="bg-white max-w-4xl mx-auto px-4 py-8 font-sans mt-6 mb-6 font-bahamas_bold">
                 <h1 className="text-3xl font-bold text-title-light text-center mb-8">Aviso Legal</h1>
 
@@ -90,7 +86,6 @@ const LegalAdvicePage: React.FC = () => {
                     <p className="text-text-light">En caso de que usted tenga cualquier duda acerca de este Aviso Legal o quiera realizar cualquier comentario sobre el Sitio Web, puede enviar un mensaje de correo electrónico a la dirección: impresion221@gmail.com</p>
                 </section>
             </div>
-            <Footer />
         </div>
     );
 };

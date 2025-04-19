@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../context/AuthContext';
-import LoginModal from './LoginModal';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
-import { SVG_PATHS } from '../constants/svgPaths';
+import { useModal } from '../context/ModalContext';
+import Icon from './icon/Icon';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { isAuthenticated } = useAuth();
+    const { openModal } = useModal();
     const navigate = useNavigate();
 
     const toggleMenu = () => {
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
         if (isAuthenticated) {
             navigate('/profile');
         } else {
-            setIsLoginModalOpen(true);
+            openModal('login')
         }
     };
 
@@ -57,24 +57,37 @@ const Header: React.FC = () => {
                         
                         <div className="hidden md:flex items-center space-x-6">
                             <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
-                                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d={SVG_PATHS.FACEBOOK}/>
-                                </svg>
+                                <Icon 
+                                    name="facebook"
+                                    className="h-6 w-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                />
                             </a>
                             <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
-                                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d={SVG_PATHS.INSTAGRAM}/>
-                                </svg>
+                                <Icon 
+                                    name="instagram"
+                                    className="h-6 w-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                />
                             </a>
                             <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
-                                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d={SVG_PATHS.LINKEDIN}/>
-                                </svg>
+                                <Icon 
+                                    name="linkedin"
+                                    className="h-6 w-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                />
                             </a>
                             <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-icon-hover-light transition-colors">
-                                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.PROFILE} />
-                                </svg>
+                                <Icon 
+                                    name="profile"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                />
                             </a>
                         </div>
 
@@ -85,13 +98,21 @@ const Header: React.FC = () => {
                                 aria-label="Toggle menu"
                             >
                                 {isMenuOpen ? (
-                                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    <Icon 
+                                        name="close"
+                                        className="h-6 w-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    />
                                 ) : (
-                                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                    </svg>
+                                    <Icon 
+                                        name="toggle"
+                                        className="h-6 w-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    />
                                 )}
                             </button>
                         </div>
@@ -114,35 +135,43 @@ const Header: React.FC = () => {
                             </Link>
                             <div className="flex space-x-4 px-3 py-2">
                                 <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
-                                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d={SVG_PATHS.FACEBOOK}/>
-                                    </svg>
+                                    <Icon 
+                                        name="facebook"
+                                        className="h-6 w-6"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                    />
                                 </a>
                                 <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
-                                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d={SVG_PATHS.INSTAGRAM}/>
-                                    </svg>
+                                    <Icon 
+                                        name="instagram"
+                                        className="h-6 w-6"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                    />
                                 </a>
                                 <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
-                                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d={SVG_PATHS.LINKEDIN}/>
-                                    </svg>
+                                    <Icon 
+                                        name="linkedin"
+                                        className="h-6 w-6"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                    />
                                 </a>
                                 <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-gray-900">
-                                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.PROFILE} />
-                                    </svg>
+                                    <Icon 
+                                        name="profile"
+                                        className="h-6 w-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    />
                                 </a>
                             </div>
                         </div>
                     </div>
                 </nav>
             </header>
-            
-            <LoginModal 
-                isOpen={isLoginModalOpen} 
-                onClose={() => setIsLoginModalOpen(false)} 
-            />
         </>
     )
 }

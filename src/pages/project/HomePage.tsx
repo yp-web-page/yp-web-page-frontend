@@ -1,17 +1,12 @@
 import React from 'react';
-
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import Carousel from '../../components/Carousel';
-import ServiceInformation from '../../components/ServiceInformation.tsx'
+import ServiceInformation from '../../components/ServiceInformation.tsx';
 
 const HomePage: React.FC = () => {
   return (
-    <div>
-      <Header />
+    <div className='font-bahamas-bold'>
       <Carousel />
       <ServiceInformation />
-      <Footer />
     </div>
   );
 }
