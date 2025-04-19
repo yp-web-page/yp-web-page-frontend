@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-
-import { SVG_PATHS } from '../constants/svgPaths';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
+import Icon from './icon/Icon';
 
 const Footer: React.FC = () => {
     return (
@@ -14,19 +13,28 @@ const Footer: React.FC = () => {
                     </div>
                     <div className='flex gap-x-2 md:gap-x-4 px-4'>
                         <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
-                            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d={SVG_PATHS.FACEBOOK}/>
-                            </svg>
+                            <Icon 
+                                name="facebook"
+                                className="h-6 w-6"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            />
                         </a>
                         <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
-                            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d={SVG_PATHS.INSTAGRAM}/>
-                            </svg>
+                            <Icon 
+                                name="instagram"
+                                className="h-6 w-6"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            />
                         </a>
                         <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
-                            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d={SVG_PATHS.LINKEDIN}/>
-                            </svg>
+                            <Icon 
+                                name="linkedin"
+                                className="h-6 w-6"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            />
                         </a>
                     </div>
                 </div>
