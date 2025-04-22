@@ -2,6 +2,7 @@ import React from 'react'
 
 import InventoryCard from './InventoryCard'
 import Inventory from '../../types/inventory.ts'
+import { useGetInventoriesInfo } from '../../hooks/useGetInventoriesInfo.ts'
 
 const InventoryList: React.FC<{ inventories: Inventory[] }> = ({ inventories }) => {
   return (
