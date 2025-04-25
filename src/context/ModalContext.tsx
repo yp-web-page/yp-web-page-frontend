@@ -3,9 +3,10 @@ import LoginModal from "../components/modals/LoginModal";
 import RegisterModal from "../components/modals/RegisterModal";
 import NotificationModal from "../components/modals/NotificationModal";
 import { TypeNotification } from "../types/TypeNotifcation";
+import RecoverPasswordModal from '../components/modals/RecoverPasswordModal';
 
 // Modal types
-type ModalType = 'login' | 'register' | 'notification' | null;
+type ModalType = 'login' | 'register' | 'notification' | 'Recover' | null;
 
 interface ModalProviderProps {
   children: ReactNode;
@@ -68,7 +69,12 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         message={message || ''}
         onClose={closeModal}
         type={typeNotification || 'success'}
-      />  
+      /> 
+
+      <RecoverPasswordModal 
+        isOpen={currentModal === "Recover"}
+        onClose={closeModal}
+      /> 
 
     </ModalContext.Provider>
   );

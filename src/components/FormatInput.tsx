@@ -73,7 +73,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                   type={type}
                   maxLength={maxLength}
                   placeholder={placeholder}
-                  className={`${className} ${errorClass} h-full`}
+                  className={`${className} ${errorClass} h-full placeholder:text-sm`}
                   {...register(name)}
                 />
                 {helperText && (
@@ -92,7 +92,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                     type={showPassword ? "text" : "password"}
                     maxLength={maxLength}
                     placeholder={placeholder}
-                    className={`${className} ${errorClass} pr-10 h-full`}
+                    className={`${className} ${errorClass} pr-10 h-full placeholder:text-sm`}
                     {...register(name)}
                   />
                   {customButton && type === "password" && (
