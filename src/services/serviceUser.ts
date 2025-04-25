@@ -1,6 +1,7 @@
 import RegisterUser from "../types/RegisterUser";
 import {API_ENDPOINTS} from "../api/endpoints";
 import apiClient from "../api/axios";
+import { RecoverPassword } from "../types/RecoverPassword";
 
 const registerUser = async ({ user, file }: {user: RegisterUser, file?: File}): Promise<string> => {
     const formData = new FormData();
@@ -23,6 +24,12 @@ const registerUser = async ({ user, file }: {user: RegisterUser, file?: File}): 
     return response.data;
 };
 
+const recoverPassword = async(recoverPassword: RecoverPassword): Promise<string> => {
+    const response = await apiClient.post(API_ENDPOINTS.user.recoverPassword, recoverPassword);
+    return response.data;
+}
+
 export const serviceUser = {
     registerUser,
+    recoverPassword,
 };

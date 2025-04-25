@@ -11,6 +11,11 @@ export default defineConfig({
   server: {
     hmr: {
       overlay: true
-    }
+    },
+    host: true,
+    port: 5173,
+    allowedHosts: [
+      'e476-191-102-198-89.ngrok-free.app' // ← replace with your actual ngrok URL
+    ],
   }
 })

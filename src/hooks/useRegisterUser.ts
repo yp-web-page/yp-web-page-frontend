@@ -3,6 +3,7 @@ import { serviceUser } from "../services/serviceUser";
 import RegisterUser from "../types/RegisterUser";
 import { TypeNotification } from "../types/TypeNotifcation";
 import { useModal } from "../context/ModalContext";
+import { MUTATION_KEYS } from "../api/mutationKeys";
 
 const useRegisterUser = () => {
 
@@ -22,14 +23,15 @@ const useRegisterUser = () => {
             , 5000);
             
         },
-        onError: (error) => {
-            console.error("Error registering user:", error);
+        onError: () => {
             handleOpenNotification("Error registrando el usuario.", 'error');
             setTimeout(() => {
                 closeModal();
             }
             , 5000);
         },
+        mutationKey: MUTATION_KEYS.user.registerUser,
+        retry: false,
     });
 };
 
