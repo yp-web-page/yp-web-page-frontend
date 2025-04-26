@@ -1,24 +1,20 @@
-import { LoginResponse } from '../types/LoginTypes';
-
-// API URL - replace with your actual backend URL or environment variable
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
+import { LoginResponse, LoginRequest } from '../types/LoginTypes';
+import {API_ENDPOINTS} from "../api/endpoints";
+import apiClient from "../api/axios";
 
 /**
  * Log in a user with credentials
  */
-const login = async (username: string, password: string): Promise<LoginResponse> => {
+const login = async (loginParams: LoginRequest): Promise<LoginResponse> => {
     try {
-        const response = await fetch(`${API_URL}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
+        const response = await apiClient.post(
+            API_ENDPOINTS.user.loginUser,
+            { username: loginParams.username, password: loginParams.password }
+        );
 
-        const data = await response.json();
+        const data = await response.data();
         
-        if (!response.ok) {
+        if (response.status !== 200) {
             return {
                 success: false,
                 message: data.message || 'Login failed'

@@ -1,6 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { authService } from '../services/serviceLogin';
 import { QUERY_KEYS } from '../constants/queryKeys';
+import { LoginRequest } from '../types/LoginTypes';
 
 // Assuming these types exist or need to be defined
 interface LoginResponse {
@@ -12,17 +13,12 @@ interface LoginResponse {
     token: string;
 }
 
-interface LoginParams {
-    username: string;
-    password: string;
-}
-
-export const useLogin = (params: LoginParams): UseQueryResult<LoginResponse, Error> => {
-    return useQuery<LoginResponse, Error, LoginResponse, [string, LoginParams]>({
+export const useLogin = (params: LoginRequest): UseQueryResult<LoginResponse, Error> => {
+    return useQuery<LoginResponse, Error, LoginResponse, [string, LoginRequest]>({
         queryKey: [QUERY_KEYS.auth.login, params],
-        queryFn: () => authService.login(params),
-        staleTime: 1000 * 60 * 60, // 1 hour
-        gcTime: 1000 * 60 * 60, // 1 hour
+        queryFn: () => authService.login(params.username, params.password),
+        staleTime: 1000 * 60 * 60 * 2, // 2 hours
+        gcTime: 1000 * 60 * 60 * 2, // 2 hours
         enabled: false, // Only run the query when needed, not on component mount
     });
 };

@@ -4,5 +4,6 @@ export const API_ENDPOINTS = {
     },
     user: {
         registerUser: '/user/register',
+        loginUser: '/auth/login',
     },
 };
