@@ -37,19 +37,19 @@ const Header: React.FC = () => {
                                 </Link>
                             </div>
                             <div className="hidden md:flex space-x-8">
-                                <Link to="/" className="text-menu-light hover:text-menu-hover-light transition-colors">
+                                <Link to="/" className="text-menu-light hover:scale-110 transform transition duration-300">
                                     Productos
                                 </Link>
-                                <Link to="/about" className="text-menu-light hover:text-menu-hover-light transition-colors">
+                                <Link to="/about" className="text-menu-light hover:scale-110 transform transition duration-300">
                                     Servicios
                                 </Link>
-                                <Link to="/services" className="text-menu-light hover:text-menu-hover-light transition-colors">
+                                <Link to="/services" className="text-menu-light hover:scale-110 transform transition duration-300">
                                     Quienes somos
                                 </Link>
-                                <Link to="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
+                                <Link to="/contact" className="text-menu-light hover:scale-110 transform transition duration-300">
                                     Contactanos
                                 </Link>
-                                <Link to="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
+                                <Link to="/contact" className="text-menu-light hover:scale-110 transform transition duration-300">
                                     Mis cotizaciones
                                 </Link>
                             </div>
