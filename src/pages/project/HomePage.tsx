@@ -4,7 +4,7 @@ import ServiceInformation from '../../components/ServiceInformation.tsx';
 
 const HomePage: React.FC = () => {
   return (
-    <div className='font-bahamas-bold'>
+    <div>
       <Carousel />
       <ServiceInformation />
     </div>

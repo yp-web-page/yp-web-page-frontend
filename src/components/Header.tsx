@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                         <div className="flex items-center justify-center space-x-8">
                             <div className='flex items-center gap-2'>
                                 <img src="/logo_favicon.png" alt="Logo" className="h-8 w-auto" />
-                                <Link to="/" className="text-2xl text-logo-light flex items-center gap-2 font-bahamas-bold">
+                                <Link to="/" className="md:text-2xl text-logo-light flex items-center gap-2 font-bahamas-bold">
                                     YANCA PUBLICIDAD
                                 </Link>
                             </div>
@@ -50,16 +50,16 @@ const Header: React.FC = () => {
                                     Contactanos
                                 </Link>
                                 <Link to="/contact" className="text-menu-light hover:text-menu-hover-light transition-colors">
-                                    Cotizar
+                                    Mis cotizaciones
                                 </Link>
                             </div>
                         </div>
                         
-                        <div className="hidden md:flex items-center space-x-6">
+                        <div className="hidden md:flex items-center space-x-5">
                             <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <Icon 
                                     name="facebook"
-                                    className="h-6 w-6"
+                                    className="h-5 w-5"
                                     fill="currentColor"
                                     viewBox="0 0 24 24"
                                 />
@@ -67,7 +67,7 @@ const Header: React.FC = () => {
                             <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <Icon 
                                     name="instagram"
-                                    className="h-6 w-6"
+                                    className="h-5 w-5"
                                     fill="currentColor"
                                     viewBox="0 0 24 24"
                                 />
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
                             <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <Icon 
                                     name="linkedin"
-                                    className="h-6 w-6"
+                                    className="h-5 w-5"
                                     fill="currentColor"
                                     viewBox="0 0 24 24"
                                 />
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
                             <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-icon-hover-light transition-colors">
                                 <Icon 
                                     name="profile"
-                                    className="h-6 w-6"
+                                    className="h-5 w-5"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -100,7 +100,7 @@ const Header: React.FC = () => {
                                 {isMenuOpen ? (
                                     <Icon 
                                         name="close"
-                                        className="h-6 w-6"
+                                        className="h-5 w-5"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -108,7 +108,7 @@ const Header: React.FC = () => {
                                 ) : (
                                     <Icon 
                                         name="toggle"
-                                        className="h-6 w-6"
+                                        className="h-5 w-5"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -137,7 +137,7 @@ const Header: React.FC = () => {
                                 <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <Icon 
                                         name="facebook"
-                                        className="h-6 w-6"
+                                        className="h-5 w-5"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                     />
@@ -145,7 +145,7 @@ const Header: React.FC = () => {
                                 <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <Icon 
                                         name="instagram"
-                                        className="h-6 w-6"
+                                        className="h-5 w-5"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                     />
@@ -153,7 +153,7 @@ const Header: React.FC = () => {
                                 <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-logo-light hover:text-gray-900">
                                     <Icon 
                                         name="linkedin"
-                                        className="h-6 w-6"
+                                        className="h-5 w-5"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                     />
@@ -161,7 +161,7 @@ const Header: React.FC = () => {
                                 <a href="#" onClick={handleProfileClick} className="text-logo-light hover:text-gray-900">
                                     <Icon 
                                         name="profile"
-                                        className="h-6 w-6"
+                                        className="h-5 w-5"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
