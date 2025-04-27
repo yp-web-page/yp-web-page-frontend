@@ -1,24 +1,38 @@
-import { useQuery, UseQueryResult } from 'react-query';
+import { useMutation, UseQueryResult } from "@tanstack/react-query";
 import { authService } from '../services/serviceLogin';
-import { QUERY_KEYS } from '../constants/queryKeys';
-import { LoginRequest } from '../types/LoginTypes';
+import { LoginRequest, LoginResponse } from '../types/LoginTypes';
+import { TypeNotification } from "../types/TypeNotifcation";
+import { useModal } from "../context/ModalContext";
 
-// Assuming these types exist or need to be defined
-interface LoginResponse {
-    user: {
-        id: string;
-        username: string;
-        // other user properties
+const useLogin = () => {
+
+    const { openModal, closeModal } = useModal();
+        const handleOpenNotification = (message: string, typeNotification: TypeNotification) => {
+            openModal("notification", message,    typeNotification);
     };
-    token: string;
-}
 
-export const useLogin = (params: LoginRequest): UseQueryResult<LoginResponse, Error> => {
-    return useQuery<LoginResponse, Error, LoginResponse, [string, LoginRequest]>({
-        queryKey: [QUERY_KEYS.auth.login, params],
-        queryFn: () => authService.login(params.username, params.password),
-        staleTime: 1000 * 60 * 60 * 2, // 2 hours
-        gcTime: 1000 * 60 * 60 * 2, // 2 hours
-        enabled: false, // Only run the query when needed, not on component mount
+    return useMutation({
+        mutationFn: ({ params }: {params: LoginRequest}) => authService.login(params),
+        onSuccess: (data) => {
+            console.log("Login successful:", data);
+            handleOpenNotification("Login exitoso", 'success')
+            setTimeout(() => {
+                closeModal();
+            }
+            , 5000)
+            if (data) {
+                localStorage.setItem("token", data.token);
+            }
+        },
+        onError: (error: Error) => {
+            console.error("Error logging in:", error);
+            handleOpenNotification("Error en el log-in del usuario", 'error')
+            setTimeout(() => {
+                closeModal();
+            }
+            , 5000)
+        },
     });
 };
+
+export { useLogin };

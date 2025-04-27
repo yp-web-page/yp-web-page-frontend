@@ -44,7 +44,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
 
     const onSubmit = async (data: LoginFormInputs) => {
         try {
-            await login();
+            await login(data);
             onClose();
         } catch (error) {
             console.error('Login failed:', error);

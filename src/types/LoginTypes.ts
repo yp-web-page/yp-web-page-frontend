@@ -10,4 +10,10 @@ interface LoginResponse {
     message?: string;
 }
 
-export type { LoginRequest, LoginResponse };
+interface LoginFormInputs {
+    username: string;
+    password: string;
+    rememberme: boolean;
+}
+
+export type { LoginRequest, LoginResponse, LoginFormInputs };
