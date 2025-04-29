@@ -1,7 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import LoginModal from "../components/modals/LoginModal";
-import RegisterModal from "../components/modals/RegisterModal";
-import NotificationModal from "../components/modals/NotificationModal";
 import { TypeNotification } from "../types/TypeNotifcation";
 
 // Modal types
@@ -13,10 +10,12 @@ interface ModalProviderProps {
 
 // Context
 interface ModalContextType {
-  currentModal: ModalType;
+  currentModal?: ModalType;
   openModal: (type: Exclude<ModalType, null>, message?: string, typeNotification?: TypeNotification) => void;
   closeModal: () => void;
   isOpen: boolean;
+  message?: string | undefined;
+  typeNotification?: TypeNotification | undefined;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -45,43 +44,15 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const closeModal = () => {
     setCurrentModal(null);
     setIsOpen(false);
+    setMessage(undefined);
+    setTypeNotification(undefined);
   };
 
+  
+
   return (
-    <ModalContext.Provider value={{ currentModal, openModal, closeModal, isOpen }}>
+    <ModalContext.Provider value={{ openModal, closeModal, isOpen, currentModal, message, typeNotification }}>
         {children}
-
-      {/* Global modals */}
-      {
-        currentModal === 'login' && (
-          <LoginModal
-            isOpen={isOpen}
-            onClose={closeModal}
-            onSwitchToRegister={() => openModal('register')}
-          />
-        )
-      }
-      
-      {
-        currentModal === 'register' && (
-          <RegisterModal
-            isOpen={isOpen}
-            onClose={closeModal}
-          />
-        )
-      }
-      
-      {
-        currentModal === 'notification' && (
-          <NotificationModal
-            isOpen={isOpen}
-            message={message || ''}
-            onClose={closeModal}
-            type={typeNotification || 'success'}
-          />
-        )
-      }
-
     </ModalContext.Provider>
   );
 };
