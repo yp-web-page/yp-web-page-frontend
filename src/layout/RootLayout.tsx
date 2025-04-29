@@ -19,11 +19,11 @@ import { ModalProvider } from '../context/ModalContext';
  */
 const RootLayout = () => {
   return (
-    <>
+    <ModalProvider>
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </ModalProvider>
   );
 };
 
