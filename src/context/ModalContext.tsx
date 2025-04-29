@@ -52,23 +52,35 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         {children}
 
       {/* Global modals */}
-      <LoginModal
-        isOpen={currentModal === "login"}
-        onClose={closeModal}
-        onSwitchToRegister={() => openModal("register")}
-      />
-
-      <RegisterModal
-        isOpen={currentModal === "register"}
-        onClose={closeModal}
-      />
-
-      <NotificationModal
-        isOpen={currentModal === "notification"}
-        message={message || ''}
-        onClose={closeModal}
-        type={typeNotification || 'success'}
-      />  
+      {
+        currentModal === 'login' && (
+          <LoginModal
+            isOpen={isOpen}
+            onClose={closeModal}
+            onSwitchToRegister={() => openModal('register')}
+          />
+        )
+      }
+      
+      {
+        currentModal === 'register' && (
+          <RegisterModal
+            isOpen={isOpen}
+            onClose={closeModal}
+          />
+        )
+      }
+      
+      {
+        currentModal === 'notification' && (
+          <NotificationModal
+            isOpen={isOpen}
+            message={message || ''}
+            onClose={closeModal}
+            type={typeNotification || 'success'}
+          />
+        )
+      }
 
     </ModalContext.Provider>
   );

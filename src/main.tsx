@@ -38,11 +38,11 @@ createRoot(root!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
-      <ModalProvider>
-      <AuthProvider>
-          <RouterProvider router={router}/>
-      </AuthProvider>
-      </ModalProvider>
+        <ModalProvider>
+          <AuthProvider>
+            <RouterProvider router={router}/>
+          </AuthProvider>
+        </ModalProvider>
       </ErrorBoundary>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
