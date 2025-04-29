@@ -13,3 +13,5 @@ const getProductsCarousel = async (): Promise<GetProductsCarouselInfo[]> => {
         throw error
     }
 }
+
+export { getProductsCarousel }
