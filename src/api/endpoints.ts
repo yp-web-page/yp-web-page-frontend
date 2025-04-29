@@ -6,4 +6,7 @@ export const API_ENDPOINTS = {
         registerUser: '/user/register',
         recoverPassword: '/user/recover-password',
     },
+    products: {
+        getProductsCarouselInfo: '/products/carousel',
+    }
 };
