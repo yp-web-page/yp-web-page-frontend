@@ -8,6 +8,7 @@ import ProfilePage from '../pages/profile/ProfilePage';
 import LegalAdvicePage from '../pages/legal/LegalAdvicePage';
 import PrivacyPolicyPage from '../pages/legal/PrivacyPolicyPage';
 import RootLayout from '../layout/RootLayout';
+import ChangePassword from '../pages/changePassword/ChangePassword';
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
         {
           path: 'politicas-privacidad',
           element: <PrivacyPolicyPage />,
+        },
+        {
+          path: 'reset-password',
+          element: <ChangePassword />,
         },
       ],
     },
