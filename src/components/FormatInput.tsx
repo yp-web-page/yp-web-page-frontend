@@ -38,7 +38,6 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
         control,
         error,
         maxLength,
-        minLength,
         length,
         placeholder,
         accept = ".pdf",
