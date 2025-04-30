@@ -1,4 +1,4 @@
-import { ComponentType, JSX, SVGProps } from "react";
+import { ComponentType, SVGProps } from "react";
 import { SVG_PATHS } from "../../constants/svgPaths"; 
 
 type SVGIconComponent = ComponentType<SVGProps<SVGSVGElement>>;
