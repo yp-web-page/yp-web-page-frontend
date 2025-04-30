@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ServiceInformation: ReactFC = () => {
+const ServiceInformation: React.FC = () => {
 
   return (
     <div className="w-full bg-background-tertiary">
