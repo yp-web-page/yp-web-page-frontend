@@ -10,8 +10,8 @@ const useRecoverPassword = () => {
 
     const { openModal, closeModal } = useModal();
     const handleOpenNotification = (message: string, typeNotification: TypeNotification) => {
-            openModal("notification", message, typeNotification);
-        };
+        openModal("notification", message, typeNotification);
+    };
 
     return useMutation({
         mutationFn: ({ recoverPassword }: { recoverPassword: RecoverPassword }) => 
