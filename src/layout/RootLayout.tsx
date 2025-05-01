@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { ModalProvider } from '../context/ModalContext';
+import ModalManager from '../components/modals/ModalManager';
 
 /**
  * RootLayout is used to wrap all pages with shared layout components 
@@ -19,11 +20,12 @@ import { ModalProvider } from '../context/ModalContext';
  */
 const RootLayout = () => {
   return (
-    <ModalProvider>
+    <>
       <Header />
       <Outlet />
       <Footer />
-    </ModalProvider>
+      <ModalManager />
+    </>
   );
 };
 
