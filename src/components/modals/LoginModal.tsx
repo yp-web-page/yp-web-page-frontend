@@ -44,8 +44,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
         });
       };
 
-    const onSubmit = async (data: LoginFormInputs) => {
-        await login(data);
+    const onSubmit = (data: LoginFormInputs) => {
+        login(data);
         handleClose();
     };
 

@@ -21,7 +21,6 @@ const useLogin = () => {
             }
             , 5000)
             if (data) {
-                console.log("Login successful", data);
                 localStorage.setItem("token", data.token)
                 localStorage.setItem("user", data.username)
                 localStorage.setItem("role", data.role)
