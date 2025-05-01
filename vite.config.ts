@@ -12,6 +12,7 @@ export default defineConfig({
     hmr: {
       overlay: true
     },
+    port: 5173,
     // Active this if you want to use ngrok to expose your local server
     /*host: true,
     port: 5173,
