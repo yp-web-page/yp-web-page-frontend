@@ -11,7 +11,7 @@ interface ModalProviderProps {
 
 // Context
 interface ModalContextType {
-  currentModal?: ModalType;
+  currentModal: ModalType;
   openModal: (type: Exclude<ModalType, null>, message?: string, typeNotification?: TypeNotification) => void;
   closeModal: () => void;
   isOpen: boolean;

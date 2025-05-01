@@ -3,6 +3,7 @@ import { authService } from '../services/serviceLogin';
 import { LoginRequest, LoginResponse } from '../types/LoginTypes';
 import { TypeNotification } from "../types/TypeNotifcation";
 import { useModal } from "../context/ModalContext";
+import { MESSAGE } from "../constants/message";
 
 const useLogin = () => {
 
@@ -14,8 +15,7 @@ const useLogin = () => {
     return useMutation({
         mutationFn: ({ params }: {params: LoginRequest}) => authService.login(params),
         onSuccess: (data) => {
-            console.log("Login successful:", data);
-            handleOpenNotification("Login exitoso", 'success')
+            handleOpenNotification(MESSAGE.LOGIN_SUCCESS, 'success')
             setTimeout(() => {
                 closeModal();
             }
@@ -24,9 +24,8 @@ const useLogin = () => {
                 localStorage.setItem("token", data.token);
             }
         },
-        onError: (error: Error) => {
-            console.error("Error logging in:", error);
-            handleOpenNotification("Error en el log-in del usuario", 'error')
+        onError: () => {
+            handleOpenNotification(MESSAGE.LOGIN_ERROR, 'error')
             setTimeout(() => {
                 closeModal();
             }
