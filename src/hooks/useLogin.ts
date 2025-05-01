@@ -1,4 +1,4 @@
-import { useMutation, UseQueryResult } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { authService } from '../services/serviceLogin';
 import { LoginRequest, LoginResponse } from '../types/LoginTypes';
 import { TypeNotification } from "../types/TypeNotifcation";
@@ -14,14 +14,17 @@ const useLogin = () => {
 
     return useMutation({
         mutationFn: ({ params }: {params: LoginRequest}) => authService.login(params),
-        onSuccess: (data) => {
+        onSuccess: (data: LoginResponse) => {
             handleOpenNotification(MESSAGE.LOGIN_SUCCESS, 'success')
             setTimeout(() => {
                 closeModal();
             }
             , 5000)
             if (data) {
-                localStorage.setItem("token", data.token);
+                console.log("Login successful", data);
+                localStorage.setItem("token", data.token)
+                localStorage.setItem("user", data.username)
+                localStorage.setItem("role", data.role)
             }
         },
         onError: () => {

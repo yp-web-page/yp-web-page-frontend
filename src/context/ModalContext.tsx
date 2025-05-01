@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { TypeNotification } from "../types/TypeNotifcation";
-import RecoverPasswordModal from '../components/modals/RecoverPasswordModal';
 
 // Modal types
 type ModalType = 'login' | 'register' | 'notification' | 'Recover' | null;

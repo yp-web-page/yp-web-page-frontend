@@ -4,10 +4,9 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
-    token?: string;
-    user?: any;
-    success: boolean;
-    message?: string;
+    token: string
+    username: string
+    role: string
 }
 
 interface LoginFormInputs {
