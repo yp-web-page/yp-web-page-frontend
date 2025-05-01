@@ -1,61 +1,105 @@
 import React from 'react'
 
+import { SERVICE_INFORMATION, SERVICE_INFORMATION_IMAGES } from '../constants/service_information'
+
 const ServiceInformation: React.FC = () => {
 
   return (
     <div className="w-full bg-background-tertiary">
-      <div className="container mx-auto flex items-start justify-between bg-background-tertiary py-24 px-24 space-x-16" >
+      <div className="hidden md:flex container mx-auto items-start justify-between bg-background-tertiary py-24 px-24 space-x-16" >
         <div className="flex flex-col w-1/5 justify-top items-center">
           <img 
-            src="https://www.yancapublicidad.com/wp-content/uploads/2024/02/GRABADO-LASER-150x150.png"
+            src={SERVICE_INFORMATION_IMAGES.CUTTING_AND_LASER_GRAVING}
             alt="Service icon"
             className="w-16 h-16 mb-4"
           />
-          <h1 className="text-title-light font-bold">
-            CORTE Y GRABADO LASER
-          </h1>
-          <p className="text-text-light text-sm text-justify">
-            ¡Dale vida a tus ideas con nuestro servicio de corte y grabado láser! Precisión insuperable en diversos materiales
+            <h1 className="text-title-light font-bold text-lg">
+            {SERVICE_INFORMATION.CUTTING_AND_LASER_GRAVING.title}
+            </h1>
+          <p className="text-text-light text-xs text-center">
+            {SERVICE_INFORMATION.CUTTING_AND_LASER_GRAVING.description}
           </p>
         </div> 
         <div className="flex flex-col w-1/5 justify-top items-center">
           <img 
-            src="https://www.yancapublicidad.com/wp-content/uploads/2024/02/IMPRESION-UV-LED-150x150.png"
+            src={SERVICE_INFORMATION_IMAGES.PRINTING_ON_RIGID_SURFACES}
             alt="Service icon"
             className="w-16 h-16 mb-4"
           />
-          <h1 className="text-title-light font-bold">
-            IMPRESIÓN SOBRE RIGIDOS
+          <h1 className="text-title-light font-bold text-lg">
+            {SERVICE_INFORMATION.PRINTING_ON_RIGID_SURFACES.title}
           </h1>
-          <p className="text-text-light text-sm text-justify">
-            Descubre la versatilidad de nuestra impresión UV-LED para proyectos impactantes y respetuosos con el medio ambiente
+          <p className="text-text-light text-xs text-center">
+            {SERVICE_INFORMATION.PRINTING_ON_RIGID_SURFACES.description}
           </p>
         </div>
         <div className="flex flex-col w-1/5 justify-top items-center">
           <img 
-            src="https://www.yancapublicidad.com/wp-content/uploads/2024/02/ICONO-STIKERT-150x150.png"
+            src={SERVICE_INFORMATION_IMAGES.DTF_PRINTING}
             alt="Service icon"
             className="w-16 h-16 mb-4"
           />
-          <h1 className="text-title-light font-bold">
-            IMPRESIÓN DTF UV
+          <h1 className="text-title-light font-bold text-lg">
+            {SERVICE_INFORMATION.DTF_PRINTING.title}
           </h1>
-          <p className="text-text-light text-sm text-justify">
-            Conoce nuestro novedoso servicio con colores vibrantes, un terminado excepcional y versatilidad en diversos sustratos
+          <p className="text-text-light text-xs text-center">
+            {SERVICE_INFORMATION.DTF_PRINTING.description}
           </p>
         </div>
         <div className="flex flex-col w-1/5 justify-top items-center">
           <img 
-            src="https://www.yancapublicidad.com/wp-content/uploads/2024/02/SUBLIMACION-150x150.png"
+            src={SERVICE_INFORMATION_IMAGES.SUBLIMATION}
             alt="Service icon"
             className="w-16 h-16 mb-4"
           />
-          <h1 className="text-title-light font-bold">
-            SUBLIMACIÓN
+          <h1 className="text-title-light font-bold text-lg">
+            {SERVICE_INFORMATION.SUBLIMATION.title}
           </h1>
-          <p className="text-text-light text-sm text-justify">
-            Sumérgete en el mundo de la sublimación. Imprime tus ideas en colores vibrantes y de alta definición
+          <p className="text-text-light text-xs text-center">
+            {SERVICE_INFORMATION.SUBLIMATION.description}
           </p>
+        </div>
+      </div>
+      <div className='md:hidden container mx-auto grid grid-cols-2 gap-4 py-8 px-10 place-items-center'>
+        <div className="flex flex-col w-full justify-top items-center">
+          <img 
+            src={SERVICE_INFORMATION_IMAGES.CUTTING_AND_LASER_GRAVING}
+            alt="Service icon"
+            className="w-8 h-8 mb-2"
+          />
+            <h1 className="text-title-light font-bold text-xs text-center">
+            {SERVICE_INFORMATION.CUTTING_AND_LASER_GRAVING.title}
+            </h1>
+        </div>
+        <div className="flex flex-col w-full justify-top items-center">
+          <img 
+            src={SERVICE_INFORMATION_IMAGES.PRINTING_ON_RIGID_SURFACES}
+            alt="Service icon"
+            className="w-8 h-8 mb-2"
+          />
+          <h1 className="text-title-light font-bold text-xs text-center">
+            {SERVICE_INFORMATION.PRINTING_ON_RIGID_SURFACES.title}
+          </h1>
+        </div>
+        <div className="flex flex-col w-full justify-top items-center">
+          <img 
+            src={SERVICE_INFORMATION_IMAGES.DTF_PRINTING}
+            alt="Service icon"
+            className="w-8 h-8 mb-2"
+          />
+          <h1 className="text-title-light font-bold text-xs text-center">
+            {SERVICE_INFORMATION.DTF_PRINTING.title}
+          </h1>
+        </div>
+        <div className="flex flex-col w-full justify-top items-center">
+          <img 
+            src={SERVICE_INFORMATION_IMAGES.SUBLIMATION}
+            alt="Service icon"
+            className="w-8 h-8 mb-2"
+          />
+          <h1 className="text-title-light font-bold text-xs text-center">
+            {SERVICE_INFORMATION.SUBLIMATION.title}
+          </h1>
         </div>
       </div>
     </div>

@@ -1,17 +1,26 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
+import { LoginFormInputs } from '../types/LoginTypes';
+import { useLogin } from '../hooks/useLogin';
 
 interface AuthContextType {
     isAuthenticated: boolean;
-    login: () => void;
+    login: (data: LoginFormInputs) => void;
     logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+    const { mutate } = useLogin();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const login = () => {
+    const login = (data: LoginFormInputs) => {
+        if (data.username && data.password) {
+            mutate({
+                params: {username: data.username, password: data.password}
+            });
+            return
+        }
         setIsAuthenticated(true);
     };
 

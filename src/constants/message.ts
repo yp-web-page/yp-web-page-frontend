@@ -4,4 +4,6 @@ export const MESSAGE = {
     PASSWORD_CHANGED_SUCCESSFULLY: "Contraseña cambiada exitosamente",
     ERROR_PASSWORD_CHANGE: "Error al cambiar la contraseña",
     ERROR_PASSWORD_CHANGE_NOT_MATCH: "La contraseña actual no coincide",
+    LOGIN_SUCCESS: "Inicio de sesión exitoso",
+    LOGIN_ERROR: "Error en el inicio de sesión",
 }
