@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <Carousel />
-      <TitleDivider title="Nuestros Servicios"/>
+      <TitleDivider title="NUESTROS SERVICIOS"/>
       <ServiceInformation />
     </div>
   );

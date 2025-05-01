@@ -31,26 +31,26 @@ const Header: React.FC = () => {
                     <div className="flex justify-between items-center">
                         <div className="flex items-center justify-center space-x-8">
                             <div className='flex items-center gap-2'>
-                                <img src="/logo_favicon.png" alt="Logo" className="h-8 w-auto" />
+                                <img src="/src/assets/icono.png" alt="Logo" className="h-12 w-12" />
                                 <Link to="/" className="md:text-2xl text-logo-light flex items-center gap-2 font-bahamas-bold">
                                     YANCA PUBLICIDAD
                                 </Link>
                             </div>
                             <div className="hidden md:flex space-x-8">
                                 <Link to="/" className="text-menu-light hover:scale-110 transform transition duration-300">
-                                    Productos
+                                    PRODUCTOS
                                 </Link>
                                 <Link to="/about" className="text-menu-light hover:scale-110 transform transition duration-300">
-                                    Servicios
+                                    SERVICIOS
                                 </Link>
                                 <Link to="/services" className="text-menu-light hover:scale-110 transform transition duration-300">
-                                    Quienes somos
+                                    QUIENES SOMOS
                                 </Link>
                                 <Link to="/contact" className="text-menu-light hover:scale-110 transform transition duration-300">
-                                    Contactanos
+                                    CONTACTANOS
                                 </Link>
                                 <Link to="/contact" className="text-menu-light hover:scale-110 transform transition duration-300">
-                                    Mis cotizaciones
+                                    MIS COTIZACIONES
                                 </Link>
                             </div>
                         </div>
