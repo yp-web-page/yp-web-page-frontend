@@ -13,6 +13,7 @@ interface ModalWrapperProps {
   wrapperClassName?: string;
   contentClassName?: string;
   isNotification?: boolean;
+  childrenWrapperClassName?: string;
   childrenClassName?:string;
 }
 
@@ -25,7 +26,8 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   wrapperClassName = "flex items-center justify-center",
   contentClassName = "relative my-1 sm:my-auto pointer-events-auto max-w-[95%] sm:max-w-md w-full mx-auto",
   isNotification = false,
-  childrenClassName= "px-7 sm:px-8 py-4 sm:py-5"
+  childrenClassName= "px-7 sm:px-8 py-4 sm:py-5",
+  childrenWrapperClassName= "w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-2xl bg-white shadow-xl overflow-hidden relative pt-20 sm:pt-24"
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -74,7 +76,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
                     </div>
                   </div>
                 )}
-                <div className="w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-2xl bg-white shadow-xl overflow-hidden relative pt-20 sm:pt-24">
+                <div className={childrenWrapperClassName}>
                   <Button
                     type="reset"
                     onClick={onClose}

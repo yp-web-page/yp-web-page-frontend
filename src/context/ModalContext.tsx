@@ -1,11 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import LoginModal from "../components/modals/LoginModal";
-import RegisterModal from "../components/modals/RegisterModal";
-import NotificationModal from "../components/modals/NotificationModal";
 import { TypeNotification } from "../types/TypeNotifcation";
 
 // Modal types
-type ModalType = 'login' | 'register' | 'notification' | null;
+type ModalType = 'login' | 'register' | 'notification' | 'Recover' | null;
 
 interface ModalProviderProps {
   children: ReactNode;
@@ -17,6 +14,8 @@ interface ModalContextType {
   openModal: (type: Exclude<ModalType, null>, message?: string, typeNotification?: TypeNotification) => void;
   closeModal: () => void;
   isOpen: boolean;
+  message?: string | undefined;
+  typeNotification?: TypeNotification | undefined;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -45,31 +44,15 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const closeModal = () => {
     setCurrentModal(null);
     setIsOpen(false);
+    setMessage(undefined);
+    setTypeNotification(undefined);
   };
 
+  
+
   return (
-    <ModalContext.Provider value={{ currentModal, openModal, closeModal, isOpen }}>
+    <ModalContext.Provider value={{ openModal, closeModal, isOpen, currentModal, message, typeNotification }}>
         {children}
-
-      {/* Global modals */}
-      <LoginModal
-        isOpen={currentModal === "login"}
-        onClose={closeModal}
-        onSwitchToRegister={() => openModal("register")}
-      />
-
-      <RegisterModal
-        isOpen={currentModal === "register"}
-        onClose={closeModal}
-      />
-
-      <NotificationModal
-        isOpen={currentModal === "notification"}
-        message={message || ''}
-        onClose={closeModal}
-        type={typeNotification || 'success'}
-      />  
-
     </ModalContext.Provider>
   );
 };

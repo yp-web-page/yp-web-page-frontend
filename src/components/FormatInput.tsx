@@ -38,7 +38,6 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
         control,
         error,
         maxLength,
-        minLength,
         length,
         placeholder,
         accept = ".pdf",
@@ -49,6 +48,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState(false);
     const errorClass = error ? "border border-red-500" : "";
+    const helperId = `${name}-helper-text`;
 
     return(
         <div className="mb-2">
@@ -73,11 +73,11 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                   type={type}
                   maxLength={maxLength}
                   placeholder={placeholder}
-                  className={`${className} ${errorClass} h-full`}
+                  className={`${className} ${errorClass} h-full placeholder:text-sm`}
                   {...register(name)}
                 />
                 {helperText && (
-                  <span className="text-xs text-gray-500 mt-1.5 block mb-3">
+                  <span id={helperId} className="text-xs text-gray-500 mt-1.5 block mb-3">
                     {helperText}
                   </span>
                 )}
@@ -92,7 +92,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                     type={showPassword ? "text" : "password"}
                     maxLength={maxLength}
                     placeholder={placeholder}
-                    className={`${className} ${errorClass} pr-10 h-full`}
+                    className={`${className} ${errorClass} pr-10 h-full placeholder:text-sm`}
                     {...register(name)}
                   />
                   {customButton && type === "password" && (
@@ -123,7 +123,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                   )}
                 </div>
                 {helperText && (
-                  <span className="text-xs text-gray-500 mt-1.5 block mb-3">
+                  <span id={helperId} className="text-xs text-gray-500 mt-1.5 block mb-3">
                     {helperText}
                   </span>
                 )}

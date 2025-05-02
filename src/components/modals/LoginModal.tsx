@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import Button from '../Button';
 import FormatInput from '../FormatInput';
 import Icon from '../icon/Icon';
+import { useModal } from '../../context/ModalContext';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -30,6 +31,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
         watch,
         reset,
       } = useForm<LoginFormInputs>();
+      const { openModal } = useModal();
 
     const usernameLength = (watch('username') || '').length;
     const passwordLength = (watch('password') || '').length;
@@ -42,25 +44,24 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
         });
       };
 
-    const onSubmit = async (data: LoginFormInputs) => {
-        try {
-            await login();
-            onClose();
-        } catch (error) {
-            console.error('Login failed:', error);
-        }
-        resetForm
+    const onSubmit = (data: LoginFormInputs) => {
+        login(data);
+        handleClose();
     };
 
     const handleClose = () => {
         resetForm();
         onClose();
-      };
+    };
 
     const handleOpenRegister = () => {
         onClose();
         onSwitchToRegister();
-    };   
+    };
+    
+    const handleRecoverPassword = () => {
+        openModal("Recover");
+    };
 
     return (
         <ModalWrapper 
@@ -163,6 +164,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                     <Button
                         type="submit"
                         className="text-[#1e3a8a] text-sm font-medium hover:underline"
+                        onClick={handleRecoverPassword}
                     >
                         ¿Se te olvidó tu contraseña?
                     </Button>

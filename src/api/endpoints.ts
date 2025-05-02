@@ -4,5 +4,8 @@ export const API_ENDPOINTS = {
     },
     user: {
         registerUser: '/user/register',
+        recoverPassword: '/user/recover-password',
+        loginUser: '/auth/login',
+        ChangePassword: '/user/change-password',
     },
 };
