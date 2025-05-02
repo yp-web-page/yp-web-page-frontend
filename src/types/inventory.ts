@@ -1,6 +1,8 @@
-export interface Inventory {
+import { ListName } from "./ListType"
+
+export interface ResponseInventoriesInfo {
+  name: string
   title: string
   imagePath: string
-  itemsList: string []
-  nextPath: string
+  lists: ListName []
 }
