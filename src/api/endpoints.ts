@@ -6,6 +6,10 @@ export const API_ENDPOINTS = {
         registerUser: '/user/register',
         recoverPassword: '/user/recover-password',
         loginUser: '/auth/login',
-        ChangePassword: '/user/change-password',
+        changePassword: '/user/change-password',
+        activeRegularAccount: '/user/active-account',
     },
+    email: {
+        resendActivationEmail: '/email/resend-activation',
+    }
 };

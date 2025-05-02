@@ -2,6 +2,7 @@ import LoginModal from "./LoginModal";
 import NotificationModal from "./NotificationModal";
 import RegisterModal from "./RegisterModal";
 import { useModal } from "../../context/ModalContext";
+import RecoverPasswordModal from "./RecoverPasswordModal";
 
 
 const ModalManager = () => {
@@ -18,6 +19,12 @@ const ModalManager = () => {
       )}
       {currentModal === 'register' && (
         <RegisterModal
+          isOpen={isOpen}
+          onClose={closeModal}
+        />
+      )}
+      {currentModal === 'Recover' && (
+        <RecoverPasswordModal 
           isOpen={isOpen}
           onClose={closeModal}
         />

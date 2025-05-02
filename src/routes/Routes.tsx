@@ -9,6 +9,7 @@ import LegalAdvicePage from '../pages/legal/LegalAdvicePage';
 import PrivacyPolicyPage from '../pages/legal/PrivacyPolicyPage';
 import RootLayout from '../layout/RootLayout';
 import ChangePassword from '../pages/changePassword/ChangePassword';
+import ActiveUserAccount from '../pages/activeUserRegularAccount/ActiveUserAccount';
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
           path: 'reset-password',
           element: <ChangePassword />,
         },
+        {
+          path: 'activate-regular-account',
+          element: <ActiveUserAccount />,
+        }
       ],
     },
   ]);
