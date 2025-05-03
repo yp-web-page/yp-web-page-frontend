@@ -3,6 +3,7 @@ import {API_ENDPOINTS} from "../api/endpoints";
 import apiClient from "../api/axios";
 import { RecoverPassword } from "../types/RecoverPassword";
 import { ChangePassword } from "../types/ChangePassword";
+import { ActiveRegularAccount } from "../types/ActiveRegularAccount";
 
 const registerUser = async ({ user, file }: {user: RegisterUser, file?: File}): Promise<string> => {
     const formData = new FormData();
@@ -31,12 +32,18 @@ const recoverPassword = async(recoverPassword: RecoverPassword): Promise<string>
 }
 
 const changePassword = async(changePassword: ChangePassword): Promise<string> => { 
-    const response = await apiClient.post(API_ENDPOINTS.user.ChangePassword, changePassword); 
+    const response = await apiClient.post(API_ENDPOINTS.user.changePassword, changePassword); 
     return response.data;
 }
+
+const activeRegularAccount = async(activeRegularAccount: ActiveRegularAccount): Promise<string> => {
+    const response = await apiClient.put(API_ENDPOINTS.user.activeRegularAccount, activeRegularAccount);
+    return response.data;
+};
 
 export const serviceUser = {
     registerUser,
     recoverPassword,
     changePassword,
+    activeRegularAccount,
 };

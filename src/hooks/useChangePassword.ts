@@ -34,7 +34,7 @@ const useChangePassword = ({ navigate }: ChangePasswordProps): UseMutationResult
             }
             , 5000);
         },
-        mutationKey: MUTATION_KEYS.user.ChangePassword,
+        mutationKey: MUTATION_KEYS.user.changePassword,
         retry: false,
     })
 }
