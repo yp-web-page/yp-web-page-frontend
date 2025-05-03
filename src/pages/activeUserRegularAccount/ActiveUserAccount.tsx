@@ -6,7 +6,7 @@ import useActiveRegularAccount from "../../hooks/useActiveRegularAccount";
 import userResendActivationEmail from "../../hooks/useResendActivationEmail";
 import { MESSAGE } from "../../constants/message";
 
-const ActiveUserAccount = () => {
+const ActiveUserAccount: React.FC = () => {
 
     const { username, token } = useMemo(() => {
         const params = new URLSearchParams(window.location.search);
