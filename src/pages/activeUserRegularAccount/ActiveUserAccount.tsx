@@ -43,9 +43,6 @@ const ActiveUserAccount = () => {
         [mutateResendActivationEmail, acitveUserAccount]
     );
 
-    console.log("isPending", isPendingForActivation);
-    console.log("isError", isErrorForActivation);
-
     return(
         <div className="min-h-screen flex flex-col md:flex-row">
             {/* Left Image Section */} 
