@@ -8,4 +8,7 @@ export const API_ENDPOINTS = {
         loginUser: '/auth/login',
         ChangePassword: '/user/change-password',
     },
+    inventories: {
+        getInventoriesInfo: '/inventories/all/info?page=0&size=3',
+    },
 };
