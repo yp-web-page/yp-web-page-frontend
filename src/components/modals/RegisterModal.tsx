@@ -112,7 +112,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
       <div className="px-3">
         {/* Title */}
         <h2 className="text-xl font-bold text-center text-blue-600">REGISTRATE</h2>
-        <p className="text-center text-gray-600 text-xs mb-3">
+        <p className="text-center text-gray-600 text-xs mb-1.5 sm:mb-2">
           ¡Haz un unico registro y tendras acceso a toda nuestra lista de precios!
         </p>
 
@@ -144,7 +144,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[300px] mx-auto space-y-2 sm:space-y-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[320px] mx-auto space-y-1 sm:space-y-2 text-xs sm:text-base">
           <FormatInput<RegisterFormInputs>
             name="name"
             label="Nombre / Nombre de la Empresa"
@@ -265,7 +265,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
           <Button
             type="submit"
-            className="w-[60%] mx-auto block py-2.5 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+            className="w-[60%] mx-auto block py-2 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-3 sm:mt-4"
           >
             Registrarse
           </Button>
