@@ -23,11 +23,11 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   children, 
   showIcon = false,
   iconContent,
-  wrapperClassName = "flex items-center justify-center",
+  wrapperClassName = "flex justify-center items-start min-h-screen pt-20 sm:pt-28",
   contentClassName = "relative my-1 sm:my-auto pointer-events-auto max-w-[95%] sm:max-w-md w-full mx-auto",
   isNotification = false,
-  childrenClassName= "px-7 sm:px-8 py-4 sm:py-5",
-  childrenWrapperClassName= "w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-2xl bg-white shadow-xl overflow-hidden relative pt-20 sm:pt-24"
+  childrenClassName = "px-4 sm:px-8 py-3 sm:py-5 flex-1 overflow-y-auto",
+  childrenWrapperClassName = "w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-3xl bg-white shadow-2xl relative pt-20 sm:pt-24 max-h-[100dvh] flex flex-col overflow-auto",
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -50,7 +50,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   const modalContent = (
     <AnimatePresence mode="wait">
       {isOpen && (
-        <div className={`fixed inset-0 z-[9999] overflow-y-auto ${wrapperClassName}`}>
+        <div className={`fixed inset-0 z-[9999] overflow-y-scroll sm:overflow-y-auto h-full ${wrapperClassName}`}>
           {!isNotification && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -70,8 +70,8 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
             {!isNotification ? (
               <>
                 {showIcon && (
-                  <div className="absolute -top-16 sm:-top-20 left-1/2 transform -translate-x-1/2 z-10">
-                    <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-[#4263EB] border-[3px] sm:border-4 border-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex items-center justify-center">
+                  <div className="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#4263EB] border-[3px] sm:border-4 border-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex items-center justify-center">
                       {iconContent}
                     </div>
                   </div>
