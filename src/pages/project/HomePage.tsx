@@ -11,6 +11,8 @@ const HomePage: React.FC = () => {
   const { data, isLoading, isError, error } = useGetInventoriesInfo();
   const inventories = data
 
+  console.log("inventories", inventories)
+
   return (
     <div>
       <Carousel />

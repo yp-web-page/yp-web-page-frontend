@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
         ChangePassword: '/user/change-password',
     },
     inventories: {
-        getInventoriesInfo: '/inventories/all/info?page=0&size=3',
+        getInventoriesInfo: '/inventories/all/info',
+        getFavoriteInventoriesInfo: '/inventories/favorite/info',
     },
 };

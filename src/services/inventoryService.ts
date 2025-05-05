@@ -5,11 +5,11 @@ import apiClient from "../api/axios";
 /**
  * Get all inventories info
  */
-const getInventoriesInfo = async (): Promise<ResponseInventoriesInfo[]> => {
-    const response = await apiClient.get(API_ENDPOINTS.inventories.getInventoriesInfo);
-    return response.data.content as ResponseInventoriesInfo[];
+const getFavoriteInventoriesInfo = async (): Promise<ResponseInventoriesInfo[]> => {
+    const response = await apiClient.get(API_ENDPOINTS.inventories.getFavoriteInventoriesInfo);
+    return response.data as ResponseInventoriesInfo[];
 };
 
 export const inventoryService = {
-    getInventoriesInfo,
+    getFavoriteInventoriesInfo,
 };

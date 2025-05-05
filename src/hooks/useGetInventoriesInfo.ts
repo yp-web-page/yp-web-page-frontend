@@ -3,7 +3,7 @@ import { QUERY_KEYS } from "../api/queryKeys";
 import { inventoryService } from "../services/inventoryService";
 import type { ResponseInventoriesInfo } from "../types/inventory";
 
-const getInventoriesInfo = inventoryService.getInventoriesInfo
+const getInventoriesInfo = inventoryService.getFavoriteInventoriesInfo
 
 export const useGetInventoriesInfo = (): UseQueryResult<ResponseInventoriesInfo[], Error> => {
     return useQuery<ResponseInventoriesInfo[], Error, ResponseInventoriesInfo[], [string]>({
