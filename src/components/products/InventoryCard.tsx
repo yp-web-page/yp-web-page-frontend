@@ -17,17 +17,22 @@ const InventoryCard: React.FC<{ inventory: ResponseInventoriesInfo }> = ({ inven
   };
 
   return (
-    <div className="bg-cover bg-center bg-no-repeat xl:h-90 xl:w-90 lg:h-80 lg:w-80 md:w-60 md:h-60 flex flex-col pl-2 md:pl-5 justify-end" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imagePath})` }}>
+    <div className="bg-cover bg-center bg-no-repeat h-40 xl:h-90 xl:w-90 lg:h-80 lg:w-80 md:w-60 md:h-60 flex flex-col pl-2 md:pl-5 justify-end" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imagePath})` }}>
       <h1 className="text-left font-bold w-full text-xxs sm:text-xs xl:text-xl lg:text-base md:text-sm uppercase mb-2">
         {title}
       </h1>
       
-      <div className="w-full pb-2 pl-5">
+      <div className="w-full pb-3 pl-3.5 sm:pl-5">
         {
           lists.map((item, index) => (
-            <ul key={index} className="list-disc text-left -my-2 lg:-my-0.5 md:-my-1">
-              <li className='text-gray-200 marker:text-white marker:text-xxs'>
-                <Link to={`/inventory/${id}`} state={{ listId: item.id }} className="text-gray-200 hover:text-white text-xxs md:text-xs lg:text-sm xl:text-base">
+            <ul key={index} className="list-disc text-left -my-2.5 sm:-my-2.5 lg:-my-1 md:-my-2">
+              <li className='text-gray-200 marker:text-white marker:text-xxs md:marker:text-xs lg:marker:text-sm xl:marker:text-base'>
+                <Link 
+                  to={`/inventory/${id}`} 
+                  state={{ listId: item.id }} 
+                  className="inline-block text-gray-200 hover:text-white text-xxs md:text-xs lg:text-sm xl:text-base"
+                  style={{ lineHeight: '0.9' }}
+                >
                   {item.name}
                 </Link>
               </li>
@@ -35,6 +40,7 @@ const InventoryCard: React.FC<{ inventory: ResponseInventoriesInfo }> = ({ inven
           ))
         }
       </div>
+      
       <div className="flex justify-start items-start mb-2 mt-1 xl:mb-7 xl:mt-2 lg:mb-5 lg:mt-2 md:mb-3 md:mt-1">
         <Button 
           type="button" 
@@ -44,6 +50,7 @@ const InventoryCard: React.FC<{ inventory: ResponseInventoriesInfo }> = ({ inven
           Explorar
         </Button>
       </div>
+      
     </div>
   )
 }

@@ -11,7 +11,7 @@ const InventoryList: React.FC<{ inventories: ResponseInventoriesInfo[] }> = ({ i
   }
 
   return (
-    <div className="grid grid-cols-3 gap-7">
+    <div className="grid grid-cols-3 gap-3 md:gap-7 pl-1 pr-1">
       {inventories.map((inventory) => (
         <InventoryCard key={inventory.name} inventory={inventory} />
       ))}
