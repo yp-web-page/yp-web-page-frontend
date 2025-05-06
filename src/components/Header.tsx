@@ -26,11 +26,11 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="bg-background-secondary  shadow-md">
+            <header className="blue-deep-gradient shadow-md">
                 <nav className="mx-8 py-4">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center justify-center space-x-8">
-                            <div className='flex items-center gap-2'>
+                            <div className="flex items-center gap-2">
                                 <img src="/icono.png" alt="Logo" className="h-12 w-12" />
                                 <Link to="/" className="md:text-2xl text-logo-light flex items-center gap-2 font-bahamas-bold">
                                     YANCA PUBLICIDAD

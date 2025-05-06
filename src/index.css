@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
-@import "./styles/fonts.css";
-
 @tailwind utilities;
+
+@import "./styles/fonts.css";
+@import "./styles/colors.css";
+
 
 :root {
   color-scheme: light dark;

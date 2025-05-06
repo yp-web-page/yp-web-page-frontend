@@ -129,7 +129,7 @@ const ChangePassword: React.FC = () => {
                     <div className="flex gap-4">
                         <Button
                             type='submit'
-                            className="w-[60%] mx-auto block py-2.5 bg-gradient-to-b from-[#4da0ff] to-[#002f7f] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+                            className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
                             disabled={isPending}
                         >
                             Enviar
