@@ -42,7 +42,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
         placeholder,
         accept = ".pdf",
         customButton = false,
-        className = "w-full py-1 px-3 rounded-md bg-gray-200 text-gray-900 text-sm sm:text-base",
+        className = "w-full py-1 px-3 rounded-md bg-gray-200 text-gray-900 text-sm sm:text-base placeholder:text-xs sm:placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
         helperText,
     } = props;
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
@@ -51,7 +51,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
     const helperId = `${name}-helper-text`;
 
     return(
-        <div className="mb-2">
+        <div className="mb-1">
           {type !== "checkbox" && (
             <div className="flex justify-between items-center mb-0.5">
               <label htmlFor={name} className="text-gray-700 text-xs">
@@ -73,7 +73,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                   type={type}
                   maxLength={maxLength}
                   placeholder={placeholder}
-                  className={`${className} ${errorClass} h-full placeholder:text-sm`}
+                  className={`${className} ${errorClass} h-full placeholder:text-sx`}
                   {...register(name)}
                 />
                 {helperText && (
@@ -92,7 +92,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                     type={showPassword ? "text" : "password"}
                     maxLength={maxLength}
                     placeholder={placeholder}
-                    className={`${className} ${errorClass} pr-10 h-full placeholder:text-sm`}
+                    className={`${className} ${errorClass} pr-10 h-full placeholder:text-sx`}
                     {...register(name)}
                   />
                   {customButton && type === "password" && (
@@ -156,11 +156,11 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                         <Button
                           type="button"
                           onClick={() => document.getElementById(name)?.click()}
-                          className="px-2 py-2 bg-gray-100 rounded-xl text-gray-700 hover:bg-gray-200 transition-colors text-sm leading-none"
+                          className="px-2 py-2 bg-gray-100 rounded-xl text-gray-700 hover:bg-gray-200 transition-colors text-sx"
                         >
                           Seleccionar archivo
                         </Button>
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 text-sx">
                           {value ? (value as File).name : "Ningún Archivo seleccionado"}
                         </span>
                         <input
