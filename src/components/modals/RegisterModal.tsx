@@ -122,7 +122,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             type='button'
             className={`w-full py-1.5 px-3 rounded-full text-sm font-bold transition-colors ${
               userType === 'REGULAR'
-                ? 'bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white hover:opacity-90 transition-opacity'
+                ? 'blue-deep-gradient'
                 : 'bg-gray-300 text-white'
             }`}
             onClick={() => setUserType('REGULAR')}
@@ -134,7 +134,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             type='button'
             className={`w-full py-1.5 px-3 rounded-full text-sm font-bold transition-colors ${
               userType === 'WHOLESALER'
-                ? 'bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white hover:opacity-90 transition-opacity'
+                ? 'blue-deep-gradient'
                 : 'bg-gray-300 text-white'
             }`}
             onClick={() => setUserType('WHOLESALER')}
@@ -265,7 +265,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
           <Button
             type="submit"
-            className="w-[60%] mx-auto block py-2 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-3 sm:mt-4"
+            className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-3 sm:mt-4 blue-deep-gradient"
           >
             Registrarse
           </Button>
