@@ -1,4 +1,0 @@
-.blue-deep-gradient {
-    @apply bg-gradient-to-b from-[#4da0ff] to-[#002f7f] text-white hover:opacity-90 transition-opacity;
-}
-  
