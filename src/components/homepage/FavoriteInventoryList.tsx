@@ -7,14 +7,13 @@ import LoadingError from "./LoadingError"
 
 const FavoriteInventoryList: React.FC = () => {
 
-    const { data, isLoading, isError, error } = useGetInventoriesInfo();
-    const inventories = data
+    const { data: inventories, isLoading, isError, error } = useGetInventoriesInfo();
 
     return (
         <>
         {isLoading && <LoadingInformation />}
         {isError && <LoadingError error={error instanceof Error ? error.message : String(error)} />}
-        {inventories? (
+        {inventories && inventories.length > 0 ? (
         <div className='bg-white'>
             <div className='container flex mx-auto items-center justify-center bg-white'>
                 <InventoryList inventories={inventories} />

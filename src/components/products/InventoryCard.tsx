@@ -6,9 +6,11 @@ import Button from '../Button'
 import { ResponseInventoriesInfo } from '../../types/inventory'
 import { BUTTON_DESIGN } from '../../constants/buttonDesign'
 
+interface InventoryCardProps {
+  inventory: ResponseInventoriesInfo
+}
 
-
-const InventoryCard: React.FC<{ inventory: ResponseInventoriesInfo }> = ({ inventory: { id, title, imagePath, lists } }) => {
+const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory: { id, title, imagePath, lists } }) => {
 
   const navigate = useNavigate();
 
@@ -24,8 +26,8 @@ const InventoryCard: React.FC<{ inventory: ResponseInventoriesInfo }> = ({ inven
       
       <div className="w-full pb-3 pl-3.5 sm:pl-5">
         {
-          lists.map((item, index) => (
-            <ul key={index} className="list-disc text-left -my-2.5 sm:-my-2.5 lg:-my-1 md:-my-2">
+          lists.map((item) => (
+            <ul key={item.id} className="list-disc text-left -my-2.5 sm:-my-2.5 lg:-my-1 md:-my-2">
               <li className='text-gray-200 marker:text-white marker:text-xxs md:marker:text-xs lg:marker:text-sm xl:marker:text-base'>
                 <Link 
                   to={`/inventory/${id}`} 
@@ -53,6 +55,6 @@ const InventoryCard: React.FC<{ inventory: ResponseInventoriesInfo }> = ({ inven
       
     </div>
   )
-}
+})
 
 export default InventoryCard
