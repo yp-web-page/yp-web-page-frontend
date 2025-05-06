@@ -68,7 +68,7 @@ const ActiveUserAccount: React.FC = () => {
                     disabled={isPendingForActivation || isErrorForActivation}
                     className={isErrorForActivation ?  
                         "w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 bg-gray-500 text-white rounded-full font-bold text-sm mt-8"
-                        : "w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 bg-gradient-to-b from-[#4da0ff] to-[#002f7f] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+                        : "w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
                     }
                 >
                     Activar cuenta
@@ -86,7 +86,7 @@ const ActiveUserAccount: React.FC = () => {
                     type="button"
                     onClick={onSubmitResendActivationEmail}
                     disabled={isPendingForResend}
-                    className="w-[60%] mx-auto block py-2.5 bg-gradient-to-b from-[#4da0ff] to-[#002f7f] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+                    className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
                     >
                         Reenviar correo de activación
                     </Button>
