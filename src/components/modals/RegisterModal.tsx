@@ -265,7 +265,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
           <Button
             type="submit"
-            className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
+            className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-3 sm:mt-4 blue-deep-gradient"
           >
             Registrarse
           </Button>
