@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
 
 @import "./styles/fonts.css";
@@ -31,4 +29,9 @@
 
 @theme {
   --font-bahamas-bold: 'BahamasBold';
+}
+
+@theme {
+  --text-xxs: 0.5rem;
+  --text-xxxs: 0.375rem;
 }

@@ -9,6 +9,10 @@ export const API_ENDPOINTS = {
         changePassword: '/user/change-password',
         activeRegularAccount: '/user/active-account',
     },
+    inventories: {
+        getInventoriesInfo: '/inventories/all/info',
+        getFavoriteInventoriesInfo: '/inventories/favorite/info',
+    },
     email: {
         resendActivationEmail: '/email/resend-activation',
     }
