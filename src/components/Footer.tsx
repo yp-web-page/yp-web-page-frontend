@@ -8,14 +8,14 @@ const Footer: React.FC = () => {
         <footer className="bg-white">
             <nav className="flex-col mx-auto px-0">
                 <div className='flex justify-between items-center py-4'>
-                    <div className='flex items-center gap-x-2 px-4 text-xs md:text-sm'>
-                        <p className='text-text-light'>Copyright © 2025 YANCA PUBLICIDAD. Powered by YANCA PUBLICIDAD.</p>
+                    <div className='flex items-center gap-x-2 px-4'>
+                        <p className='text-text-light text-xxs md:text-xs'>Copyright © 2025 YANCA PUBLICIDAD. Powered by YANCA PUBLICIDAD.</p>
                     </div>
                     <div className='flex gap-x-2 md:gap-x-4 px-4'>
                         <a href={SOCIAL_NETWORKS.FACEBOOK} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                             <Icon 
                                 name="facebook"
-                                className="h-5 w-5"
+                                className="h-4 w-4"
                                 fill="currentColor"
                                 viewBox="0 0 24 24"
                             />
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
                         <a href={SOCIAL_NETWORKS.INSTAGRAM} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                             <Icon 
                                 name="instagram"
-                                className="h-5 w-5"
+                                className="h-4 w-4"
                                 fill="currentColor"
                                 viewBox="0 0 24 24"
                             />
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
                         <a href={SOCIAL_NETWORKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                             <Icon 
                                 name="linkedin"
-                                className="h-5 w-5"
+                                className="h-4 w-4"
                                 fill="currentColor"
                                 viewBox="0 0 24 24"
                             />
@@ -39,10 +39,10 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
                 <div className='flex bg-gray-950 gap-x-2 text-xs md:text-sm md:gap-x-4 items-center justify-center py-1.5'>
-                    <Link to="/aviso-legal" className='text-gray-200 hover:text-gray-300 transition-colors'>
+                    <Link to="/aviso-legal" className='text-xxs md:text-xs text-gray-200 hover:text-gray-300 transition-colors'>
                         Aviso Legal
                     </Link>
-                    <Link to="/politicas-privacidad" className='text-gray-200 hover:text-gray-300 transition-colors'>
+                    <Link to="/politicas-privacidad" className='text-xxs md:text-xs text-gray-200 hover:text-gray-300 transition-colors'>
                         Políticas de Privacidad
                     </Link>
                 </div>
