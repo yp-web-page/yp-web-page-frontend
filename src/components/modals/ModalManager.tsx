@@ -3,6 +3,7 @@ import NotificationModal from "./NotificationModal";
 import RegisterModal from "./RegisterModal";
 import { useModal } from "../../context/ModalContext";
 import RecoverPasswordModal from "./RecoverPasswordModal";
+import UserModal from "./UserModal";
 
 
 const ModalManager = () => {
@@ -23,7 +24,7 @@ const ModalManager = () => {
           onClose={closeModal}
         />
       )}
-      {currentModal === 'Recover' && (
+      {currentModal === 'recover' && (
         <RecoverPasswordModal 
           isOpen={isOpen}
           onClose={closeModal}
@@ -35,6 +36,12 @@ const ModalManager = () => {
           onClose={closeModal}
           message={message || ''}
           type={typeNotification || 'success'}
+        />
+      )}
+      {currentModal === 'user' && (
+        <UserModal
+          isOpen={isOpen}
+          onClose={closeModal}
         />
       )}
     </>
