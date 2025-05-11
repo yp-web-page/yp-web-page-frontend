@@ -16,26 +16,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token) {
-          setIsAuthenticated(true);
-        }
+        setIsAuthenticated(!!token);
     }, []);
 
     const login = (data: LoginFormInputs) => {
-        if (isAuthenticated) {
-            return;
-        }
+        if (!data.username || !data.password || isAuthenticated) return;
 
-        if (data.username && data.password) {
-            mutate({
-                params: {username: data.username, password: data.password}
-            });
-            setIsAuthenticated(true);
-            return;
-        }
+        mutate({
+            params: {username: data.username, password: data.password}
+        });
+        setIsAuthenticated(true);
     };
 
     const logout = () => {
+        localStorage.removeItem('token');
         setIsAuthenticated(false);
     };
 
