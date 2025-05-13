@@ -17,6 +17,25 @@ const FeaturedProductsCarousel: React.FC = () => {
   return (
     <div className="w-full bg-white py-8">
       <div className="w-full px-4">
+        <style>
+          {`
+            .swiper-pagination-bullet {
+              width: 10px;
+              height: 10px;
+              background-color: #D1D5DB;
+              opacity: 1;
+              transition: all 0.3s ease;
+            }
+            .swiper-pagination-bullet-active {
+              background-color: #2563EB;
+              width: 24px;
+              border-radius: 5px;
+            }
+            .swiper-pagination {
+              bottom: 0 !important;
+            }
+          `}
+        </style>
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={20}
@@ -30,23 +49,29 @@ const FeaturedProductsCarousel: React.FC = () => {
             disableOnInteraction: false,
           }}
           breakpoints={{
-            640: {
+            0: {
               slidesPerView: 2,
+            },
+            420:{
+              slidesPerView: 2
+            },
+            640: {
+              slidesPerView: 3,
             },
             768: {
               slidesPerView: 3,
             },
-            1024: {
+            1300: {
               slidesPerView: 4,
             },
-            1280: {
-                slidesPerView: 5
+            1500: {
+              slidesPerView: 6
             }
           }}
           className="w-full"
         >
           {products.map((product) => (
-            <SwiperSlide key={product.id} className='py-4 px-9'>
+            <SwiperSlide key={product.id} className='py-4 px-6 sm:px-4 lg:px-9'>
               <ProductCard product={product} />
             </SwiperSlide>
           ))}
