@@ -5,4 +5,7 @@ export const QUERY_KEYS = {
     inventories: {
         info: ['inventories-info'] as [string],
     },
+    products: {
+        featured: ['featured-products'] as [string]
+    }
 };

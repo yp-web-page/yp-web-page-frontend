@@ -19,7 +19,7 @@ const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory: { i
   };
 
   return (
-    <div className="bg-cover bg-center bg-no-repeat h-40 xl:h-90 xl:w-90 lg:h-80 lg:w-80 md:w-60 md:h-60 flex flex-col pl-2 md:pl-5 justify-end" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imagePath})` }}>
+    <div className="bg-cover bg-center bg-no-repeat h-40 xl:h-90 xl:w-90 lg:h-80 lg:w-80 md:w-60 md:h-60 sm:w-50 sm:h-50 flex flex-col pl-2 md:pl-5 justify-end" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imagePath})` }}>
       <h1 className="text-left font-bold w-full text-xxs sm:text-xs xl:text-xl lg:text-base md:text-sm uppercase mb-2">
         {title}
       </h1>
