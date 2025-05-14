@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { LoginFormInputs } from '../types/LoginTypes';
 import { useLogin } from '../hooks/useLogin';
 
@@ -14,17 +14,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { mutate } = useLogin();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsAuthenticated(!!token);
+    }, []);
+
     const login = (data: LoginFormInputs) => {
-        if (data.username && data.password) {
-            mutate({
-                params: {username: data.username, password: data.password}
-            });
-            return
-        }
+        if (!data.username || !data.password || isAuthenticated) return;
+
+        mutate({
+            params: {username: data.username, password: data.password}
+        });
         setIsAuthenticated(true);
     };
 
     const logout = () => {
+        localStorage.removeItem('token');
         setIsAuthenticated(false);
     };
 

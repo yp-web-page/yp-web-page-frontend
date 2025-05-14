@@ -60,7 +60,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
     };
     
     const handleRecoverPassword = () => {
-        openModal("Recover");
+        openModal("recover");
     };
 
     return (
