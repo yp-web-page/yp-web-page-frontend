@@ -9,6 +9,8 @@ const FavoriteInventoryList: React.FC = () => {
 
     const { data: inventories, isLoading, isError, error } = useGetInventoriesInfo();
 
+    const inventoryListStyle = "grid grid-cols-3 gap-3 md:gap-7 pl-1 pr-1"
+
     return (
         <>
         {isLoading && <LoadingInformation />}
@@ -16,7 +18,7 @@ const FavoriteInventoryList: React.FC = () => {
         {inventories && inventories.length > 0 ? (
         <div className='bg-white'>
             <div className='container flex mx-auto items-center justify-center bg-white'>
-                <InventoryList inventories={inventories} />
+                <InventoryList inventories={inventories} classname={inventoryListStyle} />
             </div>
         </div>
         ) : (

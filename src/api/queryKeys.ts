@@ -4,5 +4,6 @@ export const QUERY_KEYS = {
     },
     inventories: {
         info: ['inventories-info'] as [string],
+        allInventories: ['inventories-all'] as [string]
     },
 };
