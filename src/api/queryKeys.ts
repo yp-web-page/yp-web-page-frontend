@@ -6,4 +6,7 @@ export const QUERY_KEYS = {
         info: ['inventories-info'] as [string],
         allInventories: ['inventories-all'] as [string]
     },
+    products: {
+        featured: ['featured-products'] as [string]
+    }
 };
