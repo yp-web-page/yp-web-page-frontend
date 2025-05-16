@@ -8,6 +8,8 @@ export const API_ENDPOINTS = {
         loginUser: '/auth/login',
         changePassword: '/user/change-password',
         activeRegularAccount: '/user/active-account',
+        getUserProfile: '/user/profile',
+        updateUserProfile: '/user/profile/update',
     },
     inventories: {
         getInventoriesInfo: '/inventories/all/info',
