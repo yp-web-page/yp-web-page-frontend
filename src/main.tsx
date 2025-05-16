@@ -27,9 +27,8 @@ persistQueryClient({
   persister: localStoragePersister,
   maxAge: 1000 * 60 * 60 * 6, 
   dehydrateOptions: {
-    shouldDehydrateQuery: (query) => {
-      return query.queryKey[0] === 'carousel-images';
-    }
+    shouldDehydrateQuery: (query) =>
+      ['carousel-images', 'featured-products', 'inventories-info'].includes(query.queryKey[0] as string)
   }
 });
 

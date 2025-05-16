@@ -8,5 +8,8 @@ export const QUERY_KEYS = {
     user: {
         getUserProfile: ['user-profile'] as [string],
         updateUserProfile: ['user-profile-update'] as [string],
+    },
+    products: {
+        featured: ['featured-products'] as [string],
     }
 };
