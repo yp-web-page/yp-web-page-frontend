@@ -11,4 +11,6 @@ export const MESSAGE = {
     SUCCESSFUL_RESEND_ACTIVATION_ACCOUNT: "Correo de activación reenviado con éxito",
     ERROR_RESEND_ACTIVATION_ACCOUNT: "Error reenviado el correo de activación",
     ERROR_ACTIVATION_ACCOUNT_FOR_USER: "No tiene un token valido de activación, debe volver a solicitar el correo de activación",
+    UPDATE_PROFILE_SUCCESS: "Perfil actualizado exitosamente",
+    ERROR_UPDATE_PROFILE: "Error al actualizar el perfil",
 }
