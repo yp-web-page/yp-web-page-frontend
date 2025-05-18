@@ -7,7 +7,7 @@ import Icon from './icon/Icon';
 import Button from './Button';
 
 const NAV_LINKS = [
-    { label: 'PRODUCTOS', path: '/' },
+    { label: 'PRODUCTOS', path: '/inventories' },
     { label: 'SERVICIOS', path: '/about' }, 
     { label: 'QUIENES SOMOS', path: '/services' },
     { label: 'CONTACTANOS', path: '/contact' },
@@ -84,7 +84,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="blue-deep-gradient shadow-md">
+            <header className="blue-deep-gradient-wo-hover shadow-md">
                 <nav className="mx-8 py-4">
                     <div className="flex justify-between items-center">
                         {/* Logo and Navigation Links */}
