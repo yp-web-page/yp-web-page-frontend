@@ -6,7 +6,11 @@ export const QUERY_KEYS = {
         info: ['inventories-info'] as [string],
         allInventories: ['inventories-all'] as [string]
     },
+    user: {
+        getUserProfile: ['user-profile'] as [string],
+        updateUserProfile: ['user-profile-update'] as [string],
+    },
     products: {
-        featured: ['featured-products'] as [string]
+        featured: ['featured-products'] as [string],
     }
 };

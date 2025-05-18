@@ -12,6 +12,7 @@ import ChangePassword from '../pages/changePassword/ChangePassword';
 import Inventory from '../pages/project/Inventory';
 import ActiveUserAccount from '../pages/activeUserRegularAccount/ActiveUserAccount';
 import Inventories from '../pages/project/Inventories';
+import ProtectedRoute from '../components/protected/ProtectedRoute';
 
 export const router = createBrowserRouter([
     {
@@ -25,7 +26,10 @@ export const router = createBrowserRouter([
         },
         {
           path: 'profile',
-          element: <ProfilePage />,
+          element: (
+            <ProtectedRoute> 
+              <ProfilePage /> 
+            </ProtectedRoute>),
         },
         {
           path: 'aviso-legal',

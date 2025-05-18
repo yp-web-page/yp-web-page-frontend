@@ -26,6 +26,7 @@ interface FormatInputProps<T extends FieldValues> {
     customButton?: boolean;
     className?: string;
     helperText?: string;
+    disabled?: boolean;
 }
 
 const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.ReactElement => {
@@ -44,6 +45,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
         customButton = false,
         className = "w-full py-1 px-3 rounded-md bg-gray-200 text-gray-900 text-sm sm:text-base placeholder:text-xs sm:placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
         helperText,
+        disabled = false,
     } = props;
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState(false);
@@ -74,6 +76,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                   maxLength={maxLength}
                   placeholder={placeholder}
                   className={`${className} ${errorClass} h-full placeholder:text-sx`}
+                  disabled={disabled}
                   {...register(name)}
                 />
                 {helperText && (
