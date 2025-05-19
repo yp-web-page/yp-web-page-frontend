@@ -11,6 +11,7 @@ import RootLayout from '../layout/RootLayout';
 import ChangePassword from '../pages/changePassword/ChangePassword';
 import Inventory from '../pages/project/Inventory';
 import ActiveUserAccount from '../pages/activeUserRegularAccount/ActiveUserAccount';
+import Inventories from '../pages/project/Inventories';
 import ProtectedRoute from '../components/protected/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
         {
           path: 'inventory/:inventoryId',
           element: <Inventory />,
+        },
+        {
+          path: 'inventories',
+          element: <Inventories />,
         },
         {
           path: 'activate-regular-account',

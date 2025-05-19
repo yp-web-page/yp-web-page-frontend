@@ -5,9 +5,10 @@ import { ResponseInventoriesInfo } from '../../types/inventory'
 
 interface InventoryListProps {
   inventories: ResponseInventoriesInfo[];
+  classname?: string;
 }
 
-const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories }) => {
+const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories, classname }) => {
 
   if (!Array.isArray(inventories)) {
     console.error('Expected inventories to be an array, but got:', inventories);
@@ -15,7 +16,7 @@ const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories })
   }
 
   return (
-    <div className="grid grid-cols-3 gap-3 md:gap-7 pl-1 pr-1">
+    <div className={classname}>
       {inventories.map((inventory) => (
         <InventoryCard key={inventory.id} inventory={inventory} />
       ))}
