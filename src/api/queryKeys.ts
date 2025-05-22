@@ -4,7 +4,8 @@ export const QUERY_KEYS = {
     },
     inventories: {
         info: ['inventories-info'] as [string],
-        allInventories: ['inventories-all'] as [string]
+        allInventories: ['inventories-all'] as [string],
+        view: ['inventories-view'] as [string]
     },
     user: {
         getUserProfile: ['user-profile'] as [string],

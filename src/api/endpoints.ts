@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
     inventories: {
         getInventoriesInfo: '/inventories/all/info',
         getFavoriteInventoriesInfo: '/inventories/favorite/info',
+        getInventoryViewById: '/inventories/:id',
     },
     email: {
         resendActivationEmail: '/email/resend-activation',
