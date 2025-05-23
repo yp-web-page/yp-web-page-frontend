@@ -1,8 +1,8 @@
 import React from "react";
-import { ResponseFeaturedProducts } from "../../types/ProductTypes";
+import { ProductCard as ProductCardType } from "../../types/ProductTypes";
 
 interface ProductCardProps {
-  product: ResponseFeaturedProducts;
+  product: ProductCardType;
 }
 
 const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {

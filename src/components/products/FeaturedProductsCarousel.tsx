@@ -7,11 +7,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 const FeaturedProductsCarousel: React.FC = () => {
-  const { data: products, isLoading, error } = useGetFeaturedProducts();
+  const { data, isLoading, error } = useGetFeaturedProducts();
 
   if (isLoading) return <div>Cargando productos...</div>;
   if (error) return <div>Error al cargar los productos</div>;
-  if (!products?.length) return <div>No hay productos destacados</div>;
+  if (!data?.products.length) return <div>No hay productos destacados</div>;
 
   return (
     <div className="w-full bg-white py-8">
@@ -69,7 +69,7 @@ const FeaturedProductsCarousel: React.FC = () => {
           }}
           className="w-full"
         >
-          {products.map((product) => (
+          {data.products.map((product) => (
             <SwiperSlide key={product.id} className='py-4 px-6 sm:px-4 lg:px-9'>
               <ProductCard product={product} />
             </SwiperSlide>

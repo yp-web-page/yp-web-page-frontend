@@ -21,5 +21,8 @@ export const API_ENDPOINTS = {
     },
     products: {
         featuredProducts: '/products/featured'
+    },
+    lists: {
+        getListViewById: '/lists/:id',
     }
 };
