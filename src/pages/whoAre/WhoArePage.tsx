@@ -1,15 +1,31 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import BrandSlogan from "../../components/BrandSlogan";
 
 const WhoArePage: React.FC = () => {
     return (
         <>
             <Helmet>
                 <title>¿Quiénes Somos? | Yanca Publicidad S.A.S</title>
-                <meta name="description" content="Conoce a Yanca Publicidad S.A.S, empresa caleña con más de 20 años de experiencia en artículos promocionales y tecnología de marcación." />
+                <meta
+                    name="description"
+                    content="Conoce a Yanca Publicidad S.A.S, empresa caleña con más de 20 años de experiencia en artículos promocionales y tecnología de marcación. Innovación y compromiso a tu servicio."
+                />
+                <meta
+                    name="keywords"
+                    content="quiénes somos, Yanca Publicidad, artículos promocionales, marcación, sublimación, publicidad, tecnología, Cali"
+                />
+                <meta property="og:title" content="¿Quiénes Somos? | Yanca Publicidad S.A.S" />
+                <meta
+                    property="og:description"
+                    content="Conoce la historia, valores y experiencia de Yanca Publicidad S.A.S. Más de 20 años ofreciendo calidad en artículos promocionales y marcación."
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://tusitio.com/quienes-somos" /> {/* TODO: Cambiar a la URL real */}
+                <meta property="og:image" content="https://www.yancapublicidad.com/wp-content/uploads/2024/09/fachada-2-600x400.jpg" />
             </Helmet>
-            <div className="bg-background-primary font-bahamas-bold flex flex-col min-h-screen">
-                <div className="container bg-white mx-auto px-40 py-2 max-w-4xl text-gray-700 mt-8 mb-8 flex flex-col items-center justify-center text-center">
+            <section className="bg-background-primary font-bahamas-bold flex flex-col min-h-screen">
+                <article className="container bg-white mx-auto px-40 py-2 max-w-4xl text-gray-700 mt-8 mb-8 flex flex-col items-center justify-center text-center">
                     <h1 className="text-3xl font-bold text-title-light mb-6">YANCA PUBLICIDAD S.A.S</h1>
                     <div className="space-y-6 text-gray-500">
                         <p>
@@ -64,14 +80,9 @@ const WhoArePage: React.FC = () => {
                             className="w-full max-w-xs md:max-w-md lg:max-w-sm mx-auto rounded shadow"
                         />
                     </div>
-                </div>
-
-                <div className="w-full flex justify-center mt-12 mb-8">
-                    <span className="text-2xl md:text-3xl font-bahamas-bold text-gray-300 text-center tracking-wide uppercase">
-                        TU IMAGÍNALO, NOSOTROS LO HACEMOS REALIDAD
-                    </span>
-                </div>
-            </div>
+                </article>
+                <BrandSlogan />
+            </section>
         </>
     );
 }
