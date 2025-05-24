@@ -1,6 +1,7 @@
 interface LoginRequest {
     username: string;
     password: string;
+    rememberme: boolean;
 }
 
 interface LoginResponse {
