@@ -1,5 +1,6 @@
 import React from 'react'
 import ProductCard from './ProductCard'
+import ProductColorsPriceCard from './ProductColorsPriceCard'
 import { ProductCard as ProductCardType } from '../../types/ProductTypes'
 
 interface ProductListProps {
@@ -13,10 +14,15 @@ const ProductList: React.FC<ProductListProps> = React.memo(({ products, classnam
     return <div>No product data available</div>;
   }
 
+  console.log(products)
+
   return (
     <div className={classname}>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <div key={product.id}>
+          <ProductCard key={product.id} product={{id: product.id, name: product.name, imageUrl: product.imageUrl }} />
+          <ProductColorsPriceCard colors={product.colors} price={product.price} />
+        </div>
       ))}
     </div>
   )

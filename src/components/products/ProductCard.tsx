@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductCard as ProductCardType } from "../../types/ProductTypes";
+import { FeaturedProductCard as ProductCardType } from "../../types/ProductTypes";
 
 interface ProductCardProps {
   product: ProductCardType;
