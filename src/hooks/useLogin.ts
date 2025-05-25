@@ -23,17 +23,16 @@ const useLogin = (onSuccessCallBack?: OnLoginSuccess) => {
             }
             , 5000);
             if (data) {
-                localStorage.setItem("token", data.token)
-                localStorage.setItem("user", data.username)
-                localStorage.setItem("role", data.role)
-            }
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", data.username);
+                localStorage.setItem("role", data.role);
 
-            if (variables.params.rememberme) {
-                localStorage.setItem('rememberedUsername', data.username);
-            } else {
-                localStorage.removeItem('rememberedUsername');
+                 if (variables.params.rememberme) {
+                    localStorage.setItem('rememberedUsername', data.username);
+                } else {
+                    localStorage.removeItem('rememberedUsername');
+                }
             }
-
             // to set the user as authenticated, only if the login was successful.
             onSuccessCallBack?.();
         },
