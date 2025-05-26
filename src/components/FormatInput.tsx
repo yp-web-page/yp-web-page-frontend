@@ -138,6 +138,7 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
                 <input
                   type={type}
                   id={name}
+                  checked={rememberMe}
                   {...register(name, {
                     onChange: (e) => {
                       setRememberMe(e.target.checked);
