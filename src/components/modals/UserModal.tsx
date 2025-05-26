@@ -32,7 +32,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     }, [isOpen, onClose]);
 
     const handleProfileClick = () => {
-        navigate('/profile');
+        navigate('/perfil');
         onClose();
     };
 
