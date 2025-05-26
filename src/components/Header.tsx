@@ -8,10 +8,10 @@ import Button from './Button';
 import SearchDropDown from './search/SearchDropDown';
 
 const NAV_LINKS = [
-    { label: 'PRODUCTOS', path: '/inventories' },
+    { label: 'PRODUCTOS', path: '/inventarios' },
     { label: 'SERVICIOS', path: '/about' }, 
-    { label: 'QUIENES SOMOS', path: '/who-are' },
-    { label: 'CONTACTANOS', path: '/contact-us' },
+    { label: 'QUIENES SOMOS', path: '/quienes-somos' },
+    { label: 'CONTACTANOS', path: '/contactanos' },
 ];
 
 const SOCIAL_ICONS = [

@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
           element: <HomePage />,
         },
         {
-          path: 'profile',
+          path: 'perfil',
           element: (
             <ProtectedRoute> 
               <Suspense fallback={<LoadingSpinner />}>
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
           ),
         },
         {
-          path: 'reset-password',
+          path: 'recuperar-contraseña',
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <ChangePassword />
@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
           ),
         },
         {
-          path: 'inventory/:inventoryId',
+          path: 'inventario/:inventoryId',
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <Inventory />
@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
           ),
         },
         {
-          path: 'inventories',
+          path: 'inventarios',
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <Inventories />
@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
           ),
         },
         {
-          path: 'activate-regular-account',
+          path: 'activar-cuenta',
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <ActiveUserAccount />
@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
           ),
         },
         {
-          path: 'who-are',
+          path: 'quienes-somos',
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <WhoArePage />
@@ -100,7 +100,7 @@ export const router = createBrowserRouter([
           ),
         },
         {
-          path: 'contact-us',
+          path: 'contactanos',
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <ContactUs />
