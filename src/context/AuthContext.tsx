@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAuthLoading, setIsAuthLoading] = useState(true);
     const { openModal } = useModal();
-    const { mutate } = useLogin(() => setIsAuthenticated(true));
+    const { mutate } = useLogin(() => setIsAuthenticated(true))
 
     useEffect(() => {
         const token = localStorage.getItem('token');

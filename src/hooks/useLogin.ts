@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { authService } from '../services/serviceLogin';
-import { LoginRequest, LoginResponse } from '../types/LoginTypes';
+import { LoginFormInputs, LoginRequest, LoginResponse } from '../types/LoginTypes';
 import { TypeNotification } from "../types/TypeNotifcation";
 import { useModal } from "../context/ModalContext";
 import { MESSAGE } from "../constants/message";
