@@ -10,7 +10,7 @@ const NAV_LINKS = [
     { label: 'PRODUCTOS', path: '/inventories' },
     { label: 'SERVICIOS', path: '/about' }, 
     { label: 'QUIENES SOMOS', path: '/who-are' },
-    { label: 'CONTACTANOS', path: '/contact' },
+    { label: 'CONTACTANOS', path: '/contact-us' },
 ];
 
 const SOCIAL_ICONS = [
