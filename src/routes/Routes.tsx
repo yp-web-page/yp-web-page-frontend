@@ -14,6 +14,7 @@ import ActiveUserAccount from '../pages/activeUserRegularAccount/ActiveUserAccou
 import Inventories from '../pages/project/Inventories';
 import ProtectedRoute from '../components/protected/ProtectedRoute';
 import ContactUs from '../pages/contactUs/ContactUs';
+import WhoArePage from '../pages/whoAre/WhoArePage';
 
 export const router = createBrowserRouter([
     {
@@ -57,9 +58,13 @@ export const router = createBrowserRouter([
           element: <ActiveUserAccount />,
         },
         {
+          path: 'who-are',
+          element: <WhoArePage />,
+        },
+        {
           path: 'contact-us',
           element: <ContactUs />,
-        }
+        },
       ],
     },
   ]);
