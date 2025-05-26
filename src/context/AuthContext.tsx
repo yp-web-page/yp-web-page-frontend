@@ -13,10 +13,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const { mutate } = useLogin();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAuthLoading, setIsAuthLoading] = useState(true);
     const { openModal } = useModal();
+    const { mutate } = useLogin(() => setIsAuthLoading(true));
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -48,9 +48,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (!data.username || !data.password || isAuthenticated) return;
 
         mutate({
-            params: {username: data.username, password: data.password}
+            params: {username: data.username, password: data.password, rememberme: data.rememberme}
         });
-        setIsAuthenticated(true);
     };
 
     const logout = () => {
