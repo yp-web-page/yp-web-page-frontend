@@ -13,4 +13,5 @@ export const MESSAGE = {
     ERROR_ACTIVATION_ACCOUNT_FOR_USER: "No tiene un token valido de activación, debe volver a solicitar el correo de activación",
     UPDATE_PROFILE_SUCCESS: "Perfil actualizado exitosamente",
     ERROR_UPDATE_PROFILE: "Error al actualizar el perfil",
+    MISSING_RUT_FILE: "El archivo RUT es obligatorio para el usuario PUBLICISTA.",
 }
