@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom"
 import { useGetInventoryView } from "../../hooks/useGetInventoryView"
 import { useGetListView } from "../../hooks/useGetListView"
 import ProductList from "../../components/products/ProductList"
+import BackButton from "../../components/BackButton"
 
 const Inventory: React.FC = () => {
     const { inventoryId } = useParams<{ inventoryId: string }>();
@@ -27,6 +28,7 @@ const Inventory: React.FC = () => {
 
     return (
         <div className="min-h-screen blue-deep-gradient-wo-hover flex items-start justify-center py-8">
+            <BackButton/>
             {/* Sidebar azul */}
             <aside className="w-64 min-h-[200px] bg-white text-black rounded-lg flex flex-col p-6 mr-6">
                 <h2 className="text-lg font-semibold mb-6">{inventoryView?.title || 'Inventario'}</h2>

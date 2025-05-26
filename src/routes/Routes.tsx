@@ -13,6 +13,7 @@ import Inventory from '../pages/project/Inventory';
 import ActiveUserAccount from '../pages/activeUserRegularAccount/ActiveUserAccount';
 import Inventories from '../pages/project/Inventories';
 import ProtectedRoute from '../components/protected/ProtectedRoute';
+import ProductView from '../pages/project/ProductView';
 
 export const router = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
         {
           path: 'activate-regular-account',
           element: <ActiveUserAccount />,
+        },
+        {
+          path: 'product/:productId',
+          element: <ProductView />,
         }
       ],
     },

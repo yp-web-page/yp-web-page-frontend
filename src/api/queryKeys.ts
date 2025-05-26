@@ -13,6 +13,7 @@ export const QUERY_KEYS = {
     },
     products: {
         featured: ['featured-products'] as [string],
+        byId: ['product-by-id'] as [string],
     },
     lists: {
         view: ['lists-view'] as [string]

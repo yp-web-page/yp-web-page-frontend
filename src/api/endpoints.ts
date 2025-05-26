@@ -20,7 +20,8 @@ export const API_ENDPOINTS = {
         resendActivationEmail: '/email/resend-activation',
     },
     products: {
-        featuredProducts: '/products/featured'
+        featuredProducts: '/products/featured',
+        productById: 'products/:id'
     },
     lists: {
         getListViewById: '/lists/:id',
