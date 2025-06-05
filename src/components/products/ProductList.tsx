@@ -1,29 +1,90 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProductCard from './ProductCard'
 import ProductColorsPriceCard from './ProductColorsPriceCard'
 import { ProductCard as ProductCardType } from '../../types/ProductTypes'
+import { PaginatedProducts } from '../../types/ListType'
+import Button from '../Button'
 
 interface ProductListProps {
-  products: ProductCardType[];
+  products: PaginatedProducts;
   classname?: string;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = React.memo(({ products, classname }) => {
-  if (!Array.isArray(products)) {
-    console.error('Expected products to be an array, but got:', products);
+const ProductList: React.FC<ProductListProps> = React.memo(({ 
+  products, 
+  classname,
+  onPageChange,
+  onPageSizeChange 
+}) => {
+  if (!products) {
+    console.error('Expected products to be a PaginatedProducts object, but got:', products);
     return <div>No product data available</div>;
   }
 
-  console.log(products)
+  const handlePageChange = (newPage: number) => {
+    if (onPageChange) {
+      onPageChange(newPage);
+    }
+  };
+
+  const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (onPageSizeChange) {
+      onPageSizeChange(parseInt(event.target.value));
+    }
+  };
 
   return (
-    <div className={classname}>
-      {products.map((product) => (
-        <div key={product.id}>
-          <ProductCard key={product.id} product={{id: product.id, name: product.name, imageUrl: product.imageUrl }} />
-          <ProductColorsPriceCard colors={product.colors} price={product.price} />
+    <div>
+      <div className={classname}>
+        {products.content.map((product) => (
+          <div key={product.id}>
+            <ProductCard key={product.id} product={{id: product.id, name: product.name, imageUrl: product.imageUrl }} />
+            <ProductColorsPriceCard colors={product.colors} price={product.price} />
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="mt-8 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-600">
+            Mostrando {products.numberOfElements} de {products.totalElements} productos
+          </span>
+          <select
+            value={products.pageable.pageSize}
+            onChange={handlePageSizeChange}
+            className="border rounded px-2 py-1 text-sm"
+          >
+            <option value="5">5 por página</option>
+            <option value="10">10 por página</option>
+            <option value="20">20 por página</option>
+          </select>
         </div>
-      ))}
+        
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            onClick={() => handlePageChange(products.pageable.pageNumber - 1)}
+            disabled={products.first}
+            className="px-3 py-1 border rounded disabled:opacity-50 blue-deep-gradient rounded-full"
+          >
+            Anterior
+          </Button>
+          <span className="text-sm text-black">
+            Página {products.pageable.pageNumber + 1} de {products.totalPages}
+          </span>
+          <Button
+            type="button"
+            onClick={() => handlePageChange(products.pageable.pageNumber + 1)}
+            disabled={products.last}
+            className="px-3 py-1 border rounded disabled:opacity-50 blue-deep-gradient rounded-full"
+          >
+            Siguiente
+          </Button>
+        </div>
+      </div>
     </div>
   )
 });

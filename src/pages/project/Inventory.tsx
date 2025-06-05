@@ -10,9 +10,11 @@ const Inventory: React.FC = () => {
     const location = useLocation();
     const listId: string | undefined = location.state?.listId
     const [selectedListId, setSelectedListId] = useState<string>(listId || '');
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [pageSize, setPageSize] = useState<number>(5);
 
     const { data: inventoryView, isLoading: isLoadingInventoryView } = useGetInventoryView(inventoryId || '');
-    const { data: listView, isLoading: isLoadingListView } = useGetListView(selectedListId);
+    const { data: listView, isLoading: isLoadingListView } = useGetListView(selectedListId, currentPage, pageSize);
 
     if (isLoadingInventoryView) {
         return <div>Loading...</div>;
@@ -24,6 +26,16 @@ const Inventory: React.FC = () => {
 
     const handleListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedListId(event.target.value);
+        setCurrentPage(0); // Reset to first page when changing lists
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
+    const handlePageSizeChange = (newSize: number) => {
+        setPageSize(newSize);
+        setCurrentPage(0); // Reset to first page when changing page size
     };
 
     return (
@@ -66,6 +78,8 @@ const Inventory: React.FC = () => {
                     <ProductList
                         products={listView.products}
                         classname="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        onPageChange={handlePageChange}
+                        onPageSizeChange={handlePageSizeChange}
                     />
                 ) : (
                     <div>No hay productos disponibles para la lista seleccionada</div>
