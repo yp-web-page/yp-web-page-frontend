@@ -15,7 +15,7 @@ const FeaturedProductsCarousel: React.FC = () => {
 
   return (
     <div className="w-full bg-white py-8">
-      <div className="w-full px-4">
+      <div className="w-full px-4 max-w-7xl mx-auto">
         <style>
           {`
             .swiper-pagination-bullet {
@@ -33,11 +33,19 @@ const FeaturedProductsCarousel: React.FC = () => {
             .swiper-pagination {
               bottom: 0 !important;
             }
+            .swiper-slide {
+              height: auto;
+              display: flex;
+              justify-content: center;
+            }
+            .swiper {
+              padding: 0 1rem;
+            }
           `}
         </style>
         <Swiper
           modules={[Autoplay, Pagination]}
-          spaceBetween={20}
+          spaceBetween={24}
           slidesPerView={1}
           pagination={{
             clickable: true,
@@ -49,28 +57,26 @@ const FeaturedProductsCarousel: React.FC = () => {
           }}
           breakpoints={{
             0: {
-              slidesPerView: 2,
-            },
-            420:{
-              slidesPerView: 2
+              slidesPerView: 1,
+              spaceBetween: 16,
             },
             640: {
-              slidesPerView: 3,
+              slidesPerView: 2,
+              spaceBetween: 20,
             },
-            768: {
+            1024: {
               slidesPerView: 3,
+              spaceBetween: 24,
             },
-            1300: {
+            1280: {
               slidesPerView: 4,
-            },
-            1500: {
-              slidesPerView: 6
+              spaceBetween: 24,
             }
           }}
           className="w-full"
         >
           {data.products.map((product) => (
-            <SwiperSlide key={product.id} className='py-4 px-6 sm:px-4 lg:px-9'>
+            <SwiperSlide key={product.id} className='py-4 px-2 sm:px-4 flex justify-center'>
               <ProductCard product={product} />
             </SwiperSlide>
           ))}

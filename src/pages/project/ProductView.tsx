@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useGetProductById } from '../../hooks/useGetProductById';
 import ProductColorsPriceCard from '../../components/products/ProductColorsPriceCard';
 import Button from '../../components/Button';
@@ -39,9 +39,9 @@ const ProductView: React.FC = () => {
     const handleCloseRegister = () => setShowRegister(false);
 
     return (
-        <div className='flex justify-center blue-deep-gradient-wo-hover min-h-screen'>
+        <div className='flex justify-center items-center blue-deep-gradient-wo-hover min-h-screen'>
             <BackButton />
-            <div className="container flex flex-col md:flex-row gap-8 md:gap-16 items-start justify-center py-8 px-4 md:px-16 bg-white mt-10 rounded-xl pt-20">
+            <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start justify-center py-20 px-4 md:px-16 bg-white mt-10 rounded-xl h-[70vh]">
                 {/* Imagen producto */}
                 <div className="flex-1 flex flex-col items-center justify-center">
                     <img

@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ProductCard from './ProductCard'
 import ProductColorsPriceCard from './ProductColorsPriceCard'
-import { ProductCard as ProductCardType } from '../../types/ProductTypes'
 import { PaginatedProducts } from '../../types/ListType'
 import Button from '../Button'
 

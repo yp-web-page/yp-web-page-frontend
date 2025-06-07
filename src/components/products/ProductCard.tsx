@@ -9,7 +9,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
   return (
     <Link to={`/product/${product.id}`} className="block">
-      <div className="flex flex-col justify-between bg-white h-50 w-35 lg:h-80 lg:w-65 md:h-70 md:w-55 sm:h-60 sm:w-45  rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] transition-shadow duration-300 overflow-hidden">
+      <div className="flex flex-col justify-between bg-white h-85 w-65 md:h-90 md:w-70 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] transition-shadow duration-300 overflow-hidden">
         <div className="aspect-w-1 aspect-h-1 w-full">
           <img
             src={product.imageUrl}
