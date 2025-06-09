@@ -16,7 +16,7 @@ const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory: { i
   const navigate = useNavigate();
 
   const handleClickButton = () => {
-    navigate(`/inventory/${id}`)
+    navigate(`/inventario/${id}`)
   };
 
   const cardClasses = isFixedSize 
@@ -35,7 +35,7 @@ const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory: { i
             <ul key={item.id} className={`list-disc text-left ${isFixedSize ? '-my-1' : '-my-2.5 sm:-my-2.5 lg:-my-1 md:-my-2'}`}>
               <li className={`text-gray-200 marker:text-white ${isFixedSize ? 'marker:text-base' : 'marker:text-xxs md:marker:text-xs lg:marker:text-sm xl:marker:text-base'}`}>
                 <Link 
-                  to={`/inventory/${id}`} 
+                  to={`/inventario/${id}`} 
                   state={{ listId: item.id }} 
                   className={`inline-block text-gray-200 hover:text-white ${isFixedSize ? 'text-base' : 'text-xxs md:text-xs lg:text-sm xl:text-base'}`}
                   style={{ lineHeight: '0.9' }}

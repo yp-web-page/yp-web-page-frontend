@@ -7,7 +7,6 @@ import {
 import HomePage from '../pages/project/HomePage';
 import RootLayout from '../layout/RootLayout';
 import ProtectedRoute from '../components/protected/ProtectedRoute';
-import ProductView from '../pages/project/ProductView';
 
 const PageNotFound = lazy(() => import('../pages/PageNotFound'));
 const ProfilePage = lazy(() => import('../pages/profile/ProfilePage'));
@@ -19,6 +18,7 @@ const ActiveUserAccount = lazy(() => import('../pages/activeUserRegularAccount/A
 const Inventories = lazy(() => import('../pages/project/Inventories'));
 const ContactUs = lazy(() => import('../pages/contactUs/ContactUs'));
 const WhoArePage = lazy(() => import('../pages/whoAre/WhoArePage'));
+const ProductView = lazy(() => import('../pages/project/ProductView'));
 
 export const router = createBrowserRouter([
     {
@@ -105,6 +105,14 @@ export const router = createBrowserRouter([
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <ContactUs />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'producto/:productId',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <ProductView />
             </Suspense>
           ),
         },
