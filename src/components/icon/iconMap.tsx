@@ -232,6 +232,23 @@ const CloseSvgIcon: SVGIconComponent = (props) => {
   );
 };
 
+const SearchSvgIcon: SVGIconComponent = (props) => {
+  const {
+    className = "",
+    fill = "currentColor",
+    viewBox = "0 0 24 24",
+    color,
+    stroke = "currentColor",
+    ...rest
+  } = props;
+
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.SEARCH} />
+    </svg>
+  );
+};
+
 const iconSvgMap: Record<string, SVGIconComponent> = {
     user: UserSvgIcon,
     plus: PlusSvgIcon,
@@ -247,6 +264,7 @@ const iconSvgMap: Record<string, SVGIconComponent> = {
     profile: ProfileSvgIcon,
     toggle: ToggleSvgIcon,
     close: CloseSvgIcon,
+    search: SearchSvgIcon,
 }
 
 export default iconSvgMap;

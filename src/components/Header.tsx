@@ -5,12 +5,13 @@ import { SOCIAL_NETWORKS } from '../constants/social_networks';
 import { useModal } from '../context/ModalContext';
 import Icon from './icon/Icon';
 import Button from './Button';
+import SearchDropDown from './search/SearchDropDown';
 
 const NAV_LINKS = [
-    { label: 'PRODUCTOS', path: '/inventories' },
+    { label: 'PRODUCTOS', path: '/inventarios' },
     { label: 'SERVICIOS', path: '/about' }, 
-    { label: 'QUIENES SOMOS', path: '/services' },
-    { label: 'CONTACTANOS', path: '/contact' },
+    { label: 'QUIENES SOMOS', path: '/quienes-somos' },
+    { label: 'CONTACTANOS', path: '/contactanos' },
 ];
 
 const SOCIAL_ICONS = [
@@ -98,6 +99,9 @@ const Header: React.FC = () => {
                             <div className="hidden md:flex xl:space-x-8 lg:space-x-7 md:space-x-5 sm:space-x-3">
                                 { NAV_LINKS.map(link => renderNavLink(link, tabClass)) }
                                 { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/contact' }, tabClass) }
+                            </div>
+                            <div className="hidden md:flex xl:space-x-8 lg:space-x-7 md:space-x-5 sm:space-x-3">
+                                <SearchDropDown />
                             </div>
                         </div>
                         {/* Desktop Profile Icon & Dropdown */}

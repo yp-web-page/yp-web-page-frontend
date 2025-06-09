@@ -5,6 +5,7 @@ import Button from '../Button';
 import FormatInput from '../FormatInput';
 import Icon from '../icon/Icon';
 import { useModal } from '../../context/ModalContext';
+import { useEffect } from 'react';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -30,7 +31,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
         formState: { errors },
         watch,
         reset,
-      } = useForm<LoginFormInputs>();
+      } = useForm<LoginFormInputs>({
+        defaultValues: {
+            rememberme: false,
+        }
+      });
       const { openModal } = useModal();
 
     const usernameLength = (watch('username') || '').length;
@@ -62,6 +67,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
     const handleRecoverPassword = () => {
         openModal("recover");
     };
+
+    useEffect(() => {
+    const rememberedUsername = localStorage.getItem('rememberedUsername');
+    if (rememberedUsername) {
+        reset({
+            username: rememberedUsername,
+            rememberme: true,
+        });
+    }
+    }, [reset]);
 
     return (
         <ModalWrapper 

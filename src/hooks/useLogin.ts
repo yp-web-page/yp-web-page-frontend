@@ -5,7 +5,9 @@ import { TypeNotification } from "../types/TypeNotifcation";
 import { useModal } from "../context/ModalContext";
 import { MESSAGE } from "../constants/message";
 
-const useLogin = () => {
+type OnLoginSuccess = () => void;
+
+const useLogin = (onSuccessCallBack?: OnLoginSuccess) => {
 
     const { openModal, closeModal } = useModal();
         const handleOpenNotification = (message: string, typeNotification: TypeNotification) => {
@@ -14,24 +16,35 @@ const useLogin = () => {
 
     return useMutation({
         mutationFn: ({ params }: {params: LoginRequest}) => authService.login(params),
-        onSuccess: (data: LoginResponse) => {
+        onSuccess: (data: LoginResponse, variables) => {
             handleOpenNotification(MESSAGE.LOGIN_SUCCESS, 'success')
             setTimeout(() => {
                 closeModal();
             }
-            , 5000)
+            , 5000);
             if (data) {
-                localStorage.setItem("token", data.token)
-                localStorage.setItem("user", data.username)
-                localStorage.setItem("role", data.role)
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", data.username);
+                localStorage.setItem("role", data.role);
+
+                 if (variables.params.rememberme) {
+                    localStorage.setItem('rememberedUsername', data.username);
+                } else {
+                    localStorage.removeItem('rememberedUsername');
+                }
             }
+            // to set the user as authenticated, only if the login was successful.
+            onSuccessCallBack?.();
         },
-        onError: () => {
+        onError: (_, variables) => {
             handleOpenNotification(MESSAGE.LOGIN_ERROR, 'error')
             setTimeout(() => {
                 closeModal();
             }
-            , 5000)
+            , 5000);
+            if (!variables.params.rememberme) {
+                localStorage.removeItem('rememberedUsername');
+            }
         },
     });
 };

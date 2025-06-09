@@ -48,7 +48,6 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
         disabled = false,
     } = props;
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
-    const [rememberMe, setRememberMe] = useState(false);
     const errorClass = error ? "border border-red-500" : "";
     const helperId = `${name}-helper-text`;
 
@@ -133,13 +132,12 @@ const FormatInput = <T extends FieldValues>(props: FormatInputProps<T>): React.R
               </div>
             )}
 
-            {type === "checkbox" && (
+            {type === "checkbox" && register && (
               <div className="flex items-center">
                 <input
                   type={type}
                   id={name}
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  {...register(name)}
                   className="h-3 w-4 text-[#4263EB] border-gray-300 rounded"
                 />
                 <label htmlFor={name} className="ml-2 text-gray-600">

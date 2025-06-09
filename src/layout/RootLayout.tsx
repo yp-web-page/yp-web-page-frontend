@@ -23,7 +23,9 @@ const RootLayout = () => {
     <>
       <Header />
       <BackButton />
-      <Outlet />
+      <main id="main-content" className="min-h-screen">
+        <Outlet />
+      </main>
       <Footer />
       <ModalManager />
     </>
