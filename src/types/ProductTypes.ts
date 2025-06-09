@@ -13,11 +13,16 @@ export interface ProductCard {
     name: string
     imageUrl: string
     colors: Color[]
-    price: number
+    price: string
 }
 
 export interface Color {
     hexCode: string
+}
+
+export interface PrintingMethod {
+    id: string
+    name: string
 }
 
 export interface Product {
@@ -25,12 +30,13 @@ export interface Product {
     name: string
     imageUrl: string
     colors: Color[]
-    price: number
+    price: string
     description: string
-    size: number
+    size: string
     material: string
     printingArea: string
-    printingMethod: string
+    printingMethods: PrintingMethod[]
     boxContent: string
+    isPrintPersonalizable: boolean
 }
 

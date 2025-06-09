@@ -4,7 +4,7 @@ import { Color } from '../../types/ProductTypes';
 
 interface ProductColorsPriceCardProps {
   colors: Color[];
-  price: number | null;
+  price: string | null;
 }
 
 const ProductColorsPriceCard: React.FC<ProductColorsPriceCardProps> = ({ colors, price }) => {
@@ -22,7 +22,7 @@ const ProductColorsPriceCard: React.FC<ProductColorsPriceCardProps> = ({ colors,
         ))}
       </div>
       <p className="text-lg font-bold text-black">
-        ${price ? price.toFixed(2) : '0.00'}
+        ${price || '0.00'}
       </p>
       <div className="text-xs text-gray-500 mb-4">*Precio no incluye marcación*</div>
     </div>

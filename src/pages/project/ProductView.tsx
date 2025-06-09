@@ -30,13 +30,13 @@ const ProductView: React.FC = () => {
     }
 
     // Handlers para login/register
-    const handleOpenLogin = () => setShowLogin(true);
-    const handleCloseLogin = () => setShowLogin(false);
+    const handleOpenLogin = () => setShowLogin(true)
+    const handleCloseLogin = () => setShowLogin(false)
     const handleSwitchToRegister = () => {
-        setShowLogin(false);
-        setShowRegister(true);
-    };
-    const handleCloseRegister = () => setShowRegister(false);
+        setShowLogin(false)
+        setShowRegister(true)
+    }
+    const handleCloseRegister = () => setShowRegister(false)
 
     return (
         <div className='flex justify-center items-center blue-deep-gradient-wo-hover min-h-screen'>
@@ -65,7 +65,7 @@ const ProductView: React.FC = () => {
                         <li><b>MATERIAL:</b> {product.material}</li>
                         <li><b>MEDIDAS:</b> {product.size} cm</li>
                         <li><b>ÁREA DE IMPRESIÓN APROXIMADA:</b> {product.printingArea}</li>
-                        <li><b>MARCA:</b> {product.printingMethod}</li>
+                        <li><b>MARCA:</b> {product.printingMethods[0]?.name || 'No especificado'}</li>
                         <li><b>EMPAQUE:</b> {product.boxContent}</li>
                     </ul>
                     <div className="mb-4">
