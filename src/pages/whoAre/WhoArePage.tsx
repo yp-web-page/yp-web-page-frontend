@@ -24,7 +24,7 @@ const WhoArePage: React.FC = () => {
                 <meta property="og:url" content="https://tusitio.com/quienes-somos" /> {/* TODO: Cambiar a la URL real */}
                 <meta property="og:image" content="https://www.yancapublicidad.com/wp-content/uploads/2024/09/fachada-2-600x400.jpg" />
             </Helmet>
-            <section className="bg-background-primary font-bahamas-bold flex flex-col min-h-screen">
+            <section className="blue-deep-gradient-wo-hover font-bahamas-bold flex flex-col min-h-screen">
                 <article className="container bg-white mx-auto px-40 py-2 max-w-4xl text-gray-700 mt-8 mb-8 flex flex-col items-center justify-center text-center">
                     <h1 className="text-3xl font-bold text-title-light mb-6">YANCA PUBLICIDAD S.A.S</h1>
                     <div className="space-y-6 text-gray-500">
