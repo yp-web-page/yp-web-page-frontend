@@ -18,6 +18,7 @@ const ActiveUserAccount = lazy(() => import('../pages/activeUserRegularAccount/A
 const Inventories = lazy(() => import('../pages/project/Inventories'));
 const ContactUs = lazy(() => import('../pages/contactUs/ContactUs'));
 const WhoArePage = lazy(() => import('../pages/whoAre/WhoArePage'));
+const ProductView = lazy(() => import('../pages/project/ProductView'));
 
 export const router = createBrowserRouter([
     {
@@ -104,6 +105,14 @@ export const router = createBrowserRouter([
           element: (
             <Suspense fallback={<LoadingSpinner />}>
               <ContactUs />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'producto/:productId',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <ProductView />
             </Suspense>
           ),
         },

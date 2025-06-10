@@ -14,11 +14,16 @@ export const API_ENDPOINTS = {
     inventories: {
         getInventoriesInfo: '/inventories/all/info',
         getFavoriteInventoriesInfo: '/inventories/favorite/info',
+        getInventoryViewById: '/inventories/:id',
     },
     email: {
         resendActivationEmail: '/email/resend-activation',
     },
     products: {
-        featuredProducts: '/products/featured'
+        featuredProducts: '/products/featured',
+        productById: 'products/:id'
+    },
+    lists: {
+        getListViewById: '/lists/:id',
     }
 };

@@ -7,3 +7,8 @@ export interface ResponseInventoriesInfo {
   imagePath: string
   lists: ListName []
 }
+
+export interface ResponseInventoryViewById {
+  title: string
+  lists: ListName []
+}

@@ -8,7 +8,7 @@ import { useGetAllInventoriesInfo } from "../../hooks/useGetAllInventoriesInfo";
 const Inventories: React.FC = () => {
 
     const { data: inventories, isLoading, isError, error } = useGetAllInventoriesInfo()
-    const inventoryListStyle = "grid grid-cols-3 gap-3 md:gap-7 pl-1 pr-1"
+    const inventoryListStyle = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-7 pl-1 pr-1"
 
     return (
         <div className="flex justify-center py-20 blue-deep-gradient-wo-hover">
@@ -18,7 +18,7 @@ const Inventories: React.FC = () => {
                 <h1 className="xl:text-2xl lg:text-xl md:text-lg text-black font-semibold mb-10">
                     CATALOGO DE ÁRTICULOS PUBLICITARIOS
                 </h1>
-                <InventoryList inventories={inventories || []} classname={inventoryListStyle}/>    
+                <InventoryList inventories={inventories || []} classname={inventoryListStyle} isFixedSize={true}/>    
             </div>
         </div>
     )
