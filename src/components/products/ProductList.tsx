@@ -18,7 +18,6 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
   onPageSizeChange 
 }) => {
   if (!products) {
-    console.error('Expected products to be a PaginatedProducts object, but got:', products);
     return <div>No product data available</div>;
   }
 
@@ -54,11 +53,11 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
           <select
             value={products.pageable.pageSize}
             onChange={handlePageSizeChange}
-            className="border rounded px-2 py-1 text-sm"
+            className="border rounded px-2 py-1 text-sm blue-deep-gradient rounded-full"
           >
-            <option value="5">5 por página</option>
-            <option value="10">10 por página</option>
-            <option value="20">20 por página</option>
+            <option className='text-black' value="5">5 por página</option>
+            <option className='text-black' value="10">10 por página</option>
+            <option className='text-black' value="20">20 por página</option>
           </select>
         </div>
         
