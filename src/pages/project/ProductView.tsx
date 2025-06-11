@@ -14,7 +14,6 @@ const ProductView: React.FC = () => {
     const { data: product, isLoading, error } = useGetProductById(productId ?? '');
     const { isAuthenticated } = useAuth();
     const [showLogin, setShowLogin] = useState(false);
-    const [showRegister, setShowRegister] = useState(false);
 
     if (!productId) {
         return <div>Product ID not found</div>;
@@ -34,9 +33,7 @@ const ProductView: React.FC = () => {
     const handleCloseLogin = () => setShowLogin(false)
     const handleSwitchToRegister = () => {
         setShowLogin(false)
-        setShowRegister(true)
     }
-    const handleCloseRegister = () => setShowRegister(false)
 
     return (
         <div className='flex justify-center items-center blue-deep-gradient-wo-hover min-h-screen'>
