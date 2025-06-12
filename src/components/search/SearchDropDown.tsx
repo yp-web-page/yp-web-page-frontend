@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Icon from "../icon/Icon";
 import Button from "../Button";
+import { useNavigate } from "react-router-dom";
 
 interface SearchDropDownProps {
   placeholder?: string;
   onSelect?: (value: string) => void;
+  onClick?: () => void;
 }
 
 const MOCK_PRODUCTS = [
@@ -20,9 +22,10 @@ const MOCK_PRODUCTS = [
   "Gorras bordadas",
 ];
 
-const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar...", onSelect }) => {
+const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar...", onSelect, onClick }) => {
     const [value, setValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
+    const navigate = useNavigate();
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
@@ -30,6 +33,12 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
 
     const onFocus = () => {
         setIsFocused(true);
+    };
+
+    const handleSearch = () => {
+        if (value.trim()) {
+            navigate('/search', { state: { searchQuery: value } });
+        }
     };
 
     return (
@@ -47,7 +56,7 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
                 <div className="absolute top-0 right-0 h-full w-8 sm:w-10">
                     <Button
                         type="button"
-                        onClick={() => console.log('Search for:', value)}
+                        onClick={handleSearch}
                         className="w-full h-full flex items-center justify-center rounded-tr-xl rounded-br-xl bg-gray-100 hover:bg-gray-300 p-1.5 sm:p-2"
                     >
                         <Icon
@@ -63,7 +72,7 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
                 <ul className="absolute z-50 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 shadow-lg rounded-md mt-1">
                     {MOCK_PRODUCTS.map((product, idx) => (
                         <li
-                            key={idx} // Replace with a unique ID of the product if available
+                            key={idx}
                             className="text-xs sm:text-sm md:text-base text-black px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onMouseDown={() => {
                                 onSelect?.(product);
