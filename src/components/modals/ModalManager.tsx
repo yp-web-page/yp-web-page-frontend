@@ -4,10 +4,11 @@ import RegisterModal from "./RegisterModal";
 import { useModal } from "../../context/ModalContext";
 import RecoverPasswordModal from "./RecoverPasswordModal";
 import UserModal from "./UserModal";
+import QuotationModal from "./QuotationModal";
 
 
 const ModalManager = () => {
-  const { currentModal, closeModal, isOpen, openModal, message, typeNotification } = useModal();
+  const { currentModal, closeModal, isOpen, openModal, message, typeNotification, product } = useModal();
 
   return (
     <>
@@ -42,6 +43,13 @@ const ModalManager = () => {
         <UserModal
           isOpen={isOpen}
           onClose={closeModal}
+        />
+      )}
+      {currentModal === 'quotation' && (
+        <QuotationModal
+          isOpen={isOpen}
+          onClose={closeModal}
+          product={product}
         />
       )}
     </>
