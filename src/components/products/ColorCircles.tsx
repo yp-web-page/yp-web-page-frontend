@@ -7,7 +7,7 @@ interface ColorCirclesProps {
     selectedColors?: Color[];
     setSelectedColors?: (colors: Color[]) => void;
     setOpenColorSelector?: (open: boolean) => void;
-    onQuantityChange: (hexCode: string, value: number) => void;
+    onQuantityChange?: (hexCode: string, value: number) => void;
 }
 
 const ColorCircles: React.FC<ColorCirclesProps> = ({ 
