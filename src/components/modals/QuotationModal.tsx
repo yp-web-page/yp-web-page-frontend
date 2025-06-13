@@ -20,6 +20,7 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
         return null;
     }
 
+    console.log("product", product);
     const { colors, name, isPrintPersonalizable, printingMethods, price, printingArea } = product;
 
     const { height, width } = useMemo(() => {
@@ -44,18 +45,18 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
     console.log("quantities", quantities);
     const totalPrice = useMemo(() => price ? (totalQuantity * parseFloat(price)).toFixed(2) : "0.00", [totalQuantity, price]);
 
-    const handleQuantityChange = useCallback((hexCode: string, value: number) => {
+    const handleQuantityChange = useCallback((name: string, value: number) => {
         setQuantities(prev => ({
             ...prev,
-            [hexCode]: isNaN(value) ? 0 : value,
+            [name]: isNaN(value) ? 0 : value,
         }));
     }, []);
 
-    const handleDeleteColor = useCallback((hexCode: string) => {
-        setSelectedColors(prev => prev.filter(c => c.hexCode !== hexCode));
+    const handleDeleteColor = useCallback((name: string) => {
+        setSelectedColors(prev => prev.filter(c => c.name !== name));
         setQuantities(prev => {
             const newQuantities = { ...prev };
-            delete newQuantities[hexCode];
+            delete newQuantities[name];
             return newQuantities;
         });
     }, []);
@@ -65,8 +66,9 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
         isOpen={isOpen} 
         onClose={onClose}
         showIcon={false}
+        childrenWrapperClassName="w-full max-w-[95%] sm:max-w-md mx-auto rounded-xl sm:rounded-2xl bg-white shadow-xl overflow-hidden relative pt-5 sm:pt-8"
     >
-        <div className="p-4 w-full max-w-3xl mx-auto text-center text-lg text-gray-800">
+        <div className="p-4 space-y-0 w-full max-w-3xl mx-auto text-center text-lg text-gray-800">
             <div className="flex-column text-lg mb-4">
                 <span>Agregar: <h2 className="font-bold">{name}</h2></span>
             </div>

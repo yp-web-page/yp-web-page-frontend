@@ -21,11 +21,11 @@ const ColorCircles: React.FC<ColorCirclesProps> = ({
         event.stopPropagation();
         if (!setSelectedColors || !selectedColors || !setOpenColorSelector || !onQuantityChange) return;
 
-        const isAlreadySelected = selectedColors.some(c => c.hexCode === color.hexCode);
+        const isAlreadySelected = selectedColors.some(c => c.name === color.name);
 
         if (isAlreadySelected) {
-            setSelectedColors(selectedColors.filter(c => c.hexCode !== color.hexCode));
-            onQuantityChange(color.hexCode, 0); // Reset quantity for removed color
+            setSelectedColors(selectedColors.filter(c => c.name !== color.name));
+            onQuantityChange(color.name, 0); // Reset quantity for removed color
 
              if (selectedColors.length === 1) {
                 setOpenColorSelector(false); // Close selector if no colors left

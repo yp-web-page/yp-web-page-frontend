@@ -49,21 +49,21 @@ const SelectColorInputs: React.FC<SelectColorInputsProps> = ({
     const content = (): React.ReactNode => {
         return(
             selectedColors.map((color) => (
-                <div key={color.hexCode} className="flex items-center gap-2">
-                    <span className="w-20 font-medium" style={{ color: color.hexCode }}>{color.hexCode}:</span>
+                <div key={color.name} className="flex items-center gap-2">
+                    <span className="w-20 font-medium" style={{ color: color.hexCode }}>{ color.name }:</span>
                     <input
                         type="number"
                         placeholder="Cantidad"
-                        value={quantities[color.hexCode] ?? ''}
+                        value={quantities[color.name] ?? ''}
                         onChange={(e) => {
                             const value = parseInt(e.target.value, 10);
-                            onQuantityChange(color.hexCode, value);
+                            onQuantityChange(color.name, value);
                         }}
                         className="border px-2 py-1 w-24 rounded"
                     />
                     <Button
                         type="button"
-                        onClick={() => onDeleteColor(color.hexCode)}
+                        onClick={() => onDeleteColor(color.name)}
                         className="text-red-500 text-sm"
                     >
                         eliminar
