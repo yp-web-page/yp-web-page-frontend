@@ -17,6 +17,7 @@ export interface ProductCard {
 }
 
 export interface Color {
+    name: string
     hexCode: string
 }
 
