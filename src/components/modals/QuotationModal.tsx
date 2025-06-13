@@ -20,7 +20,6 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
         return null;
     }
 
-    console.log("product", product);
     const { colors, name, isPrintPersonalizable, printingMethods, price, printingArea } = product;
 
     const { height, width } = useMemo(() => {
@@ -41,8 +40,6 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
 
     const totalQuantity = useMemo(() => Object.values(quantities).reduce((acc, qty) => acc + (qty || 0), 0), [quantities]);
     const showQuotationInformation = quantities && Object.values(quantities).some(qty => qty > 0) && !openColorSelector;
-    console.log("showQuotationInformation", showQuotationInformation);
-    console.log("quantities", quantities);
     const totalPrice = useMemo(() => price ? (totalQuantity * parseFloat(price)).toFixed(2) : "0.00", [totalQuantity, price]);
 
     const handleQuantityChange = useCallback((name: string, value: number) => {
