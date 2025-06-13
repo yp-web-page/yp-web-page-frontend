@@ -11,7 +11,7 @@ const FeaturedProductsCarousel: React.FC = () => {
 
   if (isLoading) return <div>Cargando productos...</div>;
   if (error) return <div>Error al cargar los productos</div>;
-  if (!data?.products.length) return <div>No hay productos destacados</div>;
+  if (!data?.products?.length) return <div>No hay productos destacados</div>;
 
   return (
     <div className="w-full bg-white py-8">

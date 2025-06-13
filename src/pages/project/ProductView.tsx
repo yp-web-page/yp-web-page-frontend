@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetProductById } from '../../hooks/useGetProductById';
 import ProductColorsPriceCard from '../../components/products/ProductColorsPriceCard';
 import Button from '../../components/Button';
 import { useAuth } from '../../context/AuthContext';
-import LoginModal from '../../components/modals/LoginModal';
 import BackButton from '../../components/BackButton';
+import { useModal } from '../../context/ModalContext';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 // Componente BackBut
 
@@ -13,13 +14,13 @@ const ProductView: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
     const { data: product, isLoading, error } = useGetProductById(productId ?? '');
     const { isAuthenticated } = useAuth();
-    const [showLogin, setShowLogin] = useState(false);
+    const { openModal } = useModal();
 
     if (!productId) {
         return <div>Product ID not found</div>;
     }
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />
     }
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -29,11 +30,11 @@ const ProductView: React.FC = () => {
     }
 
     // Handlers para login/register
-    const handleOpenLogin = () => setShowLogin(true)
-    const handleCloseLogin = () => setShowLogin(false)
-    const handleSwitchToRegister = () => {
-        setShowLogin(false)
-    }
+    const handleOpenLoginModal = () => openModal('login');
+    const handleOpenQuotationModal = () => {
+        console.log('Opening quotation modal for product:', product.name);
+        openModal('quotation', undefined, undefined, product);
+    };
 
     return (
         <div className='flex justify-center items-center blue-deep-gradient-wo-hover min-h-screen'>
@@ -71,30 +72,16 @@ const ProductView: React.FC = () => {
                     </div>
                     <div className="flex flex-col items-start gap-2">
                         <span className="text-gray-700 mb-1">Cotiza aquí tu producto Marcado:</span>
-                        {isAuthenticated ? (
-                            <Button
-                                type="button"
-                                className="w-full md:w-auto px-8 py-3 rounded-full font-bold text-lg blue-deep-gradient text-white flex items-center gap-2 shadow-lg hover:scale-105 transition-transform duration-200"
-                            >
-                                REALIZAR COTIZACIÓN
-                                {/* Aquí podrías poner un ícono de mano si lo tienes */}
-                                <span role="img" aria-label="hand">🖱️</span>
-                            </Button>
-                        ) : (
-                            <Button
-                                type="button"
-                                className="w-full md:w-auto px-8 py-3 rounded-full font-bold text-lg blue-deep-gradient text-white flex items-center gap-2 shadow-lg hover:scale-105 transition-transform duration-200"
-                                onClick={handleOpenLogin}
-                            >
-                                REALIZAR COTIZACIÓN
-                                <span role="img" aria-label="hand">🖱️</span>
-                            </Button>
-                        )}
+                        <Button
+                            type="button"
+                            onClick={isAuthenticated ? handleOpenQuotationModal : handleOpenLoginModal}
+                            className="bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300 w-full"
+                        >
+                            REALIZAR COTIZACIÓN
+                            <span role="img" aria-label="hand">🖱️</span>
+                        </Button>
                     </div>
                 </div>
-                {/* Modal login */}
-                <LoginModal isOpen={showLogin} onClose={handleCloseLogin} onSwitchToRegister={handleSwitchToRegister} />
-                {/* Aquí podrías agregar RegisterModal si lo necesitas */}
             </div>
         </div>
     );
