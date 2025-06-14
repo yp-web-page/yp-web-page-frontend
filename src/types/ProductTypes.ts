@@ -86,3 +86,12 @@ export interface ProductFilterRequest {
     description?: string
 }
 
+export interface SearchedProduct {
+    id: string
+    name: string
+    imageUrl: string
+}
+
+export interface ResponseSearchedProducts {
+    content: SearchedProduct[]
+}

@@ -2,25 +2,19 @@ import React, { useState } from "react";
 import Icon from "../icon/Icon";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
-import { useFilterProducts } from "../../hooks/useFilterProducts";
-import type { ProductFilterRequest } from "../../types/ProductTypes";
+import { useSearchProductsByName } from "../../hooks/useSearchProductsByName";
 
 interface SearchDropDownProps {
   placeholder?: string;
   onSelect?: (value: string) => void;
-  onClick?: () => void;
 }
 
-const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar...", onSelect, onClick }) => {
+const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar...", onSelect }) => {
     const [value, setValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
     const navigate = useNavigate();
 
-    const filter: ProductFilterRequest = {
-        name: value
-    };
-
-    const { data: suggestions } = useFilterProducts(filter, 0, 10);
+    const { data: suggestions } = useSearchProductsByName(value);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
