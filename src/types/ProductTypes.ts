@@ -74,3 +74,15 @@ export interface PaginatedResponse<T> {
     empty: boolean
 }
 
+export interface ProductFilterRequest {
+    name?: string
+    featured?: boolean
+    material?: string
+    size?: string
+    minPrice?: number
+    maxPrice?: number
+    printPersonalizable?: boolean
+    listId?: string
+    description?: string
+}
+

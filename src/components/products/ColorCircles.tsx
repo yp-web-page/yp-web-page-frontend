@@ -3,7 +3,7 @@ import React from 'react'
 import { Color } from '../../types/ProductTypes'
 
 interface ColorCirclesProps {
-    colors: Color[];
+    colors: Color[] | null;
     selectedColors?: Color[];
     setSelectedColors?: (colors: Color[]) => void;
     setOpenColorSelector?: (open: boolean) => void;
@@ -38,7 +38,7 @@ const ColorCircles: React.FC<ColorCirclesProps> = ({
 
     return (
         <div className="flex items-center gap-2">
-            {colors.map((color) => {
+            {colors?.map((color) => {
                 const isSelected = selectedColors?.some(c => c.hexCode === color.hexCode);
                 return (
                     <button

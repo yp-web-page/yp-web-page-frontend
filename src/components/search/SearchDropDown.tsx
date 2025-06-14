@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Icon from "../icon/Icon";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import { useFilterProducts } from "../../hooks/useFilterProducts";
+import type { ProductFilterRequest } from "../../types/ProductTypes";
 
 interface SearchDropDownProps {
   placeholder?: string;
@@ -9,23 +11,16 @@ interface SearchDropDownProps {
   onClick?: () => void;
 }
 
-const MOCK_PRODUCTS = [
-  "Tarjeta de presentación",
-  "Volante publicitario",
-  "Pendón publicitario",
-  "Rotulación de vehículos",
-  "Etiquetas adhesivas",
-  "Bolsas personalizadas",
-  "Afiches promocionales",
-  "Lonas publicitarias",
-  "Camisas estampadas",
-  "Gorras bordadas",
-];
-
 const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar...", onSelect, onClick }) => {
     const [value, setValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
     const navigate = useNavigate();
+
+    const filter: ProductFilterRequest = {
+        name: value
+    };
+
+    const { data: suggestions } = useFilterProducts(filter, 0, 10);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
@@ -68,18 +63,18 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
                     </Button>
                 </div>
             </div>
-            {isFocused && value && MOCK_PRODUCTS.length > 0 && (
+            {isFocused && value && suggestions?.content && suggestions.content.length > 0 && (
                 <ul className="absolute z-50 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 shadow-lg rounded-md mt-1">
-                    {MOCK_PRODUCTS.map((product, idx) => (
+                    {suggestions.content.map((product) => (
                         <li
-                            key={idx}
+                            key={product.id}
                             className="text-xs sm:text-sm md:text-base text-black px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onMouseDown={() => {
-                                onSelect?.(product);
-                                setValue(product);
+                                onSelect?.(product.name);
+                                setValue(product.name);
                             }}
                         >
-                            {product}
+                            {product.name}
                         </li>
                     ))}
                 </ul>

@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSearchProductsByName } from "../../hooks/useSearchProductsByName";
+import { useFilterProducts } from "../../hooks/useFilterProducts";
 import ProductList from "../../components/products/ProductList";
+import type { ProductFilterRequest } from "../../types/ProductTypes";
 
 const SearchPage: React.FC = () => {
     const location = useLocation();
     const searchQuery = location.state?.searchQuery || "";
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
-    const { data, isLoading, error } = useSearchProductsByName(searchQuery, page, pageSize);
+    
+    const filter: ProductFilterRequest = {
+        name: searchQuery
+    };
+    
+    const { data, isLoading, error } = useFilterProducts(filter, page, pageSize);
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage);
