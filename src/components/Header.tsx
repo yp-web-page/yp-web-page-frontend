@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
 import { useModal } from '../context/ModalContext';
@@ -30,12 +30,16 @@ const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { isAuthenticated } = useAuth();
     const { openModal } = useModal();
-
+    const navigate = useNavigate();
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleProfileClick = (e: React.MouseEvent) => {
         e.preventDefault();
         openModal(isAuthenticated ? 'user' : 'login');
+    };
+
+    const handleSearchClick = () => {
+        navigate('/search');
     };
 
     const renderNavLink = (link: { label:string, path:string}, className: string): ReactElement => (
@@ -101,7 +105,7 @@ const Header: React.FC = () => {
                                 { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/contact' }, tabClass) }
                             </div>
                             <div className="hidden md:flex xl:space-x-8 lg:space-x-7 md:space-x-5 sm:space-x-3">
-                                <SearchDropDown />
+                                <SearchDropDown onClick={handleSearchClick} />
                             </div>
                         </div>
                         {/* Desktop Profile Icon & Dropdown */}
