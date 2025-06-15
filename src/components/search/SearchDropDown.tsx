@@ -17,7 +17,7 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
     const { data: suggestions } = useSearchProductsByName(value);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
+        setValue(e.target.value.trim());
     };
 
     const onFocus = () => {
