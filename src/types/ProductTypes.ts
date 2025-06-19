@@ -41,3 +41,20 @@ export interface Product {
     isPrintPersonalizable: boolean
 }
 
+export interface GetPricesRequest {
+    productId: string,
+    printIds: string[]
+}
+
+export interface PrintingProductPricesResponse {
+    priceDtos: PrintingProductPrice[]
+};
+
+export interface PrintingProductPrice {
+    minQuantity: number,
+    maxQuantity: number,
+    price: number,
+    productId: string,
+    printId: string
+}
+

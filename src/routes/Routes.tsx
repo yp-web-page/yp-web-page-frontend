@@ -1,8 +1,6 @@
 import { lazy, Suspense } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
-import {
-    createBrowserRouter,
-} from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 
 import HomePage from '../pages/project/HomePage';
 import RootLayout from '../layout/RootLayout';
@@ -19,6 +17,7 @@ const Inventories = lazy(() => import('../pages/project/Inventories'));
 const ContactUs = lazy(() => import('../pages/contactUs/ContactUs'));
 const WhoArePage = lazy(() => import('../pages/whoAre/WhoArePage'));
 const ProductView = lazy(() => import('../pages/project/ProductView'));
+const Quotation = lazy(() => import('../pages/quotation/Quotation'));
 
 export const router = createBrowserRouter([
     {
@@ -114,6 +113,16 @@ export const router = createBrowserRouter([
             <Suspense fallback={<LoadingSpinner />}>
               <ProductView />
             </Suspense>
+          ),
+        },
+        {
+          path: 'cotizaciones',
+          element: (
+            <ProtectedRoute> 
+              <Suspense fallback={<LoadingSpinner />}>
+                <Quotation />
+              </Suspense>
+            </ProtectedRoute>
           ),
         },
       ],
