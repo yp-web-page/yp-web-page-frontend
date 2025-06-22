@@ -103,6 +103,8 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
         });
     }, [price, totalQuantity, heightCm, widthCm, printingPrice, isPrintPersonalizable]);
 
+    const totalPrice = useMemo(() => price ? (totalQuantity * parseFloat(price)).toFixed(2) : "0.00", [totalQuantity, price]);
+
     const handleQuantityChange = useCallback((name: string, value: number) => {
         setQuantities(prev => ({
             ...prev,
