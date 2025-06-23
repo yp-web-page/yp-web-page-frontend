@@ -1,12 +1,18 @@
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 import { quotationService } from "../services/quotationService";
 import { useModal } from "../context/ModalContext";
 import { TypeNotification } from "../types/TypeNotifcation";
 import { MUTATION_KEYS } from "../api/mutationKeys";
+import { QUERY_KEYS } from "../api/queryKeys";
+
+interface DeleteQuotationProp {
+    username: string;
+}
 
 const deleteQuotation = quotationService.deleteQuotation;
 
-const useDeleteQuotation = (): UseMutationResult<void, Error, string, unknown> => {
+const useDeleteQuotation = ({ username }: DeleteQuotationProp): UseMutationResult<void, Error, string, unknown> => {
+    const queryClient = useQueryClient();
     const { openModal, closeModal } = useModal();
     const handleOpenNotification = (message: string, typeNotification: TypeNotification) => {
         openModal("notification", message,    typeNotification);
@@ -16,6 +22,10 @@ const useDeleteQuotation = (): UseMutationResult<void, Error, string, unknown> =
         mutationFn: (quotationId: string) => deleteQuotation(quotationId),
         onSuccess: () => {
             handleOpenNotification("Cotización eliminada exitosamente.", 'success');
+
+            queryClient.invalidateQueries({
+                queryKey: [...QUERY_KEYS.quotations.getAllQuotation, username],
+            });
 
             setTimeout(() => {
                 closeModal();

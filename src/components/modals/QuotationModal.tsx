@@ -22,7 +22,6 @@ interface QuotationModalProps {
 }
 
 const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product}) => {
-    
     if (!product) {
         return null;
     }
@@ -68,6 +67,13 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
         const printIds = printingMethods?.map(pm => pm.id) || [];
         mutate({ productId: product.id, printIds });
     }, [isOpen, product]);
+
+    useEffect(() => {
+        if (isOpen) {
+            setHeightCm(height);
+            setWidthCm(width);
+        }
+    }, [isOpen, height, width]);
 
     const totalQuantity = useMemo(() => {
         return QuotationUtils.getTotalQuantity(quantities);
@@ -144,8 +150,8 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
                 printName: selectedPrintingMethod,
                 printPrice: printingPrice,
                 quantity: quantity,
-                width: width,
-                height: height,
+                width: isPrintPersonalizable ? widthCm : 0,
+                height: isPrintPersonalizable ? heightCm : 0,
                 subtotal: 0.0
             };
 

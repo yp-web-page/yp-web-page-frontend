@@ -13,8 +13,8 @@ export interface AddProductToQuotation {
     printName: string,
     printPrice: number,
     quantity: number,
-    width: number,
-    height: number,
+    width: number | null,
+    height: number | null,
     subtotal: number,
 };
 

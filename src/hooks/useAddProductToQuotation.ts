@@ -26,7 +26,7 @@ const useAddProductToQuotation = ({ onCloseQuotationModal, username }: ProductTo
             onCloseQuotationModal();
             handleOpenNotification("Producto agregado a la cotización.", 'success');
 
-             queryClient.invalidateQueries({
+            queryClient.invalidateQueries({
                 queryKey: [...QUERY_KEYS.quotations.getAllQuotation, username],
             });
 

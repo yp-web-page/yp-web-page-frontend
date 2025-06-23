@@ -13,7 +13,7 @@ const getAllQuotations = async (username: string): Promise<GetQuotations> => {
 };
 
 const deleteQuotation = async (quotationId: string): Promise<void> => {
-    await apiClient.delete(API_ENDPOINTS.email.sendEmailQuotation.replace(':quotationId', quotationId));
+    await apiClient.delete(API_ENDPOINTS.quotation.deleteQuotation.replace(':quotationId', quotationId));
 };
 
 const sendEmailQuotation = async(SendEmailQuotationRequest: SendEmailQuotationRequest): Promise<void> => {

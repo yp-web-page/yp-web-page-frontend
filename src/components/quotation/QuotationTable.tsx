@@ -21,7 +21,7 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
         setOpenIndex(open ? index : null);
     };
 
-    const { mutate: deleteQuotation } = useDeleteQuotation();
+    const { mutate: deleteQuotation } = useDeleteQuotation({username});
     const { mutate: sendEmailQuotation } = useSendEmailQuotation({username});
     const { mutate: downloadPdf, isPending } = useGenerateQuotationPdf();
 
@@ -94,10 +94,10 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
                     <tr key={product.id} className="text-center even:bg-blue-50 hover:bg-blue-100 transition text-gray-800">
                     <td className="p-2 border whitespace-nowrap">{product.productName}</td>
                     <td className="p-2 border whitespace-nowrap">{product.colorName}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.printName}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.height}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.width}</td>
-                    <td className="p-2 border whitespace-nowrap">${product.printPrice.toFixed(2)}</td>
+                    <td className="p-2 border whitespace-nowrap">{product.printName || 'No Aplica'}</td>
+                    <td className="p-2 border whitespace-nowrap">{product.height === 0 ? 'No Aplica' : product.height}</td>
+                    <td className="p-2 border whitespace-nowrap">{product.width === 0 ? 'No Aplica' : product.width}</td>
+                    <td className="p-2 border whitespace-nowrap">{product.printPrice > 0 ? `$${product.printPrice.toFixed(2)}` : "No Aplica"}</td>
                     <td className="p-2 border whitespace-nowrap">${product.productPrice.toFixed(2)}</td>
                     <td className="p-2 border whitespace-nowrap">{product.quantity}</td>
                     <td className="p-2 border font-semibold whitespace-nowrap">${product.subtotal.toFixed(2)}</td>
