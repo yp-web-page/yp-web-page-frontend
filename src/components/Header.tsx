@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
 import { useModal } from '../context/ModalContext';
@@ -98,7 +98,7 @@ const Header: React.FC = () => {
                             </div>
                             <div className="hidden md:flex xl:space-x-8 lg:space-x-7 md:space-x-5 sm:space-x-3">
                                 { NAV_LINKS.map(link => renderNavLink(link, tabClass)) }
-                                { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/contact' }, tabClass) }
+                                { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/cotizaciones' }, tabClass) }
                             </div>
                             <div className="hidden md:flex xl:space-x-8 lg:space-x-7 md:space-x-5 sm:space-x-3">
                                 <SearchDropDown />
@@ -141,7 +141,7 @@ const Header: React.FC = () => {
                     <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             { NAV_LINKS.map(link => renderNavLink(link, tabMobileClass)) }
-                            { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/contact' }, tabMobileClass) }
+                            { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/cotizaciones' }, tabMobileClass) }
                             <div className="flex space-x-3 px-3 py-2">
                                 { SOCIAL_ICONS.map(icon => renderIcon(icon, iconMobileClass)) }
                                 { renderProfileIcon() }

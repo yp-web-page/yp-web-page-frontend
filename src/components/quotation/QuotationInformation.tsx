@@ -5,7 +5,8 @@ interface QuotationInformationProps {
   isPrintPersonalizable: boolean;
   heightCm?: number;
   widthCm?: number;
-  price: string;
+  productPrice: string;
+  printingPrice?: string;
   totalPrice: string;
 }
 
@@ -15,7 +16,8 @@ const QuotationInformation: React.FC<QuotationInformationProps> = ({
     isPrintPersonalizable,
     heightCm,
     widthCm,
-    price,
+    productPrice,
+    printingPrice,
     totalPrice,
 }) => {
   return (
@@ -31,7 +33,8 @@ const QuotationInformation: React.FC<QuotationInformationProps> = ({
                     </span>
                 </p>
             )}
-        <p className="text-sm text-gray-600">Precio unitario: <span className="font-bold">${price}</span></p>
+        <p className="text-sm text-gray-600">Precio unitario - producto: <span className="font-bold">${productPrice}</span></p>
+        <p className="text-sm text-gray-600">Precio unitario - Marcación: <span className="font-bold">${printingPrice}</span></p>
         <p className="text-sm text-blue-600 font-bold">Precio Total: <span className="font-bold">${totalPrice}</span></p>
     </div>
   );

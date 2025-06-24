@@ -17,5 +17,8 @@ export const QUERY_KEYS = {
     },
     lists: {
         view: ['lists-view'] as [string]
+    },
+    quotations: {
+        getAllQuotation: ['all-quotations'] as [string],
     }
 };

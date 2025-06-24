@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
-import { Product, Color } from "../../types/ProductTypes";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Product, Color, PrintingProductPrice } from "../../types/ProductTypes";
 import ModalWrapper from "./ModalWrapper";
 import Button from "../Button";
 import SelectColorInputs from "../quotation/SelectedColorInputs";
@@ -7,6 +7,13 @@ import PrintingMethodSelector from "../quotation/PrintingMethodSelector";
 import CustomSizePrinting from "../quotation/CustomSizePrinting";
 import QuotationInformation from "../quotation/QuotationInformation";
 import SelectColorInformation from "../quotation/SelectColorInformation";
+import useGetProductPrices from "../../hooks/useGetProductPrices";
+import { QuotationUtils } from "../../util/quotationUtils";
+import { AddProductToQuotation } from '../../types/Quotation';
+import useAddProductToQuotation from "../../hooks/useAddProductToQuotation";
+import { useModal } from "../../context/ModalContext";
+import { TypeNotification } from "../../types/TypeNotifcation";
+import { UserUtils } from "../../util/userUtils";
 
 interface QuotationModalProps {
     isOpen: boolean;
@@ -15,7 +22,6 @@ interface QuotationModalProps {
 }
 
 const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product}) => {
-    
     if (!product) {
         return null;
     }
@@ -35,12 +41,73 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
     const [quantities, setQuantities] = useState<Record<string, number>>({});    
     const [selectedColors, setSelectedColors] = useState<Color[]>([]);
     const [selectedPrintingMethod, setSelectedPrintingMethod] = useState<string>("");
-    const [heightCm, setHeightCm] = useState<number>(height || 0);
-    const [widthCm, setWidthCm] = useState<number>(width || 0);
+    const [heightCm, setHeightCm] = useState<number>(height);
+    const [widthCm, setWidthCm] = useState<number>(width);
 
-    const totalQuantity = useMemo(() => Object.values(quantities).reduce((acc, qty) => acc + (qty || 0), 0), [quantities]);
+    const { openModal, closeModal } = useModal();
+    const handleOpenNotification = (message: string, typeNotification: TypeNotification) => {
+        openModal("notification", message,    typeNotification);
+    };
+
+    const username: string | null = UserUtils.getUsernameFromLocalStorage();
+
+    if (username == null) {
+        handleOpenNotification("El usuario no se encuentra logeado, por lo tanto no puede cotizar.", 'error');
+        setTimeout(() => {
+            closeModal();
+        }, 5000);
+         return null;
+    }
+
+    const { mutate, data: printingPricesResponse, isPending, isError } = useGetProductPrices();
+    const { mutate: addProductToQuotation } = useAddProductToQuotation({ onCloseQuotationModal: onClose, username });
+
+    useEffect(() => {
+        if (!isOpen || !product) return;
+        const printIds = printingMethods?.map(pm => pm.id) || [];
+        mutate({ productId: product.id, printIds });
+    }, [isOpen, product]);
+
+    useEffect(() => {
+        if (isOpen) {
+            setHeightCm(height);
+            setWidthCm(width);
+        }
+    }, [isOpen, height, width]);
+
+    const totalQuantity = useMemo(() => {
+        return QuotationUtils.getTotalQuantity(quantities);
+    }, [quantities]);
+    
     const showQuotationInformation = quantities && Object.values(quantities).some(qty => qty > 0) && !openColorSelector;
-    const totalPrice = useMemo(() => price ? (totalQuantity * parseFloat(price)).toFixed(2) : "0.00", [totalQuantity, price]);
+    const disabledAddToQuotation = isPending|| totalQuantity <= 0 || isError;
+
+    const printingPrice = useMemo(() => {
+        if (isPending || !printingPricesResponse?.priceDtos || printingPricesResponse.priceDtos.length === 0) {
+            return 0.00;
+        }
+
+        const printingPrices: PrintingProductPrice[] = printingPricesResponse.priceDtos;
+        return QuotationUtils.getPrintingPrice({
+            printingPrices,
+            selectedPrintingMethod,
+            isPending,
+            totalQuantity,
+            product,
+            printingMethods
+        });
+    }, [printingPricesResponse?.priceDtos, selectedPrintingMethod, isPending, totalQuantity, product.id, printingMethods]);
+    
+    const calculateTotalPrice = useMemo(() => {
+        return QuotationUtils.calculateTotalPrice({
+            productPrice: parseFloat(price),
+            totalQuantity,
+            heightCm,
+            widthCm,
+            printingPrice,
+            isPrintPersonalizable
+        });
+    }, [price, totalQuantity, heightCm, widthCm, printingPrice, isPrintPersonalizable]);
 
     const handleQuantityChange = useCallback((name: string, value: number) => {
         setQuantities(prev => ({
@@ -57,6 +124,42 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
             return newQuantities;
         });
     }, []);
+
+    const handleCancelQuotation = () => {
+        setSelectedColors([]);
+        setQuantities({});
+        setSelectedPrintingMethod("");
+        setHeightCm(height);
+        setWidthCm(width);
+        setOpenColorSelector(true);
+        onClose();
+    };
+
+    const handleAddQuotation = () => {
+        const addProductToQuotations: AddProductToQuotation[] = []; 
+        selectedColors.map((color: Color) => {
+            const quantity: number = quantities[color.name];
+            const username: string = localStorage.getItem("user") || "";
+
+            const addProductToQuotation: AddProductToQuotation = {
+                id: null,
+                username: username,
+                productName: name,
+                productPrice: parseFloat(price),
+                colorName: color.name,
+                printName: selectedPrintingMethod,
+                printPrice: printingPrice,
+                quantity: quantity,
+                width: isPrintPersonalizable ? widthCm : 0,
+                height: isPrintPersonalizable ? heightCm : 0,
+                subtotal: 0.0
+            };
+
+            addProductToQuotations.push(addProductToQuotation);
+        });
+
+        addProductToQuotation({addProductToQuotations});
+    };
 
   return (
     <ModalWrapper 
@@ -93,7 +196,7 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
                     printingMethods={printingMethods}
                 />
             )}
-            {isPrintPersonalizable && (
+            {isPrintPersonalizable && selectedPrintingMethod && (
                <CustomSizePrinting 
                     printingArea={printingArea}
                     heightCm={heightCm}
@@ -109,21 +212,26 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
                     isPrintPersonalizable={isPrintPersonalizable}
                     heightCm={heightCm}
                     widthCm={widthCm}
-                    price={price || "0.00"}
-                    totalPrice={totalPrice}
+                    productPrice={price}
+                    printingPrice={printingPrice.toFixed(2)}
+                    totalPrice={calculateTotalPrice}
                 />
-            )
-            }
+            )}
             <div className="mt-6 flex flex-col sm:flex-row items-center gap-3 justify-center">
                 <Button
                     type="button"
                     className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 bg-red-500 text-white hover:bg-red-600 transition-colors duration-300"
+                    onClick={handleCancelQuotation}
                 >
                     Cancelar
                 </Button>
                 <Button
                     type="button"
-                    className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
+                    className={disabledAddToQuotation ? 
+                        "w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 bg-gray-500 text-white": 
+                        "w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"}
+                    disabled={disabledAddToQuotation}
+                    onClick={handleAddQuotation}
                 >
                     Agregar a Cotización
                 </Button>

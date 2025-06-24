@@ -18,12 +18,20 @@ export const API_ENDPOINTS = {
     },
     email: {
         resendActivationEmail: '/email/resend-activation',
+        sendEmailQuotation: '/email/quotation',
     },
     products: {
         featuredProducts: '/products/featured',
-        productById: 'products/:id'
+        productById: 'products/:id',
+        getProductPrices: '/products/prices',
     },
     lists: {
         getListViewById: '/lists/:id',
+    },
+    quotation: {
+        addProductToQuotation: '/quotation',
+        getAllQuotations: '/quotation/:username',
+        deleteQuotation: '/quotation/:quotationId',
+        generatePdfQuotation: '/quotation/:quotationId/pdf',
     }
 };
