@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
 const Button: React.FC<ButtonProps> = ({
     children,
     type = 'button',
-    className = '',
+    className = "w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient",
     onClick = () => {},
     disabled = false,
 }) => {

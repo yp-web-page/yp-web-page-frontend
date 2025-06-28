@@ -6,4 +6,12 @@ export const MESSAGE = {
     ERROR_PASSWORD_CHANGE_NOT_MATCH: "La contraseña actual no coincide",
     LOGIN_SUCCESS: "Inicio de sesión exitoso",
     LOGIN_ERROR: "Error en el inicio de sesión",
+    SUCCESSFUL_ACTIVATION_ACCOUNT: "Activación exitosa",
+    ERROR_ACTIVATION_ACCOUNT: "No tiene un token valido de activación",
+    SUCCESSFUL_RESEND_ACTIVATION_ACCOUNT: "Correo de activación reenviado con éxito",
+    ERROR_RESEND_ACTIVATION_ACCOUNT: "Error reenviado el correo de activación",
+    ERROR_ACTIVATION_ACCOUNT_FOR_USER: "No tiene un token valido de activación, debe volver a solicitar el correo de activación",
+    UPDATE_PROFILE_SUCCESS: "Perfil actualizado exitosamente",
+    ERROR_UPDATE_PROFILE: "Error al actualizar el perfil",
+    MISSING_RUT_FILE: "El archivo RUT es obligatorio para el usuario PUBLICISTA.",
 }

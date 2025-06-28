@@ -1,40 +1,138 @@
-import {
-    createBrowserRouter,
-} from 'react-router';
+import { lazy, Suspense } from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { createBrowserRouter } from 'react-router-dom';
 
 import HomePage from '../pages/project/HomePage';
-import PageNotFound from '../pages/PageNotFound';
-import ProfilePage from '../pages/profile/ProfilePage';
-import LegalAdvicePage from '../pages/legal/LegalAdvicePage';
-import PrivacyPolicyPage from '../pages/legal/PrivacyPolicyPage';
 import RootLayout from '../layout/RootLayout';
-import ChangePassword from '../pages/changePassword/ChangePassword';
+import ProtectedRoute from '../components/protected/ProtectedRoute';
+
+const PageNotFound = lazy(() => import('../pages/PageNotFound'));
+const ProfilePage = lazy(() => import('../pages/profile/ProfilePage'));
+const LegalAdvicePage = lazy(() => import('../pages/legal/LegalAdvicePage'));
+const PrivacyPolicyPage = lazy(() => import('../pages/legal/PrivacyPolicyPage'));
+const ChangePassword = lazy(() => import('../pages/changePassword/ChangePassword'));
+const Inventory = lazy(() => import('../pages/project/Inventory'));
+const ActiveUserAccount = lazy(() => import('../pages/activeUserRegularAccount/ActiveUserAccount'));
+const Inventories = lazy(() => import('../pages/project/Inventories'));
+const ContactUs = lazy(() => import('../pages/contactUs/ContactUs'));
+const WhoArePage = lazy(() => import('../pages/whoAre/WhoArePage'));
+const ProductView = lazy(() => import('../pages/project/ProductView'));
+const SearchPage = lazy(() => import('../pages/project/SearchPage'));
+const Quotation = lazy(() => import('../pages/quotation/Quotation'));
 
 export const router = createBrowserRouter([
     {
       path: '/',
       element: <RootLayout />, // 👈 wrap all child routes
-      errorElement: <PageNotFound />,
+      errorElement: (
+        <Suspense fallback={<LoadingSpinner />}>
+          <PageNotFound />
+        </Suspense>
+      ),
       children: [
         {
           index: true,
           element: <HomePage />,
         },
         {
-          path: 'profile',
-          element: <ProfilePage />,
+          path: 'perfil',
+          element: (
+            <ProtectedRoute> 
+              <Suspense fallback={<LoadingSpinner />}>
+                <ProfilePage />
+              </Suspense>
+            </ProtectedRoute>
+          ),
         },
         {
           path: 'aviso-legal',
-          element: <LegalAdvicePage />,
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <LegalAdvicePage />
+            </Suspense>
+          ),
         },
         {
           path: 'politicas-privacidad',
-          element: <PrivacyPolicyPage />,
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <PrivacyPolicyPage />
+            </Suspense>
+          ),
         },
         {
-          path: 'reset-password',
-          element: <ChangePassword />,
+          path: 'recuperar-contraseña',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <ChangePassword />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'inventario/:inventoryId',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <Inventory />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'inventarios',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <Inventories />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'activar-cuenta',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <ActiveUserAccount />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'quienes-somos',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <WhoArePage />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'contactanos',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <ContactUs />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'producto/:productId',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <ProductView />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'search',
+          element: (
+            <Suspense fallback={<LoadingSpinner />}>
+              <SearchPage />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'cotizaciones',
+          element: (
+            <ProtectedRoute> 
+              <Suspense fallback={<LoadingSpinner />}>
+                <Quotation />
+              </Suspense>
+            </ProtectedRoute>
+          ),
         },
       ],
     },

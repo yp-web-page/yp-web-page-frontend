@@ -5,6 +5,7 @@ import Button from '../Button';
 import FormatInput from '../FormatInput';
 import Icon from '../icon/Icon';
 import { useModal } from '../../context/ModalContext';
+import { useEffect } from 'react';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -30,7 +31,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
         formState: { errors },
         watch,
         reset,
-      } = useForm<LoginFormInputs>();
+      } = useForm<LoginFormInputs>({
+        defaultValues: {
+            rememberme: false,
+        }
+      });
       const { openModal } = useModal();
 
     const usernameLength = (watch('username') || '').length;
@@ -60,8 +65,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
     };
     
     const handleRecoverPassword = () => {
-        openModal("Recover");
+        openModal("recover");
     };
+
+    useEffect(() => {
+    const rememberedUsername = localStorage.getItem('rememberedUsername');
+    if (rememberedUsername) {
+        reset({
+            username: rememberedUsername,
+            rememberme: true,
+        });
+    }
+    }, [reset]);
 
     return (
         <ModalWrapper 
@@ -147,7 +162,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
 
                     <Button
                         type='submit'
-                        className="w-[60%] mx-auto block py-2.5 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+                        className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
                     >
                         Ingresar
                     </Button>
@@ -157,7 +172,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                     <Button
                         type="button"
                         onClick={handleOpenRegister}
-                        className="px-2 py-1 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-xs font-medium w-fit mx-auto sm:mx-0 hover:opacity-90 transition-opacity"
+                        className="px-2 py-1 rounded-full font-bold text-xs font-medium w-fit mx-auto sm:mx-0 blue-deep-gradient"
                     >
                         CREAR UNA CUENTA
                     </Button>

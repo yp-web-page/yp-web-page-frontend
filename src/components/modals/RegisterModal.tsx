@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useForm } from "react-hook-form";
 import ModalWrapper from './ModalWrapper';
 import Button from '../Button';
@@ -7,6 +7,10 @@ import useRegisterUser from '../../hooks/useRegisterUser';
 import { UserRole } from '../../types/UserRole';
 import FormatInput from '../FormatInput';
 import IconWithBadge from '../icon/IconWithBadge';
+import { Link } from 'react-router';
+import ToolTip from '../ToolTip';
+import { useModal } from '../../context/ModalContext';
+import { MESSAGE } from '../../constants/message';
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -40,8 +44,11 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     reset,
     control
   } = useForm<RegisterFormInputs>();
-  const { mutate } = useRegisterUser();
-  const [userType, setUserType] = useState<UserType>('REGULAR');
+  const { mutate, isPending } = useRegisterUser();
+  const [ userType, setUserType ] = useState<UserType>('REGULAR');
+  const [ approvedPrivacyPolicy, setApprovedPrivacyPolicy ] = useState(false);
+  const [ acceptTermAndConditions, setAcceptTermAndConditions ] = useState(false);
+  const { openModal } = useModal();
 
   const resetForm = () => {
     reset({}, {
@@ -52,8 +59,29 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     setUserType(UserRole.REGULAR);
   };
 
-  const onSubmit = (data: RegisterFormInputs) => {
-    const userRole = userType === UserRole.WHOLESALER ? UserRole.WHOLESALER : UserRole.REGULAR;
+  const createWholesalerUser = (data: RegisterFormInputs, newUser: RegisterUser): void => {
+    const file: File = data.rut;
+      mutate({
+        user: newUser,
+        file: file
+      });
+      resetForm();
+  };
+
+  const createRegularUser = (newUser: RegisterUser): void => {
+    mutate({
+      user: newUser,
+    });
+    resetForm();
+  };
+
+  const onSubmit = (data: RegisterFormInputs): void => {
+    if (!approvedPrivacyPolicy || !acceptTermAndConditions || isPending) return;
+
+    if (userType === "WHOLESALER" && !data?.rut) {
+        openModal("notification", MESSAGE.MISSING_RUT_FILE, "info");
+        return;
+    }
 
     const newUser: RegisterUser = {
       name: data.name,
@@ -61,23 +89,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
       email: data.email,
       username: data.username,
       password: data.password, 
-      role: userRole,
+      role: userType,
     };
 
-    if (data?.rut) {
-      const file: File = data.rut;
-      console.log({file})
-      mutate({
-        user: newUser,
-        file: file
-      });
-    } else {
-      mutate({
-        user: newUser,
-      });
-    }
+    if (userType === "WHOLESALER"  && data?.rut) {
+      createWholesalerUser(data, newUser);
+      return;
+    } 
 
-    resetForm();
+    createRegularUser(newUser);
+    return;
   };
 
   const handleClose = () => {
@@ -85,11 +106,15 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
-  const nameLength = (watch('name') || '').length;
-  const phoneLength = (watch('phone') || '').length;
-  const emailLength = (watch('email') || '').length;
-  const usernameLength = (watch('username') || '').length;
-  const passwordLength = (watch('password') || '').length;
+  const nameLength = useMemo(() => (watch('name') || '').length, [watch('name')]);
+  const phoneLength = useMemo(() => (watch('phone') || '').length, [watch('phone')]);
+  const emailLength = useMemo(() => (watch('email') || '').length, [watch('email')]);
+  const usernameLength = useMemo(() => (watch('username') || '').length, [watch('username')]);
+  const passwordLength = useMemo(() => (watch('password') || '').length, [watch('password')]);
+
+  const isRegisteredButtonDisabled = useMemo(() => {
+    return !approvedPrivacyPolicy || !acceptTermAndConditions || isPending  || Object.keys(errors).length > 0;
+  }, [approvedPrivacyPolicy, acceptTermAndConditions, errors]);
   
   return (
     <ModalWrapper 
@@ -112,7 +137,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
       <div className="px-3">
         {/* Title */}
         <h2 className="text-xl font-bold text-center text-blue-600">REGISTRATE</h2>
-        <p className="text-center text-gray-600 text-xs mb-3">
+        <p className="text-center text-gray-600 text-xs mb-1.5 sm:mb-2">
           ¡Haz un unico registro y tendras acceso a toda nuestra lista de precios!
         </p>
 
@@ -122,7 +147,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             type='button'
             className={`w-full py-1.5 px-3 rounded-full text-sm font-bold transition-colors ${
               userType === 'REGULAR'
-                ? 'bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white hover:opacity-90 transition-opacity'
+                ? 'blue-deep-gradient'
                 : 'bg-gray-300 text-white'
             }`}
             onClick={() => setUserType('REGULAR')}
@@ -134,7 +159,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             type='button'
             className={`w-full py-1.5 px-3 rounded-full text-sm font-bold transition-colors ${
               userType === 'WHOLESALER'
-                ? 'bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white hover:opacity-90 transition-opacity'
+                ? 'blue-deep-gradient'
                 : 'bg-gray-300 text-white'
             }`}
             onClick={() => setUserType('WHOLESALER')}
@@ -144,7 +169,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[300px] mx-auto space-y-2 sm:space-y-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[320px] mx-auto space-y-1 sm:space-y-2 text-xs sm:text-base">
           <FormatInput<RegisterFormInputs>
             name="name"
             label="Nombre / Nombre de la Empresa"
@@ -263,9 +288,64 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             customButton={true}
           />
 
+          <div className="mx-auto h-0.5 bg-gray-200 mt-2" />
+          <div className="text-sm text-gray-700">
+            <label htmlFor="privacy-policy" className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                id="privacy-policy"
+                name="privacy-policy"
+                checked={approvedPrivacyPolicy}
+                onChange={(e) => setApprovedPrivacyPolicy(e.target.checked)}
+                className="mt-1 h-4 w-4 text-[#4263EB] border-gray-300 rounded shrink-0"
+              />
+              <div className="flex-1">
+                He leído y acepto la{" "}
+                <Link
+                  to="politicas-privacidad"
+                  className="text-[#4263EB] font-semibold hover:underline"
+                  onClick={onClose}
+                >
+                  Política de Privacidad
+                </Link>
+              </div>
+              <ToolTip 
+               text="Es obligatorio aceptar la política de privacidad para registrarse como usuario."
+              />
+            </label>
+          </div>
+          <div className="text-sm text-gray-700">
+            <label htmlFor="term-and-conditions" className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                id="term-and-conditions"
+                name="term-and-conditions"
+                checked={acceptTermAndConditions}
+                onChange={(e) => setAcceptTermAndConditions(e.target.checked)}
+                className="mt-1 h-4 w-4 text-[#4263EB] border-gray-300 rounded shrink-0"
+              />
+              <div className="flex-1">
+                Al registrase aceptas nuestros{" "}
+                <Link
+                  to="aviso-legal"
+                  className="text-[#4263EB] font-semibold hover:underline"
+                  onClick={onClose}
+                >
+                  Terminos y Condiciones
+                </Link>
+              </div>
+              <ToolTip 
+               text="Es obligatorio aceptar los terminos y condiciones para registrarse como usuario."
+              />
+            </label>
+          </div>
+
           <Button
             type="submit"
-            className="w-[60%] mx-auto block py-2.5 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+            className={isRegisteredButtonDisabled ? 
+              "w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-3 sm:mt-4 bg-gray-300 text-white" :
+              "w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-3 sm:mt-4 blue-deep-gradient" }
+            disabled={isRegisteredButtonDisabled}
           >
             Registrarse
           </Button>

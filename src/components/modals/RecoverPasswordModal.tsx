@@ -74,7 +74,7 @@ const RecoverPasswordModal: React.FC<RecoverPasswordModalProps> = ({ isOpen, onC
                         />
                         <Button
                             type='submit'
-                            className="w-[60%] mx-auto block py-2.5 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity mt-8"
+                            className="w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient"
                         >
                             Recuperar Contraseña
                         </Button>

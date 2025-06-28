@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ModalManager from '../components/modals/ModalManager';
+import BackButton from '../components/BackButton';
 
 /**
  * RootLayout is used to wrap all pages with shared layout components 
@@ -21,7 +22,10 @@ const RootLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <BackButton />
+      <main id="main-content" className="min-h-screen">
+        <Outlet />
+      </main>
       <Footer />
       <ModalManager />
     </>
