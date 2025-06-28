@@ -23,6 +23,8 @@ export const API_ENDPOINTS = {
     products: {
         featuredProducts: '/products/featured',
         productById: 'products/:id',
+        searchByName: '/products/search/name',
+        filter: '/products/filter',
         getProductPrices: '/products/prices',
     },
     lists: {

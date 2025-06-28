@@ -1,35 +1,33 @@
 import React, { useState } from "react";
 import Icon from "../icon/Icon";
 import Button from "../Button";
+import { useNavigate } from "react-router-dom";
+import { useSearchProductsByName } from "../../hooks/useSearchProductsByName";
 
 interface SearchDropDownProps {
   placeholder?: string;
   onSelect?: (value: string) => void;
 }
 
-const MOCK_PRODUCTS = [
-  "Tarjeta de presentación",
-  "Volante publicitario",
-  "Pendón publicitario",
-  "Rotulación de vehículos",
-  "Etiquetas adhesivas",
-  "Bolsas personalizadas",
-  "Afiches promocionales",
-  "Lonas publicitarias",
-  "Camisas estampadas",
-  "Gorras bordadas",
-];
-
 const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar...", onSelect }) => {
     const [value, setValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
+    const navigate = useNavigate();
+
+    const { data: suggestions } = useSearchProductsByName(value);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
+        setValue(e.target.value.trim());
     };
 
     const onFocus = () => {
         setIsFocused(true);
+    };
+
+    const handleSearch = () => {
+        if (value.trim()) {
+            navigate('/search', { state: { searchQuery: value } });
+        }
     };
 
     return (
@@ -47,7 +45,7 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
                 <div className="absolute top-0 right-0 h-full w-8 sm:w-10">
                     <Button
                         type="button"
-                        onClick={() => console.log('Search for:', value)}
+                        onClick={handleSearch}
                         className="w-full h-full flex items-center justify-center rounded-tr-xl rounded-br-xl bg-gray-100 hover:bg-gray-300 p-1.5 sm:p-2"
                     >
                         <Icon
@@ -59,18 +57,18 @@ const SearchDropDown: React.FC<SearchDropDownProps> = ({ placeholder = "Buscar..
                     </Button>
                 </div>
             </div>
-            {isFocused && value && MOCK_PRODUCTS.length > 0 && (
+            {isFocused && value && suggestions?.content && suggestions.content.length > 0 && (
                 <ul className="absolute z-50 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 shadow-lg rounded-md mt-1">
-                    {MOCK_PRODUCTS.map((product, idx) => (
+                    {suggestions.content.map((product) => (
                         <li
-                            key={idx} // Replace with a unique ID of the product if available
+                            key={product.id}
                             className="text-xs sm:text-sm md:text-base text-black px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onMouseDown={() => {
-                                onSelect?.(product);
-                                setValue(product);
+                                onSelect?.(product.name);
+                                setValue(product.name);
                             }}
                         >
-                            {product}
+                            {product.name}
                         </li>
                     ))}
                 </ul>
