@@ -1,4 +1,3 @@
-
 import React from "react";
 import ColorCircles from "../products/ColorCircles";
 import Button from "../Button";
@@ -53,10 +52,11 @@ const SelectColorInputs: React.FC<SelectColorInputsProps> = ({
                     <span className="w-20 font-medium" style={{ color: color.hexCode }}>{ color.name }:</span>
                     <input
                         type="number"
+                        min={0}
                         placeholder="Cantidad"
                         value={quantities[color.name] ?? ''}
                         onChange={(e) => {
-                            const value = parseInt(e.target.value, 10);
+                            const value = Math.max(0, parseInt(e.target.value, 10) || 0);
                             onQuantityChange(color.name, value);
                         }}
                         className="border px-2 py-1 w-24 rounded"

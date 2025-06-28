@@ -1,4 +1,4 @@
-import { ResponseFeaturedProducts, Product, PaginatedResponse, ProductCard, ProductFilterRequest, ResponseSearchedProducts } from "../types/ProductTypes"
+import { ResponseFeaturedProducts, Product, PaginatedResponse, ProductCard, ProductFilterRequest, ResponseSearchedProducts, GetPricesRequest, PrintingProductPricesResponse } from "../types/ProductTypes"
 import { API_ENDPOINTS } from "../api/endpoints"
 import apiClient from "../api/axios"
 
@@ -35,9 +35,15 @@ const filterProducts = async (
     return response.data as PaginatedResponse<ProductCard>
 }
 
+const getProductPrices = async (getPricesRequest: GetPricesRequest): Promise<PrintingProductPricesResponse> => {
+    const response = await apiClient.post(API_ENDPOINTS.products.getProductPrices, getPricesRequest);
+    return response.data;
+}
+
 export const productService = {
     getFeaturedProducts,
     getProductById,
     searchProductsByName,
-    filterProducts
+    filterProducts,
+    getProductPrices,
 }
