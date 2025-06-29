@@ -106,7 +106,7 @@ const Header: React.FC = () => {
                                 { isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/cotizaciones' }, tabClass) }
                             </div>
                             <div className="hidden md:flex xl:space-x-8 lg:space-x-7 md:space-x-5 sm:space-x-3">
-                                <SearchDropDown onClick={handleSearchClick} />
+                                <SearchDropDown />
                             </div>
                         </div>
                         {/* Desktop Profile Icon & Dropdown */}
