@@ -39,10 +39,10 @@ const Inventory: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen blue-deep-gradient-wo-hover flex items-start justify-center py-8">
+        <div className="min-h-screen blue-deep-gradient-wo-hover flex flex-col md:flex-row items-start justify-center py-8">
             <BackButton/>
             {/* Sidebar azul */}
-            <aside className="w-64 min-h-[200px] bg-white text-black rounded-lg flex flex-col p-6 mr-6">
+            <aside className="w-full md:w-64 min-h-[200px] bg-white text-black rounded-lg flex flex-col p-6 mb-6 md:mb-0 md:mr-6">
                 <h2 className="text-lg font-semibold mb-6">{inventoryView?.title || 'Inventario'}</h2>
                 {inventoryView && (
                     <div className="relative w-full">
@@ -67,9 +67,9 @@ const Inventory: React.FC = () => {
                     </div>
                 )}
             </aside>
-
+    
             {/* Contenido principal */}
-            <main className="flex-1 bg-white rounded-lg shadow-lg p-10 min-h-[500px] max-w-5xl w-full">
+            <main className="flex-1 bg-white rounded-lg shadow-lg p-4 md:p-10 min-h-[500px] max-w-5xl w-full">
                 <h1 className="text-3xl text-black font-semibold mb-2">{listView?.name || 'Inventario'}</h1>
                 <p className="text-gray-500 mb-8">Mostrando productos de la lista seleccionada</p>
                 {isLoadingListView ? (
@@ -77,7 +77,7 @@ const Inventory: React.FC = () => {
                 ) : listView && listView.products ? (
                     <ProductList
                         products={listView.products}
-                        classname="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        classname="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
                         onPageChange={handlePageChange}
                         onPageSizeChange={handlePageSizeChange}
                     />
