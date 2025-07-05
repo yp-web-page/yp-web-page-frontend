@@ -16,6 +16,7 @@ export interface AddProductToQuotation {
     width: number | null,
     height: number | null,
     subtotal: number,
+    isPrintPersonalizable: boolean
 };
 
 export interface GetQuotation {
