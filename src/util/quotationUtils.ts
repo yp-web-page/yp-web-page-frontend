@@ -67,8 +67,34 @@ const calculateTotalPrice = ({
     return totalPrice.toFixed(2);
 };
 
+const parsePrintingArea = (area?: string) => {
+    if (!area) return { height: 0, width: 0 };
+    const match = area.match(/(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)/);
+    return {
+        height: match ? parseFloat(match[1]) : 0,
+        width: match ? parseFloat(match[2]) : 0,
+    }
+}
+
+const calculateUnitPrice = (
+    productPrice: number, 
+    printingPrice: number, 
+    isPrintPersonalizable: boolean, 
+    heightCm: number, 
+    widthCm: number,
+    selectedPrintingMethod: string
+): number => {
+    if (selectedPrintingMethod === "") return productPrice;
+    
+    if (isPrintPersonalizable) return (heightCm * widthCm * printingPrice) + productPrice;
+
+    return productPrice + printingPrice;
+}
+
 export const QuotationUtils = {
     calculateTotalPrice,
     getPrintingPrice,
     getTotalQuantity,
+    parsePrintingArea,
+    calculateUnitPrice,
 };

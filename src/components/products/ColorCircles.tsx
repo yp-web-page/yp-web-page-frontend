@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { Color } from '../../types/ProductTypes'
+import Button from '../Button';
+import clsx from 'clsx';
 
 interface ColorCirclesProps {
     colors: Color[];
@@ -17,9 +19,12 @@ const ColorCircles: React.FC<ColorCirclesProps> = ({
     setOpenColorSelector,
     onQuantityChange,
 }) => {
-    const handleColorClick = (event: React.MouseEvent, color: Color) => {
+
+    const isInteractive = setSelectedColors && setOpenColorSelector && onQuantityChange && selectedColors;
+
+    const handleColorClick = useCallback((event: React.MouseEvent, color: Color) => {
         event.stopPropagation();
-        if (!setSelectedColors || !selectedColors || !setOpenColorSelector || !onQuantityChange) return;
+        if (!isInteractive) return;
 
         const isAlreadySelected = selectedColors.some(c => c.name === color.name);
 
@@ -34,19 +39,25 @@ const ColorCircles: React.FC<ColorCirclesProps> = ({
             setSelectedColors([...selectedColors, color]);
             setOpenColorSelector(true); // Keep selector open
         }
-    };
+    }, [selectedColors, setSelectedColors, setOpenColorSelector, onQuantityChange, isInteractive]);
 
     return (
         <div className="flex items-center gap-2">
             {colors.map((color) => {
                 const isSelected = selectedColors?.some(c => c.hexCode === color.hexCode);
                 return (
-                    <button
+                    <Button
                         type="button"
                         key={color.hexCode}
-                        className={`w-5 h-5 rounded-full border border-gray-200 focus:outline-none ${isSelected ? 'ring-2 ring-blue-500' : ''}`}
+                        className={clsx(
+                            "w-5 h-5 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1",
+                            {
+                                "ring-2 ring-blue-500": isSelected,
+                            }
+                        )}
                         style={{ backgroundColor: color.hexCode }}
                         onClick={(event) => handleColorClick(event, color)}
+                        aria-label={`Seleccionar color ${color.name}`}
                     />
                 );
             })}

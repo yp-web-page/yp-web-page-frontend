@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import ColorCircles from "../products/ColorCircles";
 import Button from "../Button";
 import Collapsible from "../collapsible/Collapsible";
@@ -25,8 +25,12 @@ const SelectColorInputs: React.FC<SelectColorInputsProps> = ({
     onQuantityChange,
     onDeleteColor,
 }) => {
+    const handleQuantityChange = useCallback((colorName: string, value: string) => {
+        const quantity = Math.max(0, parseInt(value, 10) || 0);
+        if (!isNaN(quantity) && quantity >= 0) onQuantityChange(colorName, quantity);
+    }, [onQuantityChange]);
 
-    const trigger = (): React.ReactNode => {
+    const renderTrigger = useMemo((): React.ReactNode => {
         return(
             <div className="w-full text-left font-medium p-2 bg-white rounded mb-2">
                 <span>Seleccionar el color del artículo</span>
@@ -43,9 +47,9 @@ const SelectColorInputs: React.FC<SelectColorInputsProps> = ({
                 </div>
             </div>
         );
-    };
+    }, [colors, selectedColors, openColorSelector, setOpenColorSelector, setSelectedColors, onQuantityChange]);
 
-    const content = (): React.ReactNode => {
+    const renderContent = useMemo((): React.ReactNode => {
         return(
             selectedColors.map((color) => (
                 <div key={color.name} className="flex items-center gap-2">
@@ -55,10 +59,7 @@ const SelectColorInputs: React.FC<SelectColorInputsProps> = ({
                         min={0}
                         placeholder="Cantidad"
                         value={quantities[color.name] ?? ''}
-                        onChange={(e) => {
-                            const value = Math.max(0, parseInt(e.target.value, 10) || 0);
-                            onQuantityChange(color.name, value);
-                        }}
+                        onChange={(e) => handleQuantityChange(color.name, e.target.value)}
                         className="border px-2 py-1 w-24 rounded"
                     />
                     <Button
@@ -71,12 +72,12 @@ const SelectColorInputs: React.FC<SelectColorInputsProps> = ({
                 </div>
             ))
         );
-    };
+    }, [selectedColors, quantities, handleQuantityChange, onDeleteColor]);
 
   return (
     <Collapsible 
-        trigger={trigger()}
-        content={content()}
+        trigger={renderTrigger}
+        content={renderContent}
         isOpen={openColorSelector}
         onToggle={setOpenColorSelector}
     />

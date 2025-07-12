@@ -1,4 +1,4 @@
-enum QuotationStatus {
+export enum QuotationStatus {
     CREATED,
     COMPLETED,
     CANCELED,
