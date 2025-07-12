@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { GetQuotation, QuotationStatus, SendEmailQuotationRequest } from "../../types/Quotation";
+import { GetQuotation, SendEmailQuotationRequest } from "../../types/Quotation";
 import Collapsible from "../collapsible/Collapsible";
 import useDeleteQuotation from "../../hooks/useDeleteQuotation";
 import Button from "../Button";
