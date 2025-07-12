@@ -20,7 +20,7 @@ const PrintingMethodSelector: React.FC<PrintingMethodSelectorProps> = ({
                 onChange={(e) => setSelectedPrintingMethod(e.target.value)}
                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-                <option value="">Selecciona un tipo de marcacion</option>
+                <option value="">Sin Marcación</option>
                 {printingMethods.map((method) => (
                     <option key={method.id} value={method.name}>
                         {method.name}

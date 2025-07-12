@@ -6,6 +6,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
     disabled?: boolean;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
+    ariaLabel?: string;
+    style?: React.CSSProperties;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,6 +16,8 @@ const Button: React.FC<ButtonProps> = ({
     className = "w-[60%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient",
     onClick = () => {},
     disabled = false,
+    ariaLabel = "Button",
+    style = {},
 }) => {
     return (
         <button
@@ -21,6 +25,8 @@ const Button: React.FC<ButtonProps> = ({
             className={className}
             onClick={onClick}
             disabled={disabled}
+            aria-label={ariaLabel}
+            style={style}
         >
             {children}
         </button>
