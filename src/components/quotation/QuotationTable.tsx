@@ -90,14 +90,21 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
               </thead>
               <tbody>
                 {quotation.addProductToQuotations.map((product) => {
+                  const isCustomPrint = product.printName !== "";
+                  const area = isCustomPrint ? ((product.height ?? 0) * (product.width ?? 0)) : 0;
+                  let printPrice = 0;
+                  if (isCustomPrint) {
+                    printPrice = product.isPrintPersonalizable ? (product.printPrice * area) : product.printPrice;
+                  }
+
                   return (
                     <tr key={product.id} className="text-center even:bg-blue-50 hover:bg-blue-100 transition text-gray-800">
                     <td className="p-2 border whitespace-nowrap">{product.productName}</td>
                     <td className="p-2 border whitespace-nowrap">{product.colorName}</td>
                     <td className="p-2 border whitespace-nowrap">{product.printName || 'No Aplica'}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.height === 0 ? 'No Aplica' : product.height}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.width === 0 ? 'No Aplica' : product.width}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.printPrice > 0 ? `$${product.printPrice.toFixed(2)}` : "No Aplica"}</td>
+                    <td className="p-2 border whitespace-nowrap">{isCustomPrint ? product.height : "No Aplica" }</td>
+                    <td className="p-2 border whitespace-nowrap">{isCustomPrint ? product.width : "No Aplica" }</td>
+                    <td className="p-2 border whitespace-nowrap">{isCustomPrint ? `$${printPrice.toFixed(2)}` : "No Aplica"}</td>
                     <td className="p-2 border whitespace-nowrap">${product.productPrice.toFixed(2)}</td>
                     <td className="p-2 border whitespace-nowrap">{product.quantity}</td>
                     <td className="p-2 border font-semibold whitespace-nowrap">${product.subtotal.toFixed(2)}</td>

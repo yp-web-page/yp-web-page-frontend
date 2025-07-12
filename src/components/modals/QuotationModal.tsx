@@ -129,8 +129,8 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
         setSelectedColors([]);
         setQuantities({});
         setSelectedPrintingMethod("");
-        setHeightCm(height);
-        setWidthCm(width);
+        setHeightCm(0);
+        setWidthCm(0);
         setOpenColorSelector(true);
         onClose();
     };
@@ -150,9 +150,10 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
                 printName: selectedPrintingMethod,
                 printPrice: printingPrice,
                 quantity: quantity,
-                width: isPrintPersonalizable ? widthCm : 0,
-                height: isPrintPersonalizable ? heightCm : 0,
-                subtotal: 0.0
+                width: !printingArea || selectedPrintingMethod !== "" ? widthCm : 0,
+                height: !printingArea || selectedPrintingMethod !== "" ? heightCm : 0,
+                subtotal: 0.0,
+                isPrintPersonalizable: isPrintPersonalizable
             };
 
             addProductToQuotations.push(addProductToQuotation);
@@ -196,20 +197,20 @@ const QuotationModal:React.FC<QuotationModalProps> = ({ isOpen, onClose, product
                     printingMethods={printingMethods}
                 />
             )}
-            {isPrintPersonalizable && selectedPrintingMethod && (
+            {selectedPrintingMethod && (
                <CustomSizePrinting 
                     printingArea={printingArea}
                     heightCm={heightCm}
                     setHeightCm={setHeightCm}
                     widthCm={widthCm}
                     setWidthCm={setWidthCm}
+                    isPrintPersonalizable={isPrintPersonalizable}
                 /> 
             )}
             {showQuotationInformation && (
                 <QuotationInformation
                     totalQuantity={totalQuantity}
                     selectedPrintingMethod={selectedPrintingMethod}
-                    isPrintPersonalizable={isPrintPersonalizable}
                     heightCm={heightCm}
                     widthCm={widthCm}
                     productPrice={price}

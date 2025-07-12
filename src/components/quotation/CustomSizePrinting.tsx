@@ -6,6 +6,7 @@ interface CustomSizePrintingProps {
     setHeightCm: (value: number) => void;
     widthCm: number;
     setWidthCm: (value: number) => void;
+    isPrintPersonalizable: boolean;
 } 
 
 const CustomSizePrinting: React.FC<CustomSizePrintingProps> = ({
@@ -14,6 +15,7 @@ const CustomSizePrinting: React.FC<CustomSizePrintingProps> = ({
     setHeightCm,
     widthCm,
     setWidthCm,
+    isPrintPersonalizable,
 }) => {
     const handleDimesionChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -36,9 +38,10 @@ const CustomSizePrinting: React.FC<CustomSizePrintingProps> = ({
                     type="number"
                     min={1}
                     placeholder="CM"
-                    className="border px-2 py-1 w-20 rounded text-center"
+                    className={isPrintPersonalizable ? "border px-2 py-1 w-20 rounded text-center" : "border px-2 py-1 w-20 rounded text-center bg-gray-200 cursor-not-allowed"}
                     value={value}
                     onChange={onChange}
+                    disabled={!isPrintPersonalizable}
                 />
             </div>
         );
