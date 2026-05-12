@@ -249,6 +249,51 @@ const SearchSvgIcon: SVGIconComponent = (props) => {
   );
 };
 
+const WhatsappSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.WHATSAPP} />
+    </svg>
+  );
+};
+
+const PhoneSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.PHONE} />
+    </svg>
+  );
+};
+
+const MailSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.MAIL} />
+    </svg>
+  );
+};
+
+const MapPinSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.MAP_PIN} />
+    </svg>
+  );
+};
+
+const ArrowRightSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.ARROW_RIGHT} />
+    </svg>
+  );
+};
+
 const iconSvgMap: Record<string, SVGIconComponent> = {
     user: UserSvgIcon,
     plus: PlusSvgIcon,
@@ -265,6 +310,11 @@ const iconSvgMap: Record<string, SVGIconComponent> = {
     toggle: ToggleSvgIcon,
     close: CloseSvgIcon,
     search: SearchSvgIcon,
+    whatsapp: WhatsappSvgIcon,
+    phone: PhoneSvgIcon,
+    mail: MailSvgIcon,
+    map: MapPinSvgIcon,
+    arrowRight: ArrowRightSvgIcon,
 }
 
 export default iconSvgMap;
