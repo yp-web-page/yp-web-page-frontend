@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -68,6 +68,31 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     const username = (typeof window !== 'undefined' && localStorage.getItem('rememberedUsername')) || 'Usuario';
     const initials = username.slice(0, 2).toUpperCase();
 
+    const [pos, setPos] = useState<{ top: number; right: number } | null>(null);
+
+    useLayoutEffect(() => {
+        if (!isOpen) return;
+        const update = () => {
+            const anchor = document.getElementById('user-menu-anchor');
+            if (!anchor) {
+                setPos({ top: 100, right: 24 });
+                return;
+            }
+            const rect = anchor.getBoundingClientRect();
+            setPos({
+                top: rect.bottom + 12,
+                right: Math.max(8, window.innerWidth - rect.right),
+            });
+        };
+        update();
+        window.addEventListener('resize', update);
+        window.addEventListener('scroll', update, true);
+        return () => {
+            window.removeEventListener('resize', update);
+            window.removeEventListener('scroll', update, true);
+        };
+    }, [isOpen]);
+
     useEffect(() => {
         if (!isOpen) return;
         const onDocClick = (e: MouseEvent) => {
@@ -101,8 +126,10 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
-                    className="fixed top-[100px] right-4 sm:right-6 z-[9999] w-[320px] bg-white rounded-2xl border border-yp-line overflow-hidden origin-top-right"
+                    className="fixed z-[9999] w-[320px] bg-white rounded-2xl border border-yp-line overflow-hidden origin-top-right"
                     style={{
+                        top: pos?.top ?? 100,
+                        right: pos?.right ?? 24,
                         boxShadow: '0 24px 60px -16px rgba(0,31,54,0.35), 0 8px 24px -10px rgba(0,31,54,0.15)',
                     }}
                 >

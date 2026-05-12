@@ -121,14 +121,16 @@ const Header: React.FC = () => {
                             <div className="hidden md:flex">
                                 <SearchDropDown />
                             </div>
-                            <Button
-                                type="button"
-                                onClick={handleProfileClick}
-                                className="hidden md:inline-grid place-items-center size-9 rounded-full hover:bg-white/10 transition text-white"
-                                aria-label="Cuenta"
-                            >
-                                <Icon name="profile" className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
-                            </Button>
+                            <div id="user-menu-anchor" className="hidden md:inline-flex">
+                                <Button
+                                    type="button"
+                                    onClick={handleProfileClick}
+                                    className="inline-grid place-items-center size-9 rounded-full hover:bg-white/10 transition text-white"
+                                    aria-label="Cuenta"
+                                >
+                                    <Icon name="profile" className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
+                                </Button>
+                            </div>
                             <a
                                 href={CONTACT_INFO.WHATSAPP_HREF}
                                 target="_blank"
