@@ -313,10 +313,10 @@ const CheckSvgIcon: SVGIconComponent = (props) => {
 };
 
 const SparkSvgIcon: SVGIconComponent = (props) => {
-  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
   return (
-    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d={SVG_PATHS.SPARK} />
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.SPARK} />
     </svg>
   );
 };

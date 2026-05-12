@@ -126,7 +126,7 @@ const Hero: React.FC = () => {
                             <div key={dup} className="flex items-center gap-10 shrink-0">
                                 {TRUST_ITEMS.map((t) => (
                                     <span key={t + dup} className="inline-flex items-center gap-3">
-                                        <Icon name="spark" className="h-3.5 w-3.5 text-accent" fill="none" />
+                                        <Icon name="spark" className="h-3.5 w-3.5 text-accent" fill="currentColor" />
                                         <span>{t}</span>
                                         <span className="opacity-30 ml-3">●</span>
                                     </span>
