@@ -6,10 +6,9 @@ import { ResponseInventoriesInfo } from '../../types/inventory';
 
 interface InventoryCardProps {
     inventory: ResponseInventoriesInfo;
-    index?: number;
 }
 
-const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory, index = 0 }) => {
+const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory }) => {
     const { id, title, imagePath, lists } = inventory;
     const navigate = useNavigate();
 
@@ -24,11 +23,8 @@ const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory, ind
                 }}
             />
 
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-white/85">
-                <span className="font-mono text-[10.5px] tracking-[0.25em]">
-                    INVENTARIO · {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="size-1.5 rounded-full bg-accent" />
+            <div className="absolute top-4 right-4">
+                <span className="size-1.5 rounded-full bg-accent block" />
             </div>
 
             <div className="absolute inset-x-4 bottom-4 flex flex-col text-white">

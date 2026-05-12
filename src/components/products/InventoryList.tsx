@@ -17,8 +17,8 @@ const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories, c
 
   return (
     <div className={classname}>
-      {inventories.map((inventory, idx) => (
-        <InventoryCard key={inventory.id} inventory={inventory} index={idx} />
+      {inventories.map((inventory) => (
+        <InventoryCard key={inventory.id} inventory={inventory} />
       ))}
     </div>
   )
