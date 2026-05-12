@@ -6,10 +6,9 @@ import { ResponseInventoriesInfo } from '../../types/inventory'
 interface InventoryListProps {
   inventories: ResponseInventoriesInfo[];
   classname?: string;
-  isFixedSize?: boolean;
 }
 
-const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories, classname, isFixedSize = false }) => {
+const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories, classname }) => {
 
   if (!Array.isArray(inventories)) {
     console.error('Expected inventories to be an array, but got:', inventories);
@@ -18,8 +17,8 @@ const InventoryList: React.FC<InventoryListProps> = React.memo(({ inventories, c
 
   return (
     <div className={classname}>
-      {inventories.map((inventory) => (
-        <InventoryCard key={inventory.id} inventory={inventory} isFixedSize={isFixedSize} />
+      {inventories.map((inventory, idx) => (
+        <InventoryCard key={inventory.id} inventory={inventory} index={idx} />
       ))}
     </div>
   )

@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { GetQuotation, SendEmailQuotationRequest } from "../../types/Quotation";
 import Collapsible from "../collapsible/Collapsible";
 import useDeleteQuotation from "../../hooks/useDeleteQuotation";
 import Button from "../Button";
 import useSendEmailQuotation from "../../hooks/useSendEmailQuotation";
 import useGenerateQuotationPdf from "../../hooks/useGeneratePdfQuotation";
+import { CurrencyUtils } from "../../util/currencyUtils";
+import { QuotationUtils } from "../../util/quotationUtils";
 
 interface QuotationTableProps {
     quotations: GetQuotation[];
-    username: string,
+    username: string;
 }
 
 const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username }) => {
@@ -25,20 +27,20 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
     const { mutate: sendEmailQuotation } = useSendEmailQuotation({username});
     const { mutate: downloadPdf, isPending } = useGenerateQuotationPdf();
 
-    const handleDeleteQuotation = (quotationId: string) => {
+    const handleDeleteQuotation = useCallback((quotationId: string) => {
       deleteQuotation(quotationId);
-    };
+    }, [deleteQuotation]);
 
-    const handleSendEmailQuotation = (quotationId: string) => {
+    const handleSendEmailQuotation = useCallback((quotationId: string) => {
       const sendEmailQuotationRequest: SendEmailQuotationRequest = {quotationId};
       sendEmailQuotation(sendEmailQuotationRequest);
-    }
+    }, [sendEmailQuotation]);
 
-    const handleDownloadPdfQuotation = (quotationId: string) => {
+    const handleDownloadPdfQuotation = useCallback((quotationId: string) => {
       downloadPdf(quotationId);
-    }
+    }, [downloadPdf]);
 
-    const trigger = ({ isOpen, quotation }: {isOpen: boolean, quotation: GetQuotation}): React.ReactNode => {
+    const renderTrigger = useCallback(({ isOpen, quotation }: {isOpen: boolean, quotation: GetQuotation}): React.ReactNode => {
         return(
           <div
             className={`flex justify-between items-center p-4 rounded-lg cursor-pointer transition shadow-sm border border-gray-200 hover:bg-blue-50 focus:bg-blue-100 outline-none ring-0 ${
@@ -61,9 +63,9 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
             <div className="text-2xl text-blue-500">{isOpen ? "▲" : "▼"}</div>
           </div>
         );
-    };
+    }, [quotations]);
 
-    const content = ({ quotation }: { quotation: GetQuotation }): React.ReactNode => {
+    const renderContent = useCallback(({ quotation }: { quotation: GetQuotation }): React.ReactNode => {
         // Calculate total cost
         const total = quotation.addProductToQuotations.reduce((sum, product) => {
             return sum + product.subtotal;
@@ -80,34 +82,34 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
                   <th className="p-2 border text-blue-900">Producto</th>
                   <th className="p-2 border text-blue-900">Color</th>
                   <th className="p-2 border text-blue-900">Marca</th>
-                  <th className="p-2 border text-blue-900">Alto</th>
-                  <th className="p-2 border text-blue-900">Ancho</th>
-                  <th className="p-2 border text-blue-900">Precio U. Marcación</th>
-                  <th className="p-2 border text-blue-900">Precio U. Producto</th>
+                  <th className="p-2 border text-blue-900">Tamaño</th>
+                  <th className="p-2 border text-blue-900">Precio Unitario</th>
                   <th className="p-2 border text-blue-900">Cantidad</th>
                   <th className="p-2 border text-blue-900">Subtotal</th>
                 </tr>
               </thead>
               <tbody>
                 {quotation.addProductToQuotations.map((product) => {
+                  const printName = product.printName;
+                  const isCustomPrint = printName !== "";
+                  const unitPrice = QuotationUtils.calculateUnitPrice(product.productPrice, product.printPrice, product.isPrintPersonalizable, product.width ?? 0, product.height ?? 0, printName);
+
                   return (
                     <tr key={product.id} className="text-center even:bg-blue-50 hover:bg-blue-100 transition text-gray-800">
                     <td className="p-2 border whitespace-nowrap">{product.productName}</td>
                     <td className="p-2 border whitespace-nowrap">{product.colorName}</td>
                     <td className="p-2 border whitespace-nowrap">{product.printName || 'No Aplica'}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.height === 0 ? 'No Aplica' : product.height}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.width === 0 ? 'No Aplica' : product.width}</td>
-                    <td className="p-2 border whitespace-nowrap">{product.printPrice > 0 ? `$${product.printPrice.toFixed(2)}` : "No Aplica"}</td>
-                    <td className="p-2 border whitespace-nowrap">${product.productPrice.toFixed(2)}</td>
+                    <td className="p-2 border whitespace-nowrap">{isCustomPrint ? product.height + " cm " + " x " + product.width + " cm" : "No Aplica" }</td>
+                    <td className="p-2 border whitespace-nowrap">{CurrencyUtils.convertNumberToCurrency(unitPrice)}</td>
                     <td className="p-2 border whitespace-nowrap">{product.quantity}</td>
-                    <td className="p-2 border font-semibold whitespace-nowrap">${product.subtotal.toFixed(2)}</td>
+                    <td className="p-2 border font-semibold whitespace-nowrap">{CurrencyUtils.convertNumberToCurrency(product.subtotal)}</td>
                   </tr>
                   );
                 })}
               </tbody>
             </table>
             <div className="flex flex-col items-center mt-4 gap-2 pb-4">
-                <span className="font-bold text-lg text-blue-900 mb-2">Total: ${total.toFixed(2)}</span>
+                <span className="font-bold text-lg text-blue-900 mb-2">Total: {CurrencyUtils.convertNumberToCurrency(total)}</span>
                 <div className="flex flex-wrap justify-center gap-2">
                   {status === "CREATED" && (
                     <>
@@ -140,7 +142,7 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
             </div>
           </div>
         );
-    };
+    }, [handleDeleteQuotation, handleSendEmailQuotation, handleDownloadPdfQuotation, quotations]);
     
     return(
         <div className="space-y-4">
@@ -152,8 +154,8 @@ const QuotationTable: React.FC<QuotationTableProps> = ({ quotations, username })
                         key={quotation.quotationId}
                         isOpen={isOpen}
                         onToggle={(open) => handleToggle(index, open)}
-                        trigger={trigger({isOpen, quotation})}
-                        content={content({quotation})}
+                        trigger={renderTrigger({isOpen, quotation})}
+                        content={renderContent({quotation})}
                     />
                 );
             })}

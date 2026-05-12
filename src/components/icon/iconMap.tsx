@@ -249,6 +249,78 @@ const SearchSvgIcon: SVGIconComponent = (props) => {
   );
 };
 
+const WhatsappSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.WHATSAPP} />
+    </svg>
+  );
+};
+
+const PhoneSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.PHONE} />
+    </svg>
+  );
+};
+
+const MailSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.MAIL} />
+    </svg>
+  );
+};
+
+const MapPinSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.MAP_PIN} />
+    </svg>
+  );
+};
+
+const ArrowRightSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.ARROW_RIGHT} />
+    </svg>
+  );
+};
+
+const ArrowUpRightSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.ARROW_UP_RIGHT} />
+    </svg>
+  );
+};
+
+const CheckSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={SVG_PATHS.CHECK} />
+    </svg>
+  );
+};
+
+const SparkSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "currentColor", viewBox = "0 0 24 24", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} viewBox={viewBox} {...rest}>
+      <path d={SVG_PATHS.SPARK} />
+    </svg>
+  );
+};
+
 const iconSvgMap: Record<string, SVGIconComponent> = {
     user: UserSvgIcon,
     plus: PlusSvgIcon,
@@ -265,6 +337,118 @@ const iconSvgMap: Record<string, SVGIconComponent> = {
     toggle: ToggleSvgIcon,
     close: CloseSvgIcon,
     search: SearchSvgIcon,
+    whatsapp: WhatsappSvgIcon,
+    phone: PhoneSvgIcon,
+    mail: MailSvgIcon,
+    map: MapPinSvgIcon,
+    arrowRight: ArrowRightSvgIcon,
+    arrowUpRight: ArrowUpRightSvgIcon,
+    check: CheckSvgIcon,
+    spark: SparkSvgIcon,
+    minus: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={SVG_PATHS.MINUS} />
+        </svg>
+      );
+    },
+    heart: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.HEART} />
+        </svg>
+      );
+    },
+    share: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.SHARE} />
+        </svg>
+      );
+    },
+    cart: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.CART} />
+        </svg>
+      );
+    },
+    chevronRight: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.CHEVRON_RIGHT} />
+        </svg>
+      );
+    },
+    lock: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.LOCK} />
+        </svg>
+      );
+    },
+    shield: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.SHIELD} />
+        </svg>
+      );
+    },
+    at: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.AT} />
+        </svg>
+      );
+    },
+    building: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.BUILDING} />
+        </svg>
+      );
+    },
+    upload: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.UPLOAD} />
+        </svg>
+      );
+    },
+    file: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.FILE} />
+        </svg>
+      );
+    },
+    fileText: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.FILE_TEXT} />
+        </svg>
+      );
+    },
+    logout: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.LOGOUT} />
+        </svg>
+      );
+    },
 }
 
 export default iconSvgMap;

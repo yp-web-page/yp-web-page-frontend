@@ -1,4 +1,4 @@
-enum QuotationStatus {
+export enum QuotationStatus {
     CREATED,
     COMPLETED,
     CANCELED,
@@ -16,6 +16,7 @@ export interface AddProductToQuotation {
     width: number | null,
     height: number | null,
     subtotal: number,
+    isPrintPersonalizable: boolean
 };
 
 export interface GetQuotation {

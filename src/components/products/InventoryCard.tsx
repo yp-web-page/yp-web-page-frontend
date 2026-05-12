@@ -1,67 +1,69 @@
-import React from 'react'
-
-import { Link, useNavigate } from 'react-router-dom'
-
-import Button from '../Button'
-import { ResponseInventoriesInfo } from '../../types/inventory'
-import { BUTTON_DESIGN } from '../../constants/buttonDesign'
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../Button';
+import Icon from '../icon/Icon';
+import { ResponseInventoriesInfo } from '../../types/inventory';
 
 interface InventoryCardProps {
-  inventory: ResponseInventoriesInfo
-  isFixedSize?: boolean
+    inventory: ResponseInventoriesInfo;
+    index?: number;
 }
 
-const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory: { id, title, imagePath, lists }, isFixedSize = false }) => {
+const InventoryCard: React.FC<InventoryCardProps> = React.memo(({ inventory, index = 0 }) => {
+    const { id, title, imagePath, lists } = inventory;
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const handleExplore = () => navigate(`/inventario/${id}`);
 
-  const handleClickButton = () => {
-    navigate(`/inventario/${id}`)
-  };
+    return (
+        <div className="group relative aspect-square rounded-2xl overflow-hidden card-shadow hover-lift bg-yp-deep">
+            <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                    backgroundImage: `linear-gradient(180deg, rgba(0,31,54,0.35) 0%, rgba(0,31,54,0.85) 100%), url(${imagePath})`,
+                }}
+            />
 
-  const cardClasses = isFixedSize 
-    ? "bg-cover bg-center bg-no-repeat h-80 w-80 flex flex-col pl-5 justify-end"
-    : "bg-cover bg-center bg-no-repeat h-40 xl:h-90 xl:w-90 lg:h-80 lg:w-80 md:w-60 md:h-60 sm:w-50 sm:h-50 flex flex-col pl-2 md:pl-5 justify-end";
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-white/85">
+                <span className="font-mono text-[10.5px] tracking-[0.25em]">
+                    INVENTARIO · {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="size-1.5 rounded-full bg-accent" />
+            </div>
 
-  return (
-    <div className={cardClasses} style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imagePath})` }}>
-      <h1 className={`text-left font-bold w-full uppercase mb-2 ${isFixedSize ? 'text-xl' : 'text-xxs sm:text-xs xl:text-xl lg:text-base md:text-sm'}`}>
-        {title}
-      </h1>
-      
-      <div className="w-full pb-3 pl-3.5 sm:pl-5">
-        {
-          lists.map((item) => (
-            <ul key={item.id} className={`list-disc text-left ${isFixedSize ? '-my-1' : '-my-2.5 sm:-my-2.5 lg:-my-1 md:-my-2'}`}>
-              <li className={`text-gray-200 marker:text-white ${isFixedSize ? 'marker:text-base' : 'marker:text-xxs md:marker:text-xs lg:marker:text-sm xl:marker:text-base'}`}>
-                <Link 
-                  to={`/inventario/${id}`} 
-                  state={{ listId: item.id }} 
-                  className={`inline-block text-gray-200 hover:text-white ${isFixedSize ? 'text-base' : 'text-xxs md:text-xs lg:text-sm xl:text-base'}`}
-                  style={{ lineHeight: '0.9' }}
+            <div className="absolute inset-x-4 bottom-4 flex flex-col text-white">
+                <h3 className="font-display font-extrabold text-2xl uppercase leading-tight mb-3">{title}</h3>
+
+                {lists.length > 0 && (
+                    <ul className="grid gap-1 mb-4">
+                        {lists.slice(0, 5).map((item) => (
+                            <li key={item.id} className="flex items-center gap-2 text-[13px] text-white/80 hover:text-white">
+                                <span className="text-accent">•</span>
+                                <Link
+                                    to={`/inventario/${id}`}
+                                    state={{ listId: item.id }}
+                                    className="transition-colors"
+                                >
+                                    {item.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                <Button
+                    type="button"
+                    onClick={handleExplore}
+                    className="inline-flex items-center justify-center gap-2 bg-accent text-yp-deep font-semibold text-[12.5px] px-4 py-2.5 rounded-full hover:brightness-95 transition w-fit"
                 >
-                  {item.name}
-                </Link>
-              </li>
-            </ul>
-          ))
-        }
-      </div>
-      
-      <div className={`flex justify-start items-start ${isFixedSize ? 'mb-7 mt-2' : 'mb-2 mt-1 xl:mb-7 xl:mt-2 lg:mb-5 lg:mt-2 md:mb-3 md:mt-1'}`}>
-        <Button 
-          type="button" 
-          className={`${isFixedSize 
-            ? 'blue-deep-gradient text-white font-bold uppercase text-base w-30 h-12 px-6 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out' 
-            : BUTTON_DESIGN.EXPLORER_BUTTON}`}
-          onClick={handleClickButton}
-        >
-          Explorar
-        </Button>
-      </div>
-      
-    </div>
-  )
-})
+                    Explorar
+                    <Icon name="arrowRight" className="h-3.5 w-3.5" />
+                </Button>
+            </div>
+        </div>
+    );
+});
 
-export default InventoryCard
+InventoryCard.displayName = 'InventoryCard';
+
+export default InventoryCard;

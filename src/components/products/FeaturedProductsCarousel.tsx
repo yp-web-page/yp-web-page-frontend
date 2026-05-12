@@ -9,81 +9,66 @@ import 'swiper/css/pagination';
 const FeaturedProductsCarousel: React.FC = () => {
   const { data, isLoading, error } = useGetFeaturedProducts();
 
-  if (isLoading) return <div>Cargando productos...</div>;
-  if (error) return <div>Error al cargar los productos</div>;
-  if (!data?.products?.length) return <div>No hay productos destacados</div>;
-
   return (
-    <div className="w-full bg-white py-8">
-      <div className="w-full px-4 max-w-7xl mx-auto">
-        <style>
-          {`
-            .swiper-pagination-bullet {
-              width: 10px;
-              height: 10px;
-              background-color: #D1D5DB;
-              opacity: 1;
-              transition: all 0.3s ease;
-            }
-            .swiper-pagination-bullet-active {
-              background-color: #2563EB;
-              width: 24px;
-              border-radius: 5px;
-            }
-            .swiper-pagination {
-              bottom: 0 !important;
-            }
-            .swiper-slide {
-              height: auto;
-              display: flex;
-              justify-content: center;
-            }
-            .swiper {
-              padding: 0 1rem;
-            }
-          `}
-        </style>
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={24}
-          slidesPerView={1}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          breakpoints={{
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 16,
-            },
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 24,
-            },
-            1280: {
-              slidesPerView: 4,
-              spaceBetween: 24,
-            }
-          }}
-          className="w-full"
-        >
-          {data.products.map((product) => (
-            <SwiperSlide key={product.id} className='py-4 px-2 sm:px-4 flex justify-center'>
-              <ProductCard product={product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+    <section id="productos" className="py-20 lg:py-28 bg-white border-y border-yp-line">
+      <div className="max-w-[1400px] mx-auto px-6">
+        <div className="mb-10 max-w-[640px]">
+          <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
+            <span className="size-1.5 rounded-full bg-yp-bright" /> PRODUCTOS DESTACADOS
+          </div>
+          <h2 className="font-display font-black text-[40px] lg:text-[56px] leading-[1.02] mt-3 text-yp-deep tracking-tight">
+            Listos para producir hoy.
+          </h2>
+          <p className="mt-3 text-[15px] text-yp-muted max-w-[520px]">
+            Los favoritos de nuestros clientes. Personalizables al 100% con tu logo, colores y arte.
+          </p>
+        </div>
+
+        {isLoading && <div className="text-yp-muted">Cargando productos...</div>}
+        {error && <div className="text-red-500">Error al cargar los productos</div>}
+        {!isLoading && !error && !data?.products?.length && (
+          <div className="text-yp-muted">No hay productos destacados</div>
+        )}
+
+        {!!data?.products?.length && (
+          <>
+            <style>
+              {`
+                .featured-carousel .swiper-pagination-bullet {
+                  width: 10px; height: 10px; background-color: var(--color-yp-line); opacity: 1; transition: all 0.3s ease;
+                }
+                .featured-carousel .swiper-pagination-bullet-active {
+                  background-color: var(--color-yp-bright); width: 28px; border-radius: 5px;
+                }
+                .featured-carousel .swiper-pagination { bottom: 0 !important; position: static !important; margin-top: 2rem; }
+                .featured-carousel .swiper-slide { height: auto; display: flex; justify-content: center; }
+              `}
+            </style>
+            <Swiper
+              modules={[Autoplay, Pagination]}
+              spaceBetween={20}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              breakpoints={{
+                0: { slidesPerView: 1, spaceBetween: 16 },
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 20 },
+                1280: { slidesPerView: 4, spaceBetween: 20 },
+              }}
+              className="featured-carousel w-full"
+            >
+              {data.products.map((product) => (
+                <SwiperSlide key={product.id} className="py-4">
+                  <ProductCard product={product} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
-export default FeaturedProductsCarousel
+export default FeaturedProductsCarousel;
