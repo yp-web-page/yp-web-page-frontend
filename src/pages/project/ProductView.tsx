@@ -44,7 +44,7 @@ const ProductView: React.FC = () => {
         <main className="bg-yp-paper">
             {/* Breadcrumb */}
             <div className="bg-white border-b border-yp-line">
-                <div className="max-w-[1400px] mx-auto px-6 py-3.5 flex items-center gap-2 text-[11px] font-mono tracking-[0.18em] text-yp-muted">
+                <div className="max-w-[1400px] mx-auto px-6 py-3.5 flex items-center gap-2 text-[11px] tracking-[0.18em] text-yp-muted">
                     <Link to="/" className="hover:text-yp-bright transition">INICIO</Link>
                     <Icon name="chevronRight" className="h-3 w-3" />
                     <Link to="/inventarios" className="hover:text-yp-bright transition">PRODUCTOS</Link>
@@ -65,12 +65,12 @@ const ProductView: React.FC = () => {
                                     className="absolute inset-0 w-full h-full object-contain p-8"
                                 />
                             ) : (
-                                <div className="absolute inset-0 grid place-items-center font-mono text-[12px] tracking-[0.25em] text-yp-deep/40">
+                                <div className="absolute inset-0 grid place-items-center text-[12px] tracking-[0.25em] text-yp-deep/40">
                                     SIN IMAGEN
                                 </div>
                             )}
                             <div className="absolute top-4 left-4 flex flex-col gap-2">
-                                <span className="bg-accent text-yp-deep font-mono text-[10px] tracking-[0.18em] px-2.5 py-1 rounded-full font-bold">
+                                <span className="bg-accent text-yp-deep text-[10px] tracking-[0.18em] px-2.5 py-1 rounded-full font-bold">
                                     ENTREGA 24H
                                 </span>
                             </div>
@@ -95,7 +95,7 @@ const ProductView: React.FC = () => {
 
                     {/* Info */}
                     <div className="lg:col-span-6">
-                        <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.2em] text-yp-bright">
+                        <div className="flex items-center gap-3 text-[11px] tracking-[0.2em] text-yp-bright">
                             <span className="size-1.5 rounded-full bg-yp-bright" /> PRODUCTO
                             <span className="text-yp-line">·</span>
                             <span className="text-yp-muted">SKU {productId.slice(0, 8).toUpperCase()}</span>
@@ -132,7 +132,7 @@ const ProductView: React.FC = () => {
                         {/* Price */}
                         {product.price && (
                             <div className="mt-7">
-                                <div className="font-mono text-[10px] tracking-[0.25em] text-yp-muted mb-1">PRECIO UNITARIO</div>
+                                <div className="text-[10px] tracking-[0.25em] text-yp-muted mb-1">PRECIO UNITARIO</div>
                                 <div className="font-display font-black text-[30px] lg:text-[34px] leading-none text-yp-deep tracking-tight">
                                     {product.price}
                                 </div>
@@ -144,13 +144,13 @@ const ProductView: React.FC = () => {
                         {colors.length > 0 && (
                             <div className="mt-7">
                                 <div className="flex items-center justify-between mb-3">
-                                    <div className="font-mono text-[10px] tracking-[0.25em] text-yp-muted">
+                                    <div className="text-[10px] tracking-[0.25em] text-yp-muted">
                                         COLOR ·{' '}
                                         <span className="text-yp-deep font-semibold normal-case tracking-normal">
                                             {selectedColor?.name || 'selecciona'}
                                         </span>
                                     </div>
-                                    <div className="font-mono text-[10px] tracking-[0.2em] text-yp-muted">
+                                    <div className="text-[10px] tracking-[0.2em] text-yp-muted">
                                         {colors.length} OPCIONES
                                     </div>
                                 </div>
@@ -278,7 +278,7 @@ const SpecRow: React.FC<{ label: string; value?: string | null; last?: boolean }
     if (!value) return null;
     return (
         <div className={`grid grid-cols-12 gap-4 py-3 ${last ? '' : 'border-b border-yp-line'}`}>
-            <div className="col-span-5 lg:col-span-4 font-mono text-[10.5px] tracking-[0.2em] text-yp-muted uppercase pt-0.5">
+            <div className="col-span-5 lg:col-span-4 text-[10.5px] tracking-[0.2em] text-yp-muted uppercase pt-0.5">
                 {label}
             </div>
             <div className="col-span-7 lg:col-span-8 text-[14px] text-yp-deep">{value}</div>
