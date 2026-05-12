@@ -121,14 +121,14 @@ const Hero: React.FC = () => {
 
             <div className="border-t border-white/10 bg-[#001428]/40 backdrop-blur">
                 <div className="max-w-[1400px] mx-auto px-6 py-5 overflow-hidden marquee-mask">
-                    <div className="flex items-center gap-10 whitespace-nowrap text-white/60 text-[12px] tracking-[0.18em]">
+                    <div className="ticker flex items-center gap-10 whitespace-nowrap text-white/60 text-[12px] tracking-[0.18em] w-max">
                         {Array.from({ length: 2 }).map((_, dup) => (
-                            <div key={dup} className="flex items-center gap-10">
+                            <div key={dup} className="flex items-center gap-10 shrink-0">
                                 {TRUST_ITEMS.map((t) => (
-                                    <span key={t + dup} className="inline-flex items-center gap-2">
-                                        <Icon name="spark" className="h-3.5 w-3.5 text-accent" />
-                                        {t}
-                                        <span className="opacity-30 ml-10">●</span>
+                                    <span key={t + dup} className="inline-flex items-center gap-3">
+                                        <Icon name="spark" className="h-3.5 w-3.5 text-accent" fill="none" />
+                                        <span>{t}</span>
+                                        <span className="opacity-30 ml-3">●</span>
                                     </span>
                                 ))}
                             </div>

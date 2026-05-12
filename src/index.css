@@ -113,6 +113,20 @@
           mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker {
+  animation: ticker-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+.ticker:hover {
+  animation-play-state: paused;
+}
+
 .yp-label {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
