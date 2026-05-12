@@ -7,9 +7,9 @@ import FeaturedProductsCarousel from '../../components/products/FeaturedProducts
 const HomePage: React.FC = () => (
     <>
         <Hero />
+        <FeaturedProductsCarousel />
         <Services />
         <Process />
-        <FeaturedProductsCarousel />
     </>
 );
 
