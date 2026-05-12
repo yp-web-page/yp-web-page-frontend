@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-5 relative">
-                    <div className="relative aspect-[5/6] rounded-3xl overflow-hidden ring-1 ring-white/10 bg-yp-paper">
+                    <div className="relative aspect-[5/6] rounded-3xl overflow-hidden ring-1 ring-white/10">
                         {imageUrl ? (
                             <img
                                 key={imageUrl}
@@ -126,7 +126,7 @@ const Hero: React.FC = () => {
                                 loading="eager"
                             />
                         ) : (
-                            <div className="absolute inset-0 grid place-items-center font-mono text-[11px] tracking-[0.3em] text-yp-deep/55">
+                            <div className="absolute inset-0 grid place-items-center bg-yp-paper font-mono text-[11px] tracking-[0.3em] text-yp-deep/55">
                                 {s.placeholder}
                             </div>
                         )}
