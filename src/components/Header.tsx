@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { SOCIAL_NETWORKS, CONTACT_INFO } from '../constants/social_networks';
+import { SOCIAL_NETWORKS } from '../constants/social_networks';
 import { useModal } from '../context/ModalContext';
 import Icon from './icon/Icon';
 import Button from './Button';
@@ -19,51 +19,6 @@ const SOCIAL_ICONS = [
     { name: 'instagram', href: SOCIAL_NETWORKS.INSTAGRAM },
     { name: 'whatsapp', href: SOCIAL_NETWORKS.WHATSAPP },
 ];
-
-const TopStrip = () => (
-    <div className="bg-yp-deep text-white/80 text-[11px] tracking-wide">
-        <div className="max-w-[1400px] mx-auto px-6 py-1.5 flex items-center justify-between">
-            <div className="flex items-center gap-5">
-                <a href={CONTACT_INFO.PHONE_HREF} className="hidden md:inline-flex items-center gap-1.5 hover:text-white transition">
-                    <Icon name="phone" className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24" />
-                    {CONTACT_INFO.PHONE}
-                </a>
-                <a href={CONTACT_INFO.WHATSAPP_HREF} target="_blank" rel="noreferrer" className="hidden md:inline-flex items-center gap-1.5 hover:text-white transition">
-                    <Icon name="whatsapp" className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24" />
-                    {CONTACT_INFO.WHATSAPP_NUMBER}
-                </a>
-                <a href={CONTACT_INFO.EMAIL_HREF} className="hidden md:inline-flex items-center gap-1.5 hover:text-white transition">
-                    <Icon name="mail" className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24" />
-                    {CONTACT_INFO.EMAIL}
-                </a>
-                <span className="md:hidden">Servicio Cali &amp; Nacional</span>
-            </div>
-            <div className="hidden lg:flex items-center gap-4">
-                <span className="inline-flex items-center gap-1.5">
-                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Cotiza online en 60s
-                </span>
-                <span className="text-white/30">|</span>
-                <span>{CONTACT_INFO.HOURS_SHORT}</span>
-                <span className="text-white/30">|</span>
-                <div className="flex items-center gap-1">
-                    {SOCIAL_ICONS.map((s) => (
-                        <a
-                            key={s.name}
-                            href={s.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label={s.name}
-                            className="size-6 grid place-items-center rounded-full hover:bg-white/15 text-white/75 hover:text-white transition"
-                        >
-                            <Icon name={s.name} className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24" />
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </div>
-    </div>
-);
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -96,7 +51,6 @@ const Header: React.FC = () => {
 
     return (
         <header className="sticky top-0 z-40">
-            <TopStrip />
             <div className={`yp-gradient text-white border-b border-white/10 transition-all ${scrolled ? 'shadow-2xl' : ''}`}>
                 <nav className="max-w-[1400px] mx-auto px-6">
                     <div className="flex items-center justify-between h-16 lg:h-[72px]">
