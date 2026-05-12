@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 const PAGES: Array<{ name: string; path: string }> = [
   { name: 'home', path: '/' },
   { name: 'inventories', path: '/inventarios' },
+  { name: 'inventory-detail', path: '/inventario/1' },
   { name: 'who-are', path: '/quienes-somos' },
   { name: 'contact', path: '/contactanos' },
 ];
