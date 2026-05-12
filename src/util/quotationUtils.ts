@@ -69,11 +69,11 @@ const calculateTotalPrice = ({
 
 const parsePrintingArea = (area?: string) => {
     if (!area) return { height: 0, width: 0 };
-    const match = area.match(/(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)/);
-    return {
-        height: match ? parseFloat(match[1]) : 0,
-        width: match ? parseFloat(match[2]) : 0,
-    }
+    // Accept "8x0.7", "8 x 0,7 cm.", "20 × 15", "20*15", etc.
+    const match = area.match(/(\d+(?:[.,]\d+)?)\s*[x×X*]\s*(\d+(?:[.,]\d+)?)/);
+    if (!match) return { height: 0, width: 0 };
+    const toNum = (s: string) => parseFloat(s.replace(',', '.'));
+    return { height: toNum(match[1]), width: toNum(match[2]) };
 }
 
 const calculateUnitPrice = (
