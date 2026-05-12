@@ -9,8 +9,8 @@ type Slide = { tag: string; title: string; sub: string; placeholder: string };
 const SLIDES: Slide[] = [
     {
         tag: 'IMPRESIÓN DTF UV',
-        title: 'Color que se queda. Detalle que se ve.',
-        sub: 'Producción profesional con acabados premium para marcas, talleres y agencias.',
+        title: 'Corte y Grabado Láser',
+        sub: 'Ofrecemos servicio de corte láser y grabado sobre diferentes sustratos como metal, madera, cuero, plástico y vidrio. Contamos con equipos Trotec, IPG y Epilog y una robusta experiencia que te garantizará la máxima calidad del mercado.',
         placeholder: 'DTF · CABEZOTE',
     },
     {
