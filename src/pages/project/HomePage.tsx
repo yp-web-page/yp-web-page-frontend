@@ -1,23 +1,16 @@
 import React from 'react';
-import Carousel from '../../components/Carousel';
-import ServiceInformation from '../../components/ServiceInformation.tsx';
-import TitleDivider from '../../components/TitleDivider.tsx';
-import FavoriteInventoryList from '../../components/homepage/FavoriteInventoryList.tsx';
-import FeaturedProductsCarousel from '../../components/products/FeaturedProductsCarousel.tsx';
+import Hero from '../../components/homepage/Hero';
+import Services from '../../components/homepage/Services';
+import Process from '../../components/homepage/Process';
+import FeaturedProductsCarousel from '../../components/products/FeaturedProductsCarousel';
 
-const HomePage: React.FC = () => {
-
-  return (
-    <div>
-      <Carousel />
-      <TitleDivider title="NUESTROS SERVICIOS"/>
-      <ServiceInformation />
-      <TitleDivider title="NUESTROS PRODUCTOS" />
-      <FavoriteInventoryList />
-      <TitleDivider title='PRODUCTOS DESTACADOS' />
-      <FeaturedProductsCarousel />
-    </div>
-  );
-}
+const HomePage: React.FC = () => (
+    <>
+        <Hero />
+        <Services />
+        <Process />
+        <FeaturedProductsCarousel />
+    </>
+);
 
 export default HomePage;

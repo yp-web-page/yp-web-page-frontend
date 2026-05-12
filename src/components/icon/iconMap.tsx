@@ -294,6 +294,33 @@ const ArrowRightSvgIcon: SVGIconComponent = (props) => {
   );
 };
 
+const ArrowUpRightSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.ARROW_UP_RIGHT} />
+    </svg>
+  );
+};
+
+const CheckSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={SVG_PATHS.CHECK} />
+    </svg>
+  );
+};
+
+const SparkSvgIcon: SVGIconComponent = (props) => {
+  const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+  return (
+    <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d={SVG_PATHS.SPARK} />
+    </svg>
+  );
+};
+
 const iconSvgMap: Record<string, SVGIconComponent> = {
     user: UserSvgIcon,
     plus: PlusSvgIcon,
@@ -315,6 +342,9 @@ const iconSvgMap: Record<string, SVGIconComponent> = {
     mail: MailSvgIcon,
     map: MapPinSvgIcon,
     arrowRight: ArrowRightSvgIcon,
+    arrowUpRight: ArrowUpRightSvgIcon,
+    check: CheckSvgIcon,
+    spark: SparkSvgIcon,
 }
 
 export default iconSvgMap;
