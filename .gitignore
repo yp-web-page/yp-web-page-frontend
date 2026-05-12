@@ -38,3 +38,12 @@ bower_components
 psd
 thumb
 sketch
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Claude
+.claude/
