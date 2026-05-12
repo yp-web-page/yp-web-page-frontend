@@ -21,7 +21,7 @@ const SLIDES: Slide[] = [
     },
     {
         tag: 'IMPRESIÓN UV SOBRE RÍGIDOS',
-        title: 'Tu idea sobre cualquier superficie.',
+        title: 'Gafetes identificadores',
         sub: 'Vidrio, metal, madera, acrílico — impresión directa con tinta UV-LED.',
         placeholder: 'UV · CABEZOTE',
     },
