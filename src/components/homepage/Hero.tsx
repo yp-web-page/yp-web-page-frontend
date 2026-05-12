@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
             <div className="absolute inset-0 grid-bg opacity-60 pointer-events-none" />
             <div className="absolute -top-40 -right-32 w-[520px] h-[520px] rounded-full bg-accent blur-3xl opacity-15" />
 
-            <div className="max-w-[1400px] mx-auto px-6 pt-14 pb-20 lg:pt-20 lg:pb-28 grid lg:grid-cols-12 gap-10 items-center relative">
+            <div className="max-w-[1400px] mx-auto px-6 pt-4 pb-8 lg:pt-6 lg:pb-10 grid lg:grid-cols-12 gap-10 items-center relative">
                 <div className="lg:col-span-7" key={i}>
                     <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] tracking-[0.2em] text-white/85 mb-6 bg-white/10 border border-white/15">
                         <span className="size-1.5 rounded-full bg-accent" /> {s.tag}
