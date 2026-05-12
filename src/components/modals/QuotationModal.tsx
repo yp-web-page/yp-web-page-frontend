@@ -72,10 +72,18 @@ const QuotationModal: React.FC<QuotationModalProps> = ({ isOpen, onClose, produc
         [openModal],
     );
 
-    const { width: maxW, height: maxH } = useMemo(
-        () => QuotationUtils.parsePrintingArea(product?.printingArea),
-        [product?.printingArea],
-    );
+    const { width: maxW, height: maxH } = useMemo(() => {
+        const parsed = QuotationUtils.parsePrintingArea(product?.printingArea);
+        // Fallback to 30x30 cm if backend value is missing or unparseable so
+        // the sliders remain usable.
+        return {
+            width: parsed.width > 0 ? parsed.width : 30,
+            height: parsed.height > 0 ? parsed.height : 30,
+        };
+    }, [product?.printingArea]);
+
+    const sliderStep = (max: number) => (max < 5 ? 0.1 : 1);
+    const sliderMin = (max: number) => (max < 1 ? Math.min(0.1, max) : 1);
 
     // Unauth → notification + auto close
     useEffect(() => {
@@ -513,13 +521,17 @@ const QuotationModal: React.FC<QuotationModalProps> = ({ isOpen, onClose, produc
                                                 <div className="space-y-3">
                                                     <SizeRow
                                                         label="Ancho · cm"
-                                                        max={maxW || 1}
+                                                        min={sliderMin(maxW)}
+                                                        max={maxW}
+                                                        step={sliderStep(maxW)}
                                                         value={widthCm}
                                                         onChange={setWidthCm}
                                                     />
                                                     <SizeRow
                                                         label="Alto · cm"
-                                                        max={maxH || 1}
+                                                        min={sliderMin(maxH)}
+                                                        max={maxH}
+                                                        step={sliderStep(maxH)}
                                                         value={heightCm}
                                                         onChange={setHeightCm}
                                                     />
@@ -588,35 +600,43 @@ const QuotationModal: React.FC<QuotationModalProps> = ({ isOpen, onClose, produc
     return ReactDOM.createPortal(content, document.getElementById('modal-root') || document.body);
 };
 
-const SizeRow: React.FC<{ label: string; max: number; value: number; onChange: (v: number) => void }> = ({
-    label, max, value, onChange,
-}) => (
-    <div>
-        <div className="flex items-baseline justify-between mb-1.5">
-            <label className="text-[10px] tracking-[0.2em] uppercase text-yp-muted">{label}</label>
-            <span className="text-[10px] text-yp-muted">Máx · {max}cm</span>
+const SizeRow: React.FC<{
+    label: string;
+    min: number;
+    max: number;
+    step: number;
+    value: number;
+    onChange: (v: number) => void;
+}> = ({ label, min, max, step, value, onChange }) => {
+    const clamp = (n: number) => Math.max(min, Math.min(max, isNaN(n) ? min : n));
+    return (
+        <div>
+            <div className="flex items-baseline justify-between mb-1.5">
+                <label className="text-[10px] tracking-[0.2em] uppercase text-yp-muted">{label}</label>
+                <span className="text-[10px] text-yp-muted">Máx · {max}cm</span>
+            </div>
+            <div className="flex items-center gap-3">
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={clamp(value)}
+                    onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
+                    className="flex-1 accent-yp-deep"
+                />
+                <input
+                    type="number"
+                    value={clamp(value)}
+                    min={min}
+                    max={max}
+                    step={step}
+                    onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
+                    className="w-16 px-2 py-1.5 bg-yp-paper border border-yp-line rounded-lg text-center text-[13px] font-bold text-yp-deep focus:outline-none focus:border-yp-deep [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                />
+            </div>
         </div>
-        <div className="flex items-center gap-3">
-            <input
-                type="range"
-                min={1}
-                max={max}
-                value={value}
-                onChange={(e) => onChange(parseInt(e.target.value, 10))}
-                className="flex-1 accent-yp-deep"
-            />
-            <input
-                type="number"
-                value={value}
-                min={1}
-                max={max}
-                onChange={(e) =>
-                    onChange(Math.min(max, Math.max(1, parseInt(e.target.value, 10) || 1)))
-                }
-                className="w-16 px-2 py-1.5 bg-yp-paper border border-yp-line rounded-lg text-center text-[13px] font-bold text-yp-deep focus:outline-none focus:border-yp-deep [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-            />
-        </div>
-    </div>
-);
+    );
+};
 
 export default QuotationModal;
