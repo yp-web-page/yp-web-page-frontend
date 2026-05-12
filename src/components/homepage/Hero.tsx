@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-5 relative">
-                    <div className="relative aspect-[5/6] rounded-3xl overflow-hidden ring-1 ring-white/10">
+                    <div className="relative aspect-[5/6] overflow-hidden">
                         {imageUrl ? (
                             <img
                                 key={imageUrl}
