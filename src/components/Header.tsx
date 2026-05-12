@@ -131,15 +131,13 @@ const Header: React.FC = () => {
                                     <Icon name="profile" className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                                 </Button>
                             </div>
-                            <a
-                                href={CONTACT_INFO.WHATSAPP_HREF}
-                                target="_blank"
-                                rel="noreferrer"
+                            <Link
+                                to="/inventarios"
                                 className="hidden md:inline-flex items-center gap-2 ml-1 bg-accent text-yp-deep font-semibold text-[12.5px] px-4 py-2.5 rounded-full hover:brightness-95 transition"
                             >
                                 COTIZAR
                                 <Icon name="arrowRight" className="h-3.5 w-3.5" />
-                            </a>
+                            </Link>
                             <button
                                 onClick={toggleMenu}
                                 className="lg:hidden p-2 text-white"
@@ -160,15 +158,14 @@ const Header: React.FC = () => {
                         <div className="lg:hidden pb-4 grid gap-1">
                             {NAV_LINKS.map((link) => renderNavLink(link, mobileNavClass))}
                             {isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/cotizaciones' }, mobileNavClass)}
-                            <a
-                                href={CONTACT_INFO.WHATSAPP_HREF}
-                                target="_blank"
-                                rel="noreferrer"
+                            <Link
+                                to="/inventarios"
+                                onClick={() => setIsMenuOpen(false)}
                                 className="mt-2 inline-flex items-center justify-center gap-2 bg-accent text-yp-deep font-semibold text-[13px] px-4 py-3 rounded-full"
                             >
                                 COTIZAR AHORA
                                 <Icon name="arrowRight" className="h-3.5 w-3.5" />
-                            </a>
+                            </Link>
                             <div className="flex items-center gap-2 px-3 pt-3">
                                 {SOCIAL_ICONS.map((s) => (
                                     <a
