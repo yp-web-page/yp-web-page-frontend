@@ -8,19 +8,19 @@ type Slide = { tag: string; title: string; sub: string; placeholder: string };
 
 const SLIDES: Slide[] = [
     {
-        tag: 'IMPRESIÓN DTF UV',
-        title: 'Color que se queda. Detalle que se ve.',
-        sub: 'Producción profesional con acabados premium para marcas, talleres y agencias.',
+        tag: 'CORTE Y GRABADO LÁSER',
+        title: 'Corte y Grabado Láser',
+        sub: 'Ofrecemos servicio de corte láser y grabado sobre diferentes sustratos como metal, madera, cuero, plástico y vidrio. Contamos con equipos Trotec, IPG y Epilog y una robusta experiencia que te garantizará la máxima calidad del mercado.',
         placeholder: 'DTF · CABEZOTE',
     },
     {
-        tag: 'CORTE Y GRABADO LÁSER',
-        title: 'Cortes precisos. Grabados que enamoran.',
-        sub: 'Trabajamos acrílico, MDF, madera, cuero y más con tolerancia milimétrica.',
+        tag: 'IMPRESIÓN FULL COLOR SOBRE RÍGIDOS',
+        title: 'Impresión full color sobre rígidos',
+        sub: 'Contamos con tecnología UV-LED, que te permite marcar sustratos a full color como vidrio, plástico, madera y otros materiales tanto flexibles como rígidos.',
         placeholder: 'LÁSER · CABEZOTE',
     },
     {
-        tag: 'IMPRESIÓN UV SOBRE RÍGIDOS',
+        tag: 'GAFETES IDENTIFICADORES',
         title: 'Gafetes identificadores',
         sub: 'Vidrio, metal, madera, acrílico — impresión directa con tinta UV-LED.',
         placeholder: 'UV · CABEZOTE',
