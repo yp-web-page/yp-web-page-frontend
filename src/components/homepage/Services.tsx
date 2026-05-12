@@ -45,7 +45,7 @@ const SERVICES: Service[] = [
 ];
 
 const Services: React.FC = () => (
-    <section id="servicios" className="relative py-20 lg:py-28 bg-yp-paper">
+    <section id="servicios" className="relative py-20 lg:py-28 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 relative">
             <div className="flex items-end justify-between gap-6 mb-12 flex-wrap">
                 <div className="max-w-[640px]">

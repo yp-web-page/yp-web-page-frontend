@@ -10,7 +10,7 @@ const FeaturedProductsCarousel: React.FC = () => {
   const { data, isLoading, error } = useGetFeaturedProducts();
 
   return (
-    <section id="productos" className="py-20 lg:py-28 bg-white border-y border-yp-line">
+    <section id="productos" className="py-20 lg:py-28 bg-yp-paper border-y border-yp-line">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="mb-10 max-w-[640px]">
           <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">

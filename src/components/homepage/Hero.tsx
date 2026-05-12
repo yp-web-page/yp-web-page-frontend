@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
                             rel="noreferrer"
                             className="group inline-flex items-center gap-3 bg-accent text-yp-deep font-bold text-[14px] px-6 py-4 rounded-full hover:brightness-95 transition"
                         >
-                            COTIZAR EN 60 SEGUNDOS
+                            COTIZAR AHORA
                             <span className="size-7 rounded-full bg-yp-deep text-accent grid place-items-center group-hover:translate-x-0.5 transition">
                                 <Icon name="arrowRight" className="h-3.5 w-3.5" />
                             </span>
