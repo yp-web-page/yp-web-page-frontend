@@ -8,8 +8,8 @@ const HomePage: React.FC = () => (
     <>
         <Hero />
         <FeaturedProductsCarousel />
-        <Services />
         <Process />
+        <Services />
     </>
 );
 
