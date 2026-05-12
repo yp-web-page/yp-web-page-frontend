@@ -409,6 +409,30 @@ const iconSvgMap: Record<string, SVGIconComponent> = {
         </svg>
       );
     },
+    building: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.BUILDING} />
+        </svg>
+      );
+    },
+    upload: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.UPLOAD} />
+        </svg>
+      );
+    },
+    file: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={SVG_PATHS.FILE} />
+        </svg>
+      );
+    },
 }
 
 export default iconSvgMap;
