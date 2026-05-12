@@ -10,8 +10,6 @@ import { CONTACT_INFO } from '../../constants/social_networks';
 const Inventories: React.FC = () => {
     const { data: inventories, isLoading, isError, error } = useGetAllInventoriesInfo();
 
-    const totalLists = (inventories || []).reduce((acc, inv) => acc + (inv.lists?.length || 0), 0);
-
     return (
         <>
             {/* Hero */}
@@ -23,31 +21,9 @@ const Inventories: React.FC = () => {
                         <span>›</span>
                         <span className="text-white">CATÁLOGO</span>
                     </nav>
-                    <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] tracking-[0.2em] text-white/85 mb-6 bg-white/10 border border-white/15">
-                        <span className="size-1.5 rounded-full bg-accent" /> CATÁLOGO COMPLETO
-                    </div>
                     <h1 className="font-display font-black text-[40px] lg:text-[60px] leading-[1.02] tracking-tight max-w-[820px]">
                         Catálogo de artículos publicitarios.
                     </h1>
-                    <p className="mt-4 text-white/70 text-[15px] lg:text-[16px] max-w-[620px] leading-relaxed">
-                        Explora nuestros inventarios y sublistas. Personalizamos cada producto con tu marca, colores y arte.
-                    </p>
-                    <div className="mt-8 flex flex-wrap items-center gap-8 text-white/80">
-                        <div>
-                            <div className="font-display font-black text-3xl text-accent">{inventories?.length ?? '—'}</div>
-                            <div className="font-mono text-[10px] tracking-[0.25em] text-white/55 mt-1">INVENTARIOS</div>
-                        </div>
-                        <div className="h-10 w-px bg-white/15" />
-                        <div>
-                            <div className="font-display font-black text-3xl text-accent">{totalLists || '—'}</div>
-                            <div className="font-mono text-[10px] tracking-[0.25em] text-white/55 mt-1">SUBCATEGORÍAS</div>
-                        </div>
-                        <div className="h-10 w-px bg-white/15" />
-                        <div>
-                            <div className="font-display font-black text-3xl text-accent">+20</div>
-                            <div className="font-mono text-[10px] tracking-[0.25em] text-white/55 mt-1">AÑOS</div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
