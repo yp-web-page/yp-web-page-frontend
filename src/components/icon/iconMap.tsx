@@ -345,6 +345,46 @@ const iconSvgMap: Record<string, SVGIconComponent> = {
     arrowUpRight: ArrowUpRightSvgIcon,
     check: CheckSvgIcon,
     spark: SparkSvgIcon,
+    minus: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={SVG_PATHS.MINUS} />
+        </svg>
+      );
+    },
+    heart: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.HEART} />
+        </svg>
+      );
+    },
+    share: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.SHARE} />
+        </svg>
+      );
+    },
+    cart: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.CART} />
+        </svg>
+      );
+    },
+    chevronRight: (props) => {
+      const { className = "", fill = "none", viewBox = "0 0 24 24", stroke = "currentColor", ...rest } = props;
+      return (
+        <svg className={className} fill={fill} stroke={stroke} viewBox={viewBox} {...rest}>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={SVG_PATHS.CHEVRON_RIGHT} />
+        </svg>
+      );
+    },
 }
 
 export default iconSvgMap;
