@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../icon/Icon';
 import { CONTACT_INFO } from '../../constants/social_networks';
+import { useCarouselImages } from '../../hooks/useCarouselImages';
 
 type Slide = { tag: string; title: string; sub: string; placeholder: string };
 
@@ -36,11 +37,15 @@ const TRUST_ITEMS = [
 
 const Hero: React.FC = () => {
     const [i, setI] = useState(0);
+    const { data: carousel } = useCarouselImages();
+    const images = carousel?.carouselImages ?? [];
+
     useEffect(() => {
         const t = setTimeout(() => setI((i + 1) % SLIDES.length), 5500);
         return () => clearTimeout(t);
     }, [i]);
     const s = SLIDES[i];
+    const imageUrl = images[i % Math.max(images.length, 1)];
 
     return (
         <section className="relative yp-gradient-radial text-white overflow-hidden">
@@ -112,9 +117,19 @@ const Hero: React.FC = () => {
 
                 <div className="lg:col-span-5 relative">
                     <div className="relative aspect-[5/6] rounded-3xl overflow-hidden ring-1 ring-white/10 bg-yp-paper">
-                        <div className="absolute inset-0 grid place-items-center font-mono text-[11px] tracking-[0.3em] text-yp-deep/55">
-                            {s.placeholder}
-                        </div>
+                        {imageUrl ? (
+                            <img
+                                key={imageUrl}
+                                src={imageUrl}
+                                alt={s.tag}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                loading="eager"
+                            />
+                        ) : (
+                            <div className="absolute inset-0 grid place-items-center font-mono text-[11px] tracking-[0.3em] text-yp-deep/55">
+                                {s.placeholder}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
