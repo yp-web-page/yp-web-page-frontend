@@ -15,8 +15,8 @@ const SLIDES: Slide[] = [
     },
     {
         tag: 'CORTE Y GRABADO LÁSER',
-        title: 'Cortes precisos. Grabados que enamoran.',
-        sub: 'Trabajamos acrílico, MDF, madera, cuero y más con tolerancia milimétrica.',
+        title: 'Impresión full color sobre rígidos',
+        sub: 'Contamos con tecnología UV-LED, que te permite marcar sustratos a full color como vidrio, plástico, madera y otros materiales tanto flexibles como rígidos.',
         placeholder: 'LÁSER · CABEZOTE',
     },
     {
