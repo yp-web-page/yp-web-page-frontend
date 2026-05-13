@@ -10,20 +10,8 @@ const FeaturedProductsCarousel: React.FC = () => {
   const { data, isLoading, error } = useGetFeaturedProducts();
 
   return (
-    <section id="productos" className="py-20 lg:py-28 bg-yp-paper border-y border-yp-line">
+    <section id="productos" className="pt-20 lg:pt-28 pb-5 lg:pb-7 bg-yp-paper border-y border-yp-line">
       <div className="max-w-[1400px] mx-auto px-6">
-        <div className="mb-10 max-w-[640px]">
-          <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
-            <span className="size-1.5 rounded-full bg-yp-bright" /> PRODUCTOS DESTACADOS
-          </div>
-          <h2 className="font-display font-black text-[40px] lg:text-[56px] leading-[1.02] mt-3 text-yp-deep tracking-tight">
-            Listos para producir hoy.
-          </h2>
-          <p className="mt-3 text-[15px] text-yp-muted max-w-[520px]">
-            Los favoritos de nuestros clientes. Personalizables al 100% con tu logo, colores y arte.
-          </p>
-        </div>
-
         {isLoading && <div className="text-yp-muted">Cargando productos...</div>}
         {error && <div className="text-red-500">Error al cargar los productos</div>}
         {!isLoading && !error && !data?.products?.length && (
@@ -66,6 +54,12 @@ const FeaturedProductsCarousel: React.FC = () => {
             </Swiper>
           </>
         )}
+
+        <div className="mt-6 flex justify-center">
+          <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
+            <span className="size-1.5 rounded-full bg-yp-bright" /> PRODUCTOS DESTACADOS
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -45,23 +45,8 @@ const SERVICES: Service[] = [
 ];
 
 const Services: React.FC = () => (
-    <section id="servicios" className="relative py-20 lg:py-28 bg-white">
+    <section id="servicios" className="relative pt-20 lg:pt-28 pb-5 lg:pb-7 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 relative">
-            <div className="flex items-end justify-between gap-6 mb-12 flex-wrap">
-                <div className="max-w-[640px]">
-                    <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
-                        <span className="size-1.5 rounded-full bg-yp-bright" /> NUESTROS SERVICIOS
-                    </div>
-                    <h2 className="font-display font-black text-[40px] lg:text-[56px] leading-[1.02] mt-3 text-yp-deep tracking-tight">
-                        Cuatro técnicas. <span className="text-yp-bright">Una calidad.</span>
-                    </h2>
-                    <p className="mt-4 text-[15px] text-yp-muted leading-relaxed">
-                        Producción profesional con tecnología de punta. Te asesoramos en la mejor técnica según tu material,
-                        volumen y presupuesto.
-                    </p>
-                </div>
-            </div>
-
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
                 {SERVICES.map((s) => (
                     <div
@@ -101,6 +86,12 @@ const Services: React.FC = () => (
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="mt-6 flex justify-center">
+                <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
+                    <span className="size-1.5 rounded-full bg-yp-bright" /> NUESTROS SERVICIOS
+                </div>
             </div>
         </div>
     </section>
