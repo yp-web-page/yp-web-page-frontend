@@ -16,16 +16,20 @@ const Inventories: React.FC = () => {
             <section className="relative yp-gradient-radial text-white overflow-hidden">
                 <div className="absolute inset-0 grid-bg opacity-50 pointer-events-none" />
                 <div className="max-w-[1400px] mx-auto px-6 pt-16 pb-14 relative">
-                    <nav className="flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] text-white/55 mb-6">
-                        <Link to="/" className="hover:text-white transition">INICIO</Link>
-                        <span>›</span>
-                        <span className="text-white">CATÁLOGO</span>
-                    </nav>
                     <h1 className="font-display font-black text-[40px] lg:text-[60px] leading-[1.02] tracking-tight max-w-[820px]">
                         Catálogo de artículos publicitarios.
                     </h1>
                 </div>
             </section>
+
+            {/* Breadcrumbs */}
+            <div className="bg-yp-paper border-b border-yp-line">
+                <nav className="max-w-[1400px] mx-auto px-6 py-4 flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] text-yp-muted">
+                    <Link to="/" className="hover:text-yp-deep transition">INICIO</Link>
+                    <span>›</span>
+                    <span className="text-yp-deep">CATÁLOGO</span>
+                </nav>
+            </div>
 
             {/* Grid */}
             <section className="bg-yp-paper py-16 lg:py-20">

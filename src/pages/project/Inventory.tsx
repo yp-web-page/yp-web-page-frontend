@@ -88,16 +88,6 @@ const Inventory: React.FC = () => {
             <section className="relative yp-gradient-radial text-white overflow-hidden">
                 <div className="absolute inset-0 grid-bg opacity-50 pointer-events-none" />
                 <div className="max-w-[1400px] mx-auto px-6 pt-14 pb-12 relative">
-                    <nav className="flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] text-white/55 mb-6">
-                        <Link to="/" className="hover:text-white transition">INICIO</Link>
-                        <span>›</span>
-                        <Link to="/inventarios" className="hover:text-white transition">CATÁLOGO</Link>
-                        <span>›</span>
-                        <span className="text-white truncate">{inventoryView?.title || 'INVENTARIO'}</span>
-                    </nav>
-                    <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] tracking-[0.2em] text-white/85 mb-5 bg-white/10 border border-white/15">
-                        <span className="size-1.5 rounded-full bg-accent" /> INVENTARIO
-                    </div>
                     <h1 className="font-display font-black text-[36px] lg:text-[52px] leading-[1.02] tracking-tight">
                         {inventoryView?.title || (isLoadingInv ? 'Cargando…' : 'Inventario')}
                     </h1>
@@ -106,6 +96,17 @@ const Inventory: React.FC = () => {
                     </p>
                 </div>
             </section>
+
+            {/* Breadcrumbs */}
+            <div className="bg-yp-paper border-b border-yp-line">
+                <nav className="max-w-[1400px] mx-auto px-6 py-4 flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] text-yp-muted">
+                    <Link to="/" className="hover:text-yp-deep transition">INICIO</Link>
+                    <span>›</span>
+                    <Link to="/inventarios" className="hover:text-yp-deep transition">CATÁLOGO</Link>
+                    <span>›</span>
+                    <span className="text-yp-deep truncate">{inventoryView?.title || 'INVENTARIO'}</span>
+                </nav>
+            </div>
 
             {/* Main */}
             <section className="bg-yp-paper py-12 lg:py-16">

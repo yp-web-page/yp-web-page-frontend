@@ -45,7 +45,7 @@ const SERVICES: Service[] = [
 ];
 
 const Services: React.FC = () => (
-    <section id="servicios" className="relative pt-20 lg:pt-28 pb-5 lg:pb-7 bg-white">
+    <section id="servicios" className="relative pt-10 lg:pt-14 pb-5 lg:pb-7 bg-yp-deep">
         <div className="max-w-[1400px] mx-auto px-6 relative">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
                 {SERVICES.map((s) => (
@@ -89,8 +89,8 @@ const Services: React.FC = () => (
             </div>
 
             <div className="mt-6 flex justify-center">
-                <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
-                    <span className="size-1.5 rounded-full bg-yp-bright" /> NUESTROS SERVICIOS
+                <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-accent">
+                    <span className="size-1.5 rounded-full bg-accent" /> NUESTROS SERVICIOS
                 </div>
             </div>
         </div>

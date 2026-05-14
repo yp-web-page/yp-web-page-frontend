@@ -8,7 +8,7 @@ const STEPS: Step[] = [
 ];
 
 const Process: React.FC = () => (
-    <section className="relative bg-yp-deep text-white pt-20 lg:pt-28 pb-5 lg:pb-7 overflow-hidden">
+    <section className="relative bg-white text-yp-ink pt-10 lg:pt-14 pb-5 lg:pb-7 overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-50" />
         <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full bg-yp-bright blur-3xl opacity-30" />
         <div className="max-w-[1400px] mx-auto px-6 relative">
@@ -19,7 +19,7 @@ const Process: React.FC = () => (
                             <span className="font-mono text-[11px] tracking-[0.25em] text-white/40">PASO {s.n}</span>
                             <span className="font-display font-black text-2xl text-accent">{s.n}</span>
                         </div>
-                        <div className="font-display font-extrabold text-3xl lg:text-4xl mb-3">{s.t}</div>
+                        <div className="font-display font-extrabold text-3xl lg:text-4xl mb-3 text-white">{s.t}</div>
                         <p className="text-white/70 text-[14px] leading-relaxed max-w-[280px]">{s.d}</p>
                         <div className="mt-7 h-px bg-gradient-to-r from-accent via-white/20 to-transparent w-0 group-hover:w-full transition-all duration-700" />
                     </div>
@@ -27,8 +27,8 @@ const Process: React.FC = () => (
             </div>
 
             <div className="mt-6 flex justify-center">
-                <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-accent">
-                    <span className="size-1.5 rounded-full bg-accent" /> CÓMO TRABAJAMOS
+                <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.25em] text-yp-bright">
+                    <span className="size-1.5 rounded-full bg-yp-bright" /> CÓMO TRABAJAMOS
                 </div>
             </div>
         </div>
