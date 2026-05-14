@@ -10,7 +10,7 @@ const FeaturedProductsCarousel: React.FC = () => {
   const { data, isLoading, error } = useGetFeaturedProducts();
 
   return (
-    <section id="productos" className="pt-20 lg:pt-28 pb-5 lg:pb-7 bg-yp-paper border-y border-yp-line">
+    <section id="productos" className="pt-10 lg:pt-14 pb-5 lg:pb-7 bg-yp-paper border-y border-yp-line">
       <div className="max-w-[1400px] mx-auto px-6">
         {isLoading && <div className="text-yp-muted">Cargando productos...</div>}
         {error && <div className="text-red-500">Error al cargar los productos</div>}
