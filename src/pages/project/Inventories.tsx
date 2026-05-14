@@ -24,7 +24,7 @@ const Inventories: React.FC = () => {
 
             {/* Breadcrumbs */}
             <div className="bg-yp-paper border-b border-yp-line">
-                <nav className="max-w-[1400px] mx-auto px-6 py-4 flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] text-yp-muted">
+                <nav className="max-w-[1400px] mx-auto px-6 py-4 flex items-center gap-2 text-[12px] font-bahamas-bold tracking-[0.08em] uppercase text-yp-muted">
                     <Link to="/" className="hover:text-yp-deep transition">INICIO</Link>
                     <span>›</span>
                     <span className="text-yp-deep">CATÁLOGO</span>
