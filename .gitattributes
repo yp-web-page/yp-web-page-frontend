@@ -1,0 +1,20 @@
+# Normalize all text files to LF in the repo and on checkout (incl. Windows).
+# Fixes the "whole tree shows as modified" CRLF/LF churn.
+* text=auto eol=lf
+
+# Binary assets — never touch line endings.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.avif  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+*.otf   binary
+*.pdf   binary
+*.mp4   binary
+*.webm  binary
