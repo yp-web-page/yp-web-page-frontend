@@ -406,8 +406,8 @@ const ProductMiniCard: React.FC<{ product: ProductCardType }> = ({ product }) =>
         </div>
         <div className="p-4">
             <h3 className="font-display font-bold text-[15px] text-yp-deep leading-tight line-clamp-2">{product.name}</h3>
-            <div className="mt-2 flex items-center justify-between">
-                <div className="font-display font-extrabold text-[16px] text-yp-deep">{product.price || '—'}</div>
+            <div className="mt-2 flex items-center justify-end">
+                {/* Price hidden while quotation-based pricing is disabled. */}
                 {product.colors?.length > 0 && (
                     <div className="flex items-center gap-2">
                         <div className="flex -space-x-1.5">

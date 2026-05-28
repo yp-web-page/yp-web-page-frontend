@@ -4,8 +4,6 @@ import { useGetProductById } from '../../hooks/useGetProductById';
 import Button from '../../components/Button';
 import Icon from '../../components/icon/Icon';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { useAuth } from '../../context/AuthContext';
-import { useModal } from '../../context/ModalContext';
 import { CONTACT_INFO } from '../../constants/social_networks';
 import type { Color } from '../../types/ProductTypes';
 
@@ -20,8 +18,6 @@ const TABS: { id: TabId; label: string }[] = [
 const ProductView: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
     const { data: product, isLoading, error } = useGetProductById(productId ?? '');
-    const { isAuthenticated } = useAuth();
-    const { openModal } = useModal();
 
     const [qty, setQty] = useState(1);
     const [selectedColorIdx, setSelectedColorIdx] = useState(0);
@@ -31,11 +27,6 @@ const ProductView: React.FC = () => {
     if (isLoading) return <LoadingSpinner />;
     if (error) return <div className="p-10">Error: {error.message}</div>;
     if (!product) return <div className="p-10">No product found</div>;
-
-    const handleQuote = () => {
-        if (isAuthenticated) openModal('quotation', undefined, undefined, product);
-        else openModal('login');
-    };
 
     const colors: Color[] = product.colors || [];
     const selectedColor = colors[selectedColorIdx];
@@ -129,16 +120,7 @@ const ProductView: React.FC = () => {
                             <SpecRow label="EMPAQUE" value={product.boxContent} last />
                         </div>
 
-                        {/* Price */}
-                        {product.price && (
-                            <div className="mt-7">
-                                <div className="text-[10px] tracking-[0.25em] text-yp-muted mb-1">PRECIO UNITARIO</div>
-                                <div className="font-display font-black text-[30px] lg:text-[34px] leading-none text-yp-deep tracking-tight">
-                                    {product.price}
-                                </div>
-                                <div className="text-[12.5px] text-yp-muted mt-1">Descuentos por volumen al cotizar.</div>
-                            </div>
-                        )}
+                        {/* Price hidden while quotation-based pricing is disabled. */}
 
                         {/* Colors */}
                         {colors.length > 0 && (
@@ -206,21 +188,15 @@ const ProductView: React.FC = () => {
                                     <Icon name="plus" className="h-3.5 w-3.5" />
                                 </Button>
                             </div>
-                            <Button
-                                type="button"
-                                onClick={handleQuote}
-                                className="flex-1 min-w-[200px] inline-flex items-center justify-center gap-2 bg-yp-deep hover:bg-yp-mid transition text-white font-bold text-[13.5px] tracking-wide px-6 py-4 rounded-full"
-                            >
-                                <Icon name="cart" className="h-4 w-4" /> AÑADIR A COTIZACIÓN
-                            </Button>
+                            {/* In-app quotation disabled for now; WhatsApp is the contact CTA. */}
                             <a
                                 href={CONTACT_INFO.WHATSAPP_HREF}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="inline-flex items-center justify-center gap-2 bg-accent hover:brightness-95 transition text-yp-deep font-bold text-[13.5px] tracking-wide px-6 py-4 rounded-full"
+                                className="flex-1 min-w-[200px] inline-flex items-center justify-center gap-2 bg-accent hover:brightness-95 transition text-yp-deep font-bold text-[13.5px] tracking-wide px-6 py-4 rounded-full"
                             >
                                 <Icon name="whatsapp" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" />
-                                WhatsApp
+                                Cotizar por WhatsApp
                             </a>
                         </div>
                     </div>
