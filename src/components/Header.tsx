@@ -68,7 +68,7 @@ const Header: React.FC = () => {
                                     <span className="absolute left-3 right-3 -bottom-0.5 h-px bg-accent scale-x-0 group-hover:scale-x-100 origin-left transition-transform" />
                                 </Link>
                             ))}
-                            {isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/cotizaciones' }, desktopNavClass)}
+                            {/* "MIS COTIZACIONES" hidden while quotation is disabled. */}
                         </div>
 
                         <div className="flex items-center gap-1.5">
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                     {isMenuOpen && (
                         <div className="lg:hidden pb-4 grid gap-1">
                             {NAV_LINKS.map((link) => renderNavLink(link, mobileNavClass))}
-                            {isAuthenticated && renderNavLink({ label: 'MIS COTIZACIONES', path: '/cotizaciones' }, mobileNavClass)}
+                            {/* "MIS COTIZACIONES" hidden while quotation is disabled. */}
                             <Link
                                 to="/inventarios"
                                 onClick={() => setIsMenuOpen(false)}

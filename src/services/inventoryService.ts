@@ -1,26 +1,31 @@
-import { API_ENDPOINTS } from "../api/endpoints";
-import apiClient from "../api/axios";
+import erpClient from "../api/erpClient";
 import { ResponseInventoriesInfo, ResponseInventoryViewById } from "../types/inventory";
-
-const getAllInventoriesInfo = async (): Promise<ResponseInventoriesInfo[]> => {
-    const response = await apiClient.get(API_ENDPOINTS.inventories.getInventoriesInfo)
-    return response.data as ResponseInventoriesInfo[]
-}
+import {
+    ErpCategoryNode,
+    ErpCategoryDetail,
+    mapCategoryNodeToInventoryInfo,
+    mapCategoryDetailToInventoryView,
+} from "../api/erpMappers";
 
 /**
- * Get featured inventories info
+ * Categories ("inventories" in the legacy model) are served by the ERP
+ * storefront API. Root categories = inventories, their children = lists.
  */
-const getFavoriteInventoriesInfo = async (): Promise<ResponseInventoriesInfo[]> => {
-    const response = await apiClient.get(API_ENDPOINTS.inventories.getFavoriteInventoriesInfo);
-    return response.data as ResponseInventoriesInfo[];
+const getAllInventoriesInfo = async (): Promise<ResponseInventoriesInfo[]> => {
+    const response = await erpClient.get<ErpCategoryNode[]>("/categories");
+    return response.data.map(mapCategoryNodeToInventoryInfo);
 };
 
-/**
- * Get inventory view by id
- */
+const getFavoriteInventoriesInfo = async (): Promise<ResponseInventoriesInfo[]> => {
+    const response = await erpClient.get<ErpCategoryNode[]>("/categories", {
+        params: { featured: true },
+    });
+    return response.data.map(mapCategoryNodeToInventoryInfo);
+};
+
 const getInventoryViewById = async (id: string): Promise<ResponseInventoryViewById> => {
-    const response = await apiClient.get(API_ENDPOINTS.inventories.getInventoryViewById.replace(':id', id));
-    return response.data as ResponseInventoryViewById;
+    const response = await erpClient.get<ErpCategoryDetail>(`/categories/${id}`);
+    return mapCategoryDetailToInventoryView(response.data);
 };
 
 export const inventoryService = {
