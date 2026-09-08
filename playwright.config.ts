@@ -2,6 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  // Visual specs only. tests/contract/*.test.mjs is a node --test suite
+  // (`npm run test:contract`) and must not be picked up by Playwright.
+  testMatch: '**/*.spec.ts',
   fullyParallel: false,
   retries: 0,
   workers: 1,
