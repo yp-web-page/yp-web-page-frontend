@@ -7,6 +7,7 @@
  * envelope, price as a number). These mappers translate ERP responses back to
  * the existing frontend types so no component or hook has to change.
  */
+import type { GetCarouselImages } from "../types/GetCarouselImages";
 import type { ResponseInventoriesInfo, ResponseInventoryViewById } from "../types/inventory";
 import type { PaginatedProducts } from "../types/ListType";
 import type {
@@ -79,6 +80,15 @@ export interface ErpPage<T> {
 export interface ErpCategoryProducts {
   category: ErpCategoryRef;
   products: ErpPage<ErpProductCard>;
+}
+
+/** `GET /banners` item: enabled hero banners, already ordered by sortOrder. */
+export interface ErpBanner {
+  id: string;
+  /** Absolute URL on the ERP host; 302s to a presigned object. */
+  imageUrl: string;
+  alt: string;
+  sortOrder: number;
 }
 
 // ---- mappers ----------------------------------------------------------------
@@ -175,5 +185,20 @@ export function mapProductDetail(p: ErpProductDetail): Product {
     printingMethods: p.printingMethods ?? [],
     boxContent: p.boxContent ?? "",
     isPrintPersonalizable: p.isPrintPersonalizable,
+  };
+}
+
+/**
+ * `GET /banners` -> the shape the Hero already reads. The ERP returns enabled
+ * banners only, ordered, at most three, so the mapper preserves the order it is
+ * given and does not filter or sort. `carouselAlts` is parallel to
+ * `carouselImages`; an empty list yields empty lists and the Hero falls back to
+ * its placeholder.
+ */
+export function mapBannersToCarousel(items: ErpBanner[] | undefined): GetCarouselImages {
+  const banners = items ?? [];
+  return {
+    carouselImages: banners.map((b) => b.imageUrl),
+    carouselAlts: banners.map((b) => b.alt),
   };
 }

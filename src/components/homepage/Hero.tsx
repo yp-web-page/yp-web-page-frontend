@@ -39,13 +39,16 @@ const Hero: React.FC = () => {
     const [i, setI] = useState(0);
     const { data: carousel } = useCarouselImages();
     const images = carousel?.carouselImages ?? [];
+    const alts = carousel?.carouselAlts ?? [];
 
     useEffect(() => {
         const t = setTimeout(() => setI((i + 1) % SLIDES.length), 5500);
         return () => clearTimeout(t);
     }, [i]);
     const s = SLIDES[i];
-    const imageUrl = images[i % Math.max(images.length, 1)];
+    const imageIndex = i % Math.max(images.length, 1);
+    const imageUrl = images[imageIndex];
+    const imageAlt = alts[imageIndex] || s.tag;
 
     return (
         <section className="relative yp-gradient-radial text-white overflow-hidden">
@@ -121,7 +124,7 @@ const Hero: React.FC = () => {
                             <img
                                 key={imageUrl}
                                 src={imageUrl}
-                                alt={s.tag}
+                                alt={imageAlt}
                                 className="absolute inset-0 w-full h-full object-cover"
                                 loading="eager"
                             />
