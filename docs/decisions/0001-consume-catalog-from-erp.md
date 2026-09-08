@@ -105,6 +105,37 @@ diffs stay scoped.
 - **Change our types/components to the ERP shapes** — rejected: large blast
   radius across components/hooks/pages for no gain over mapping in 3 services.
 
+## Update 2026-09-08 — the hero carousel moves to the ERP too
+
+The decision above listed the **carousel** among the domains that "keep calling
+`wpb`". That is no longer true, and the reason is not a milestone: the legacy
+server (`https://yancapublicidad.duckdns.org`) expired and was not renewed, so
+`/carousel/images` answered nothing and the home page rendered its placeholder
+text instead of images.
+
+The ERP now owns the domain. `GET /api/storefront/v1/banners` returns
+`{ items: [{ id, imageUrl, alt, sortOrder }] }` — enabled banners only, already
+ordered, at most three; `imageUrl` is an absolute URL on the ERP host that 302s
+to a presigned object, exactly like product and category images
+(`Alexander940/erp#555`, ADR-0040 there). `serviceCarousel` calls `erpClient`
+and `erpMappers.mapBannersToCarousel` translates the response into the
+`{ carouselImages }` the `Hero` already read, plus an optional parallel
+`carouselAlts` so the `<img alt>` can carry the banner's own alt text.
+
+Two consequences worth recording:
+
+- **The ERP base URL moved hosts.** `VITE_REACT_APP_ERP_BASE_URL` is now
+  `https://yancapublicidad.fabricabinaria.com/api/storefront/v1`. The
+  `odoo.yprint.co` name used since May is being retired and already answers with
+  a redirect; the new host serves the same catalog.
+- **The persisted query key was bumped** to `['carousel-images', 'v2']`. React
+  Query persists carousel entries in `localStorage` for up to 6 h, so returning
+  visitors would otherwise keep serving the dead backend's empty answer after
+  the deploy.
+
+What still calls `wpb`: auth, user, quotation, email and the wholesale price
+tiers. The follow-up below is unchanged for those.
+
 ## Follow-ups
 
 Re-point the remaining services to the ERP and re-enable prices + quotation once
