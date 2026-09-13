@@ -1,72 +1,86 @@
-# Yanca Publicidad - Web Application
+# Yanca Publicidad — Web Site
 
-Welcome to **Yanca Publicidad**, an e-commerce platform where users can browse, purchase, and request quotes for various products. The platform also includes a user registration and login system.
+Public-facing site for Yanca Publicidad. Customers can browse the product catalog, request quotes, and manage their accounts.
 
-## 🚀 Project Overview
-This project is built using **ReactJS** with **Vite** for a fast and optimized development experience. It provides a user-friendly interface for customers to explore products, make purchases, and request price quotes.
+## Stack
 
-## 🛠️ Technologies Used
-- **ReactJS** (UI Framework)
-- **Vite** (Build tool)
-- **React Router** (Navigation)
-- **Material-UI (MUI)** (UI Components)
-- **Redux Toolkit / Context API** (State management)
-- **Axios** (API requests)
-- **Java + Spring Boot** (Backend)
-- **MongoDB / PostgreSQL** (Database, if applicable)
+React 19 + Vite + TypeScript + Tailwind CSS v4 + React Router v7 + TanStack Query v5 + Axios.
 
-## 📌 Features
-- 🔍 **View Products**: Browse a variety of products available on the platform.
-- 🛒 **Purchase Products**: Add items to the cart and complete purchases.
-- 📩 **Request a Quote**: Users can request price quotes for bulk or customized orders.
-- 🔑 **User Authentication**: Sign up, log in, and manage user accounts.
-- 🎨 **Responsive UI**: Fully optimized for desktop and mobile devices.
+## Backends
 
-## 📂 Project Structure
-```
-├── src/
-│   ├── components/    # Reusable UI components
-│   ├── pages/         # Page components
-│   ├── hooks/         # Custom hooks
-│   ├── services/      # API calls
-│   ├── store/         # State management
-│   ├── assets/        # Images & static files
-│   ├── App.jsx        # Main app component
-│   ├── main.jsx       # Entry point
-│
-├── public/            # Static files
-├── package.json       # Dependencies & scripts
-├── vite.config.js     # Vite configuration
-├── README.md          # Project documentation
+The site talks to two APIs:
+
+| Variable | Points to | Used for |
+|---|---|---|
+| `VITE_REACT_APP_BASE_URL` | Legacy Java backend | Auth, user management, quotations, email |
+| `VITE_REACT_APP_ERP_BASE_URL` | ERP storefront REST | Product catalog, categories, hero banners |
+
+Environment files are committed: `.env.development` for local dev, `.env.production` for production builds.
+
+## Local setup
+
+Requirements:
+
+- Node ≥ 18
+
+### One-command startup (macOS and Linux)
+
+```bash
+make front
 ```
 
-## 🔧 Installation & Setup
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/yanca-publicidad.git
-   cd yanca-publicidad
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Start the development server:
-   ```sh
-   npm run dev
-   ```
+Installs dependencies and starts the Vite dev server at http://localhost:5173.
 
-## 📦 Build & Deployment
-To create a production build:
-```sh
-npm run build
-```
-To preview the production build locally:
-```sh
-npm run preview
+> **Windows:** run `npm install && npm run dev` from PowerShell.
+
+### Available `make` commands
+
+| Command | What it does |
+|---|---|
+| `make front` | Install deps and start the dev server |
+| `make dev` | Start the Vite dev server (deps must already be installed) |
+| `make build` | Production build |
+| `make preview` | Preview the production build at http://localhost:4173 |
+| `make lint` | Lint the source code |
+| `make test` | Run contract tests |
+
+### Manual setup (without `make`)
+
+```bash
+npm install
+npm run dev
 ```
 
-## 📜 License
-This project is licensed under the MIT License.
+## Routes
 
-## 📞 Contact
-For inquiries, please contact **Yanca Publicidad** at: [your-email@example.com] or visit our website.
+| Path | Page |
+|---|---|
+| `/` | Home — hero, featured products, services, process |
+| `/inventarios` | Product catalog |
+| `/inventario/:id` | Category detail with product list |
+| `/producto/:id` | Product detail |
+| `/search` | Search results |
+| `/cotizaciones` | My quotations (requires login) |
+| `/perfil` | User profile (requires login) |
+| `/quienes-somos` | About us |
+| `/contactanos` | Contact |
+| `/politicas-privacidad` | Privacy policy |
+| `/aviso-legal` | Legal notice |
+
+## Project structure
+
+```
+src/
+├── api/          # Axios clients and mappers (legacy backend + ERP storefront)
+├── components/   # Reusable UI components
+├── context/      # Auth, modal and error boundary contexts
+├── hooks/        # Custom React Query hooks
+├── pages/        # Page components
+├── routes/       # React Router configuration
+├── services/     # API call functions
+├── types/        # TypeScript types
+└── util/         # Utility functions
+
+tests/
+└── contract/     # Contract tests for the ERP storefront API mapping
+```
