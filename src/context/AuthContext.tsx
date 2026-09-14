@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { LoginFormInputs } from '../types/LoginTypes';
-import { useLogin } from '../hooks/useLogin';
+import { useCustomerLogin } from '../hooks/useCustomerLogin';
+import { useCustomerLogout } from '../hooks/useCustomerLogout';
+import { getCustomerToken, clearCustomerToken } from '../api/customerClient';
 import { useModal } from './ModalContext';
 
 interface AuthContextType {
@@ -16,45 +18,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAuthLoading, setIsAuthLoading] = useState(true);
     const { openModal } = useModal();
-    const { mutate } = useLogin(() => setIsAuthenticated(true))
+    const { mutate: loginMutate } = useCustomerLogin(() => setIsAuthenticated(true));
+    const { mutate: logoutMutate } = useCustomerLogout();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = getCustomerToken();
         setIsAuthenticated(!!token);
         setIsAuthLoading(false);
     }, []);
 
-    // Listen for the custom event 'unauthorized' to handle logout
-    // This event should be dispatched from the axios interceptor in case of 401 error
-    // This is a workaround to handle unauthorized access globally
     useEffect(() => {
-        const handleUnauthorized = () => {
-            logout();
-        };
+        const handleUnauthorized = () => logout();
+        const handleForbidden = () =>
+            openModal('notification', 'No tienes permisos para acceder a este recurso.', 'error');
 
-        const handleForbidden = () => {
-            openModal("notification", "No tienes permisos para acceder a este recurso.", "error");
-          };
-
-        window.addEventListener('unauthorized', handleUnauthorized);
+        window.addEventListener('customer:unauthorized', handleUnauthorized);
         window.addEventListener('forbidden', handleForbidden);
         return () => {
-            window.removeEventListener('unauthorized', handleUnauthorized); 
+            window.removeEventListener('customer:unauthorized', handleUnauthorized);
             window.removeEventListener('forbidden', handleForbidden);
         };
     }, []);
 
     const login = (data: LoginFormInputs) => {
-        if (!data.username || !data.password || isAuthenticated) return;
-
-        mutate({
-            params: {username: data.username, password: data.password, rememberme: data.rememberme}
-        });
+        if (!data.email || !data.password || isAuthenticated) return;
+        loginMutate({ email: data.email, password: data.password });
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
-        setIsAuthenticated(false);
+        logoutMutate(undefined, {
+            onSettled: () => {
+                clearCustomerToken();
+                setIsAuthenticated(false);
+            },
+        });
     };
 
     return (
@@ -70,4 +67,4 @@ export const useAuth = () => {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}; 
+};

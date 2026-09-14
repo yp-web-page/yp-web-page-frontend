@@ -1,10 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import { serviceCustomer, type RegisterCustomerParams } from '../services/serviceCustomer';
+import { serviceCustomer } from '../services/serviceCustomer';
 import { TypeNotification } from '../types/TypeNotifcation';
 import { useModal } from '../context/ModalContext';
-import { MUTATION_KEYS } from '../api/mutationKeys';
+import { MESSAGE } from '../constants/message';
 
-const useRegisterUser = () => {
+type OnLoginSuccess = () => void;
+
+const useCustomerLogin = (onSuccessCallback?: OnLoginSuccess) => {
     const { openModal, closeModal } = useModal();
 
     const handleOpenNotification = (message: string, typeNotification: TypeNotification) => {
@@ -12,22 +14,19 @@ const useRegisterUser = () => {
     };
 
     return useMutation({
-        mutationFn: ({ user }: { user: RegisterCustomerParams }) =>
-            serviceCustomer.registerCustomer(user),
+        mutationFn: ({ email, password }: { email: string; password: string }) =>
+            serviceCustomer.loginCustomer(email, password),
         onSuccess: () => {
-            handleOpenNotification(
-                'Usuario registrado. Ya puedes iniciar sesión.',
-                'success',
-            );
+            handleOpenNotification(MESSAGE.LOGIN_SUCCESS, 'success');
             setTimeout(() => closeModal(), 5000);
+            onSuccessCallback?.();
         },
         onError: () => {
-            handleOpenNotification('Error registrando el usuario.', 'error');
+            handleOpenNotification(MESSAGE.LOGIN_ERROR, 'error');
             setTimeout(() => closeModal(), 5000);
         },
-        mutationKey: MUTATION_KEYS.user.registerUser,
         retry: false,
     });
 };
 
-export default useRegisterUser;
+export { useCustomerLogin };
