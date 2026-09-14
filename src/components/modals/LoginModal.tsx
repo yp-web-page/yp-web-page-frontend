@@ -150,7 +150,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
     }, [isOpen, onClose]);
 
     const handleClose = () => {
-        reset({ username: '', password: '', rememberme: false });
+        reset({ email: '', password: '', rememberme: false });
         setShowPass(false);
         onClose();
     };
