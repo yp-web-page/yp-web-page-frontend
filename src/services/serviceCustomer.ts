@@ -25,11 +25,13 @@ const registerCustomer = async (params: RegisterCustomerParams): Promise<void> =
 };
 
 const loginCustomer = async (email: string, password: string): Promise<void> => {
-    const response = await erpClient.post<{ token: string; expiresIn: number }>(
+    const response = await erpClient.post<{ expiresIn: number }>(
         '/customers/login',
         { email, password },
     );
-    setCustomerToken(response.data.token);
+    const token = response.headers['authorization']?.replace('Bearer ', '');
+    if (!token) throw new Error('No authorization header in login response');
+    setCustomerToken(token);
 };
 
 const logoutCustomer = async (): Promise<void> => {
