@@ -41,8 +41,11 @@ customerClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            clearCustomerToken();
-            window.dispatchEvent(new Event('customer:unauthorized'));
+            // Access the store directly — no global window events needed.
+            // useAuthStore.getState() works outside React components.
+            import('../store/authStore').then(({ useAuthStore }) => {
+                useAuthStore.getState().logout();
+            });
         }
         return Promise.reject(error);
     },

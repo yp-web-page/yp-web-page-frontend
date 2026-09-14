@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useAuth } from '../../context/AuthContext';
+import { useAuthStore } from '../../store/authStore';
 import { useModal } from '../../context/ModalContext';
 import Icon from '../icon/Icon';
 import Button from '../Button';
@@ -109,7 +109,7 @@ const Field: React.FC<FieldProps> = ({
 };
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegister }) => {
-    const { login } = useAuth();
+    const login = useAuthStore((s) => s.login);
     const { openModal } = useModal();
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<LoginFormInputs>({
         defaultValues: { rememberme: false },

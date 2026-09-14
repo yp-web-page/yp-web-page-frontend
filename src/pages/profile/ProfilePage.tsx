@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import SplitScreen from '../../components/SplitScreen';
-import { useAuth } from '../../context/AuthContext';
+import { useAuthStore } from '../../store/authStore';
 import { useNavigate } from 'react-router';
 import FormatInput from '../../components/FormatInput';
 import { useEffect } from 'react';
@@ -23,7 +23,8 @@ const MAX_PHONE_LENGTH = 10;
 const MAX_EMAIL_LENGTH = 50;
 
 const ProfilePage: React.FC = () => {
-    const { isAuthenticated, isAuthLoading } = useAuth();
+    const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+    const isAuthLoading = useAuthStore((s) => s.isAuthLoading);
     const navigate = useNavigate();
 
     const { data: user, isLoading } = useGetUser();
