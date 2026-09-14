@@ -47,3 +47,7 @@ sketch
 
 # Claude
 .claude/
+
+# Wrong package manager lockfiles — this project uses npm (package-lock.json)
+pnpm-lock.yaml
+yarn.lock
