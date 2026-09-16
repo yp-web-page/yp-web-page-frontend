@@ -117,7 +117,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
         setAuthenticated(true);
         handleClose();
     });
-    const errorInfo = loginError ? parseLoginError(loginError as AxiosError) : null;
+    const errorInfo = loginError ? parseLoginError(loginError as AxiosError<{ error: string; remainingAttempts?: number; lockoutMinutes?: number; retryAfter?: number }>) : null;
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<LoginFormInputs>({
         defaultValues: { rememberme: false },
     });
