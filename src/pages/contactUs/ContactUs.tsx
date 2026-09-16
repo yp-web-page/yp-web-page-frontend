@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import Icon from '../../components/icon/Icon';
 import Button from '../../components/Button';
 import ContactMap from '../../components/map/ContactMap';

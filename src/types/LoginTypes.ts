@@ -11,7 +11,7 @@ interface LoginResponse {
 }
 
 interface LoginFormInputs {
-    username: string;
+    email: string;
     password: string;
     rememberme: boolean;
 }

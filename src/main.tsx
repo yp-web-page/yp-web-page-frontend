@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
+import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
 import { router } from './routes/Routes.tsx';
 import { AuthProvider } from './context/AuthContext';
@@ -35,15 +36,17 @@ persistQueryClient({
 
 createRoot(root!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ErrorBoundary>
-        <ModalProvider>
-          <AuthProvider>
-            <RouterProvider router={router}/>
-          </AuthProvider>
-        </ModalProvider>
-      </ErrorBoundary>
-      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <ErrorBoundary>
+          <ModalProvider>
+            <AuthProvider>
+              <RouterProvider router={router}/>
+            </AuthProvider>
+          </ModalProvider>
+        </ErrorBoundary>
+        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+      </QueryClientProvider>
+    </HelmetProvider>
   </StrictMode>
 )

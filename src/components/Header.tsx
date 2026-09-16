@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuthStore } from '../store/authStore';
 import { SOCIAL_NETWORKS } from '../constants/social_networks';
 import { useModal } from '../context/ModalContext';
 import Icon from './icon/Icon';
@@ -23,7 +23,7 @@ const SOCIAL_ICONS = [
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const { isAuthenticated } = useAuth();
+    const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
     const { openModal } = useModal();
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
