@@ -1,11 +1,9 @@
-
 interface RegisterUser {
     name: string;
     phone: string;
     email: string;
-    username: string;
     password: string;
-    role: string;
+    segment: 'retail' | 'wholesale';
 }
 
 export default RegisterUser;

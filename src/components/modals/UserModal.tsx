@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useAuth } from '../../context/AuthContext';
+import { useAuthStore } from '../../store/authStore';
 import Icon from '../icon/Icon';
 import Button from '../Button';
 
@@ -62,7 +62,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ iconName, label, hint, onClick, dan
 
 const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const logout = useAuthStore((s) => s.logout);
     const ref = useRef<HTMLDivElement>(null);
 
     const username = (typeof window !== 'undefined' && localStorage.getItem('rememberedUsername')) || 'Usuario';

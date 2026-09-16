@@ -15,7 +15,7 @@ interface RegisterModalProps {
     onClose: () => void;
 }
 
-type UserType = 'REGULAR' | 'WHOLESALER';
+type UserSegment = 'REGULAR' | 'WHOLESALER';
 
 interface RegisterFormInputs {
     name: string;
@@ -214,7 +214,7 @@ const FileField: React.FC<{ file: File | null; onChange: (f: File | null) => voi
 const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     const { mutate, isPending } = useRegisterUser();
     const { openModal } = useModal();
-    const [userType, setUserType] = useState<UserType>('REGULAR');
+    const [selectedSegment, setSelectedSegment] = useState<UserSegment>('REGULAR');
     const [showPass, setShowPass] = useState(false);
     const [privacy, setPrivacy] = useState(false);
     const [terms, setTerms] = useState(false);
@@ -283,7 +283,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         reset({ name: '', phone: '', email: '', rut: null, username: '', password: '' });
         setPrivacy(false);
         setTerms(false);
-        setUserType('REGULAR');
+        setSelectedSegment('REGULAR');
         setShowPass(false);
     };
 
@@ -294,7 +294,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
     const onSubmit = (data: RegisterFormInputs) => {
         if (!privacy || !terms || isPending) return;
-        if (userType === 'WHOLESALER' && !data.rut) {
+        if (selectedSegment === 'WHOLESALER' && !data.rut) {
             openModal('notification', MESSAGE.MISSING_RUT_FILE, 'info');
             return;
         }
@@ -302,21 +302,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             name: data.name,
             phone: data.phone,
             email: data.email,
-            username: data.username,
             password: data.password,
-            role: userType,
+            segment: selectedSegment === 'WHOLESALER' ? 'wholesale' : 'retail',
         };
-        if (userType === 'WHOLESALER' && data.rut) {
-            mutate({ user: newUser, file: data.rut });
-        } else {
-            mutate({ user: newUser });
-        }
+        mutate({ user: newUser });
         resetAll();
     };
 
     const canSubmit = privacy && terms && !isPending;
 
-    const BENEFITS = userType === 'REGULAR'
+    const BENEFITS = selectedSegment === 'REGULAR'
         ? [['Precios al detal', 'y por unidad'], ['Cotización rápida', 'sin papeleo'], ['Catálogo completo', 'de productos']]
         : [['Precios mayoristas', 'exclusivos'], ['Volúmenes especiales', 'para tus campañas'], ['Atención prioritaria', 'con asesor dedicado']];
 
@@ -378,7 +373,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
                             <div className="relative mt-8">
                                 <div className="font-mono text-[9.5px] tracking-[0.25em] text-white/45 mb-3">
-                                    {userType === 'REGULAR' ? 'BENEFICIOS · REGULAR' : 'BENEFICIOS · PUBLICISTA'}
+                                    {selectedSegment === 'REGULAR' ? 'BENEFICIOS · REGULAR' : 'BENEFICIOS · PUBLICISTA'}
                                 </div>
                                 <div className="space-y-2.5">
                                     {BENEFITS.map(([a, b]) => (
@@ -429,12 +424,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                 <div className="font-mono text-[10px] tracking-[0.25em] text-yp-muted mb-2">TIPO DE CUENTA</div>
                                 <div className="grid grid-cols-2 gap-2 p-1 bg-yp-paper rounded-2xl border border-yp-line">
                                     {TYPES.map((t) => {
-                                        const active = userType === t.id;
+                                        const active = selectedSegment === t.id;
                                         return (
                                             <Button
                                                 key={t.id}
                                                 type="button"
-                                                onClick={() => setUserType(t.id)}
+                                                onClick={() => setSelectedSegment(t.id)}
                                                 className={`relative px-3 py-2.5 rounded-xl text-left transition-all ${
                                                     active ? 'bg-yp-deep text-white' : 'text-yp-ink hover:bg-white'
                                                 }`}
@@ -471,7 +466,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         <Field
                                             id="name"
-                                            label={userType === 'WHOLESALER' ? 'Nombre / Empresa' : 'Nombre completo'}
+                                            label={selectedSegment === 'WHOLESALER' ? 'Nombre / Empresa' : 'Nombre completo'}
                                             iconName="user"
                                             value={v.name || ''}
                                             onChange={(val) => setValue('name', val, { shouldValidate: true })}
@@ -507,7 +502,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
 
-                                {userType === 'WHOLESALER' && (
+                                {selectedSegment === 'WHOLESALER' && (
                                     <div>
                                         <div className="font-mono text-[9.5px] tracking-[0.25em] text-yp-muted mb-2.5">
                                             02 · DOCUMENTO LEGAL
@@ -530,7 +525,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                 {/* Credentials */}
                                 <div>
                                     <div className="font-mono text-[9.5px] tracking-[0.25em] text-yp-muted mb-2.5">
-                                        {userType === 'WHOLESALER' ? '03' : '02'} · CREDENCIALES DE ACCESO
+                                        {selectedSegment === 'WHOLESALER' ? '03' : '02'} · CREDENCIALES DE ACCESO
                                     </div>
                                     <div className="space-y-3">
                                         <Field

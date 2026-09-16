@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useAuth } from '../../context/AuthContext';
+import { AxiosError } from 'axios';
+import { useAuthStore } from '../../store/authStore';
+import { useCustomerLogin, parseLoginError } from '../../hooks/useCustomerLogin';
 import { useModal } from '../../context/ModalContext';
 import Icon from '../icon/Icon';
 import Button from '../Button';
@@ -14,15 +16,14 @@ interface LoginModalProps {
 }
 
 interface LoginFormInputs {
-    username: string;
+    email: string;
     password: string;
     rememberme: boolean;
 }
 
-const MIN_USER = 5;
-const MAX_USER = 50;
+const MAX_EMAIL = 255;
 const MIN_PASS = 8;
-const MAX_PASS = 20;
+const MAX_PASS = 128;
 
 type FieldProps = {
     id: string;
@@ -110,47 +111,37 @@ const Field: React.FC<FieldProps> = ({
 };
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegister }) => {
-    const { login } = useAuth();
+    const setAuthenticated = useAuthStore((s) => s.setAuthenticated);
     const { openModal } = useModal();
+    const { mutate: loginMutate, isPending, error: loginError, reset: resetMutation } = useCustomerLogin(() => {
+        setAuthenticated(true);
+        handleClose();
+    });
+    const errorInfo = loginError ? parseLoginError(loginError as AxiosError<{ error: string; remainingAttempts?: number; lockoutMinutes?: number; retryAfter?: number }>) : null;
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<LoginFormInputs>({
         defaultValues: { rememberme: false },
     });
     const [showPass, setShowPass] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
 
-    const username = watch('username') || '';
+    const email = watch('email') || '';
     const password = watch('password') || '';
     const remember = watch('rememberme') || false;
 
-    register('username', {
+    register('email', {
         required: 'Este campo es requerido',
-        minLength: { value: MIN_USER, message: `Mínimo ${MIN_USER} caracteres` },
-        maxLength: { value: MAX_USER, message: `Máximo ${MAX_USER} caracteres` },
+        pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Correo electrónico inválido' },
+        maxLength: { value: MAX_EMAIL, message: `Máximo ${MAX_EMAIL} caracteres` },
     });
     register('password', {
         required: 'Este campo es requerido',
         minLength: { value: MIN_PASS, message: `Mínimo ${MIN_PASS} caracteres` },
         maxLength: { value: MAX_PASS, message: `Máximo ${MAX_PASS} caracteres` },
-        pattern: {
-            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-            message: 'Debe cumplir todos los requisitos',
-        },
     });
 
-    const passStrength = (() => {
-        if (!password) return { score: 0, checks: [] as { id: string; label: string; ok: boolean }[] };
-        const checks = [
-            { id: 'len', label: `${MIN_PASS}+ caracteres`, ok: password.length >= MIN_PASS },
-            { id: 'low', label: 'Minúscula', ok: /[a-z]/.test(password) },
-            { id: 'up', label: 'Mayúscula', ok: /[A-Z]/.test(password) },
-            { id: 'num', label: 'Número', ok: /\d/.test(password) },
-        ];
-        return { score: checks.filter((c) => c.ok).length, checks };
-    })();
 
     useEffect(() => {
-        const remembered = localStorage.getItem('rememberedUsername');
-        if (remembered) reset({ username: remembered, rememberme: true });
+        const remembered = localStorage.getItem('rememberedEmail');
+        if (remembered) reset({ email: remembered, rememberme: true });
     }, [reset]);
 
     useEffect(() => {
@@ -165,18 +156,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
     }, [isOpen, onClose]);
 
     const handleClose = () => {
-        reset({ username: '', password: '', rememberme: false });
+        reset({ email: '', password: '', rememberme: false });
+        resetMutation();
         setShowPass(false);
         onClose();
     };
 
     const onSubmit = (data: LoginFormInputs) => {
-        setSubmitting(true);
-        login(data);
-        setTimeout(() => {
-            setSubmitting(false);
-            handleClose();
-        }, 600);
+        if (data.rememberme) {
+            localStorage.setItem('rememberedEmail', data.email);
+        } else {
+            localStorage.removeItem('rememberedEmail');
+        }
+        loginMutate({ email: data.email, password: data.password });
     };
 
     const handleOpenRegister = () => {
@@ -292,14 +284,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
 
                             <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-3.5">
                                 <Field
-                                    id="username"
-                                    label="Nombre de usuario o correo"
+                                    id="email"
+                                    label="Correo electrónico"
                                     iconName="at"
-                                    value={username}
-                                    onChange={(v) => setValue('username', v, { shouldValidate: true })}
-                                    error={errors.username?.message}
-                                    maxLen={MAX_USER}
-                                    showCounter={username.length > 0}
+                                    value={email}
+                                    onChange={(v) => setValue('email', v, { shouldValidate: true })}
+                                    error={errors.email?.message}
+                                    maxLen={MAX_EMAIL}
+                                    inputProps={{ type: 'email', autoComplete: 'email' }}
                                 />
 
                                 <Field
@@ -323,44 +315,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                                         </Button>
                                     }
                                 />
-
-                                {password.length > 0 && (
-                                    <div className="px-1">
-                                        <div className="flex gap-1 mb-2">
-                                            {[1, 2, 3, 4].map((i) => {
-                                                const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-emerald-600'];
-                                                const active = passStrength.score >= i;
-                                                return (
-                                                    <div
-                                                        key={i}
-                                                        className={`h-1 flex-1 rounded-full transition-all ${
-                                                            active ? colors[passStrength.score - 1] : 'bg-yp-line'
-                                                        }`}
-                                                    />
-                                                );
-                                            })}
-                                        </div>
-                                        <div className="flex flex-wrap gap-x-3 gap-y-1">
-                                            {passStrength.checks.map((c) => (
-                                                <div
-                                                    key={c.id}
-                                                    className={`flex items-center gap-1 font-mono text-[9.5px] tracking-wider uppercase ${
-                                                        c.ok ? 'text-emerald-600' : 'text-yp-muted'
-                                                    }`}
-                                                >
-                                                    <span
-                                                        className={`size-2.5 rounded-full grid place-items-center ${
-                                                            c.ok ? 'bg-emerald-600' : 'bg-yp-line'
-                                                        }`}
-                                                    >
-                                                        {c.ok && <Icon name="check" className="h-1.5 w-1.5 text-white" />}
-                                                    </span>
-                                                    {c.label}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
 
                                 <div className="flex items-center justify-between pt-2">
                                     <Button
@@ -386,12 +340,22 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                                     </Button>
                                 </div>
 
+                                {errorInfo && (
+                                    <div className={`px-4 py-3 rounded-2xl text-[12.5px] font-semibold leading-snug ${
+                                        errorInfo.type === 'account_locked' || errorInfo.type === 'too_many_requests'
+                                            ? 'bg-orange-50 text-orange-700 border border-orange-200'
+                                            : 'bg-red-50 text-red-600 border border-red-200'
+                                    }`}>
+                                        {errorInfo.message}
+                                    </div>
+                                )}
+
                                 <Button
                                     type="submit"
-                                    disabled={submitting}
+                                    disabled={isPending}
                                     className="w-full mt-3 group relative overflow-hidden bg-yp-deep hover:bg-yp-mid disabled:opacity-80 text-white font-bold text-[13px] tracking-[0.12em] uppercase py-4 rounded-2xl transition flex items-center justify-center gap-2.5"
                                 >
-                                    {submitting ? (
+                                    {isPending ? (
                                         <>
                                             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
                                                 <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.5" opacity="0.25" />
