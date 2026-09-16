@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
+import { AxiosError } from 'axios';
 import { useAuthStore } from '../../store/authStore';
+import { useCustomerLogin, parseLoginError } from '../../hooks/useCustomerLogin';
 import { useModal } from '../../context/ModalContext';
 import Icon from '../icon/Icon';
 import Button from '../Button';
@@ -109,13 +111,17 @@ const Field: React.FC<FieldProps> = ({
 };
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegister }) => {
-    const login = useAuthStore((s) => s.login);
+    const setAuthenticated = useAuthStore((s) => s.setAuthenticated);
     const { openModal } = useModal();
+    const { mutate: loginMutate, isPending, error: loginError, reset: resetMutation } = useCustomerLogin(() => {
+        setAuthenticated(true);
+        handleClose();
+    });
+    const errorInfo = loginError ? parseLoginError(loginError as AxiosError) : null;
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<LoginFormInputs>({
         defaultValues: { rememberme: false },
     });
     const [showPass, setShowPass] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
 
     const email = watch('email') || '';
     const password = watch('password') || '';
@@ -151,22 +157,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
 
     const handleClose = () => {
         reset({ email: '', password: '', rememberme: false });
+        resetMutation();
         setShowPass(false);
         onClose();
     };
 
     const onSubmit = (data: LoginFormInputs) => {
-        setSubmitting(true);
         if (data.rememberme) {
             localStorage.setItem('rememberedEmail', data.email);
         } else {
             localStorage.removeItem('rememberedEmail');
         }
-        login(data);
-        setTimeout(() => {
-            setSubmitting(false);
-            handleClose();
-        }, 600);
+        loginMutate({ email: data.email, password: data.password });
     };
 
     const handleOpenRegister = () => {
@@ -338,12 +340,22 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                                     </Button>
                                 </div>
 
+                                {errorInfo && (
+                                    <div className={`px-4 py-3 rounded-2xl text-[12.5px] font-semibold leading-snug ${
+                                        errorInfo.type === 'account_locked' || errorInfo.type === 'too_many_requests'
+                                            ? 'bg-orange-50 text-orange-700 border border-orange-200'
+                                            : 'bg-red-50 text-red-600 border border-red-200'
+                                    }`}>
+                                        {errorInfo.message}
+                                    </div>
+                                )}
+
                                 <Button
                                     type="submit"
-                                    disabled={submitting}
+                                    disabled={isPending}
                                     className="w-full mt-3 group relative overflow-hidden bg-yp-deep hover:bg-yp-mid disabled:opacity-80 text-white font-bold text-[13px] tracking-[0.12em] uppercase py-4 rounded-2xl transition flex items-center justify-center gap-2.5"
                                 >
-                                    {submitting ? (
+                                    {isPending ? (
                                         <>
                                             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
                                                 <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.5" opacity="0.25" />

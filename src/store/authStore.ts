@@ -6,6 +6,7 @@ import type { LoginFormInputs } from '../types/LoginTypes';
 interface AuthState {
     isAuthenticated: boolean;
     isAuthLoading: boolean;
+    setAuthenticated: (value: boolean) => void;
     login: (data: LoginFormInputs) => void;
     logout: () => void;
     init: () => void;
@@ -20,6 +21,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         const token = getCustomerToken();
         set({ isAuthenticated: !!token, isAuthLoading: false });
     },
+
+    setAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
 
     login: (data: LoginFormInputs) => {
         if (!data.email || !data.password || get().isAuthenticated) return;
