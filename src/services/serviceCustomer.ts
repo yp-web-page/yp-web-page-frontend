@@ -8,6 +8,8 @@ export interface RegisterCustomerParams {
     phone?: string;
     type?: 'person' | 'company';
     segment: 'retail' | 'wholesale';
+    /** Required when segment = 'wholesale'. */
+    rut?: File | null;
 }
 
 export interface CustomerProfile {
@@ -21,7 +23,19 @@ export interface CustomerProfile {
 }
 
 const registerCustomer = async (params: RegisterCustomerParams): Promise<void> => {
-    await erpClient.post('/customers/register', params);
+    const formData = new FormData();
+    formData.append('name', params.name);
+    formData.append('email', params.email);
+    formData.append('password', params.password);
+    formData.append('segment', params.segment);
+    if (params.phone) formData.append('phone', params.phone);
+    if (params.type) formData.append('type', params.type);
+    if (params.rut) formData.append('rut', params.rut);
+
+    await erpClient.post('/customers/register', formData, {
+        // Let the browser set Content-Type with the correct boundary for multipart/form-data.
+        headers: { 'Content-Type': undefined },
+    });
 };
 
 const loginCustomer = async (email: string, password: string): Promise<void> => {
