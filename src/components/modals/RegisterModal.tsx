@@ -1,14 +1,72 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { AxiosError } from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useRegisterUser from '../../hooks/useRegisterUser';
+import useResendVerification from '../../hooks/useResendVerification';
 import { useModal } from '../../context/ModalContext';
 import { MESSAGE } from '../../constants/message';
 import RegisterUser from '../../types/RegisterUser';
 import Icon from '../icon/Icon';
 import Button from '../Button';
+
+// ─── Email confirmation screen ─────────────────────────────────────────────────
+
+const EmailConfirmationScreen: React.FC<{ email: string; onClose: () => void }> = ({ email, onClose }) => {
+    const { mutate: resend, isPending, isSuccess, isError, error } = useResendVerification();
+    const isTooMany = isError && error instanceof AxiosError && error.response?.status === 429;
+
+    return (
+        <div className="col-span-2 flex flex-col items-center justify-center p-10 text-center min-h-[420px]">
+            <div className="size-16 rounded-2xl bg-accent/10 grid place-items-center mb-6">
+                <Icon name="at" className="h-8 w-8 text-yp-deep" />
+            </div>
+            <h2 className="font-display font-black text-[28px] text-yp-deep leading-tight">
+                Revisa tu correo
+            </h2>
+            <p className="mt-3 text-[13.5px] text-yp-muted max-w-[380px]">
+                Enviamos un enlace de activación a <strong className="text-yp-deep">{email}</strong>.
+                Haz clic en el enlace para activar tu cuenta.
+            </p>
+            <p className="mt-6 text-[12px] text-yp-muted">¿No lo recibiste o el enlace expiró?</p>
+            {isSuccess ? (
+                <p className="mt-2 text-[12.5px] text-emerald-600 font-semibold">
+                    ¡Correo reenviado! Revisa también tu carpeta de spam.
+                </p>
+            ) : (
+                <>
+                    <Button
+                        type="button"
+                        onClick={() => resend(email)}
+                        disabled={isPending}
+                        className="mt-2 px-6 py-2.5 rounded-full bg-yp-paper border border-yp-line hover:border-yp-deep/30 text-yp-deep font-bold text-[12.5px] transition disabled:opacity-60"
+                    >
+                        {isPending ? 'Enviando...' : 'Reenviar correo de activación'}
+                    </Button>
+                    {isTooMany && (
+                        <p className="mt-2 text-[11px] text-orange-500">
+                            Demasiados intentos. Espera una hora antes de intentarlo de nuevo.
+                        </p>
+                    )}
+                    {isError && !isTooMany && (
+                        <p className="mt-2 text-[11px] text-red-500">
+                            No se pudo enviar. Intenta de nuevo más tarde.
+                        </p>
+                    )}
+                </>
+            )}
+            <Button
+                type="button"
+                onClick={onClose}
+                className="mt-8 text-[12px] text-yp-muted hover:text-yp-deep underline"
+            >
+                Cerrar
+            </Button>
+        </div>
+    );
+};
 
 interface RegisterModalProps {
     isOpen: boolean;
@@ -218,6 +276,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     const [showPass, setShowPass] = useState(false);
     const [privacy, setPrivacy] = useState(false);
     const [terms, setTerms] = useState(false);
+    // When non-empty the form is replaced by the email confirmation screen.
+    const [registeredEmail, setRegisteredEmail] = useState('');
 
     const {
         register, handleSubmit, setValue, watch, reset, control,
@@ -285,6 +345,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         setTerms(false);
         setSelectedSegment('REGULAR');
         setShowPass(false);
+        setRegisteredEmail('');
     };
 
     const handleClose = () => {
@@ -305,8 +366,21 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             password: data.password,
             segment: selectedSegment === 'WHOLESALER' ? 'wholesale' : 'retail',
         };
+<<<<<<< Updated upstream
         mutate({ user: newUser });
         resetAll();
+=======
+        const emailToConfirm = data.email;
+        const onSuccess = () => {
+            resetAll();
+            setRegisteredEmail(emailToConfirm);
+        };
+        if (userType === 'WHOLESALER' && data.rut) {
+            mutate({ user: newUser, file: data.rut }, { onSuccess });
+        } else {
+            mutate({ user: newUser }, { onSuccess });
+        }
+>>>>>>> Stashed changes
     };
 
     const canSubmit = privacy && terms && !isPending;
@@ -340,6 +414,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                         className="relative w-full max-w-[1020px] my-8 rounded-[28px] overflow-hidden bg-white grid md:grid-cols-[1fr_1.35fr]"
                         style={{ boxShadow: '0 30px 80px -20px rgba(0,31,54,0.55), 0 8px 24px -8px rgba(0,31,54,0.25)' }}
                     >
+                        {/* Email confirmation screen — shown after successful registration */}
+                        {registeredEmail && (
+                            <EmailConfirmationScreen
+                                email={registeredEmail}
+                                onClose={handleClose}
+                            />
+                        )}
+
+                        {/* Branded panel — hidden when showing confirmation */}
+                        {!registeredEmail && <>
                         {/* Branded panel */}
                         <div className="relative yp-gradient-radial text-white p-7 lg:p-9 hidden md:flex flex-col justify-between overflow-hidden">
                             <div className="absolute inset-0 grid-bg opacity-50" />
@@ -698,6 +782,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </form>
                         </div>
+                        </>}
                     </motion.div>
                 </div>
             )}

@@ -47,9 +47,14 @@ const getCustomerProfile = async (): Promise<CustomerProfile> => {
     return response.data;
 };
 
+const resendVerificationEmail = async (email: string): Promise<void> => {
+    await erpClient.post('/customers/resend-verification', { email });
+};
+
 export const serviceCustomer = {
     registerCustomer,
     loginCustomer,
     logoutCustomer,
     getCustomerProfile,
+    resendVerificationEmail,
 };

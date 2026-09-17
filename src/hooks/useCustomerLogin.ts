@@ -13,7 +13,7 @@ interface LoginErrorResponse {
 
 export interface LoginErrorInfo {
     message: string;
-    type: 'invalid_credentials' | 'account_locked' | 'too_many_requests' | 'unknown';
+    type: 'invalid_credentials' | 'account_locked' | 'too_many_requests' | 'email_not_verified' | 'unknown';
 }
 
 function parseLoginError(error: AxiosError<LoginErrorResponse>): LoginErrorInfo {
@@ -32,6 +32,13 @@ function parseLoginError(error: AxiosError<LoginErrorResponse>): LoginErrorInfo 
         return {
             type: 'too_many_requests',
             message: 'Demasiados intentos seguidos. Espera un momento antes de intentar de nuevo.',
+        };
+    }
+
+    if (status === 403 && data?.error === 'email_not_verified') {
+        return {
+            type: 'email_not_verified',
+            message: 'Tu cuenta no está activada. Te enviamos un nuevo enlace de activación a tu correo.',
         };
     }
 
