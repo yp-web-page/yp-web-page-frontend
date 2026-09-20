@@ -1,7 +1,18 @@
 import { create } from 'zustand';
-import { getCustomerToken, clearCustomerToken, CUSTOMER_TOKEN_KEY } from '../api/customerClient';
 import { serviceCustomer } from '../services/serviceCustomer';
 import type { LoginFormInputs } from '../types/LoginTypes';
+
+const AUTH_CHANNEL = 'yanca_auth';
+
+function broadcastAuth(type: 'login' | 'logout') {
+    try {
+        const ch = new BroadcastChannel(AUTH_CHANNEL);
+        ch.postMessage({ type });
+        ch.close();
+    } catch {
+        // BroadcastChannel not available (e.g. old browsers) — cross-tab sync degrades gracefully.
+    }
+}
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -18,8 +29,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     isAuthLoading: true,
 
     init: () => {
-        const token = getCustomerToken();
-        set({ isAuthenticated: !!token, isAuthLoading: false });
+        serviceCustomer.getCustomerProfile()
+            .then(() => set({ isAuthenticated: true, isAuthLoading: false }))
+            .catch(() => set({ isAuthenticated: false, isAuthLoading: false }));
     },
 
     /**
@@ -27,19 +39,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
      * duplicate listeners (React StrictMode runs effects twice in development).
      */
     startCrossTabSync: () => {
-        const handler = (event: StorageEvent) => {
-            if (event.key !== CUSTOMER_TOKEN_KEY) return;
-            if (event.newValue) {
-                const parts = event.newValue.split('.');
-                if (parts.length !== 3) return;
-                useAuthStore.setState({ isAuthenticated: true });
-            } else {
-                useAuthStore.setState({ isAuthenticated: false });
-            }
-        };
-        window.addEventListener('storage', handler);
-        // Return cleanup so the caller can remove the listener.
-        return () => window.removeEventListener('storage', handler);
+        let channel: BroadcastChannel | null = null;
+        try {
+            channel = new BroadcastChannel(AUTH_CHANNEL);
+            channel.onmessage = ({ data }: MessageEvent<{ type: 'login' | 'logout' }>) => {
+                if (data.type === 'logout') useAuthStore.setState({ isAuthenticated: false });
+                if (data.type === 'login') useAuthStore.setState({ isAuthenticated: true });
+            };
+        } catch {
+            // BroadcastChannel not supported — degrade gracefully.
+        }
+        return () => channel?.close();
     },
 
     setAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
@@ -48,13 +58,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         if (!data.email || !data.password || get().isAuthenticated) return;
         serviceCustomer.loginCustomer(data.email, data.password).then(() => {
             set({ isAuthenticated: true });
+            broadcastAuth('login');
         });
     },
 
     logout: () => {
         serviceCustomer.logoutCustomer().finally(() => {
-            clearCustomerToken();
             set({ isAuthenticated: false });
+            broadcastAuth('logout');
         });
     },
 }));

@@ -1,4 +1,4 @@
-import customerClient, { setCustomerToken, clearCustomerToken } from '../api/customerClient';
+import customerClient from '../api/customerClient';
 import erpClient from '../api/erpClient';
 
 export interface RegisterCustomerParams {
@@ -39,21 +39,13 @@ const registerCustomer = async (params: RegisterCustomerParams): Promise<void> =
 };
 
 const loginCustomer = async (email: string, password: string): Promise<void> => {
-    const response = await erpClient.post<{ expiresIn: number }>(
-        '/customers/login',
-        { email, password },
-    );
-    const token = response.headers['authorization']?.replace('Bearer ', '');
-    if (!token) throw new Error('No authorization header in login response');
-    setCustomerToken(token);
+    // The server sets an httpOnly cookie — nothing to extract or store here.
+    await erpClient.post('/customers/login', { email, password }, { withCredentials: true });
 };
 
 const logoutCustomer = async (): Promise<void> => {
-    try {
-        await customerClient.post('/customers/logout');
-    } finally {
-        clearCustomerToken();
-    }
+    // Server clears the httpOnly cookie; ignore 401 (session already gone).
+    await customerClient.post('/customers/logout').catch(() => {});
 };
 
 const getCustomerProfile = async (): Promise<CustomerProfile> => {
