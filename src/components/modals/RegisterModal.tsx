@@ -9,6 +9,7 @@ import { MESSAGE } from '../../constants/message';
 import RegisterUser from '../../types/RegisterUser';
 import Icon from '../icon/Icon';
 import Button from '../Button';
+import EmailConfirmationScreen from '../EmailConfirmationScreen';
 
 interface RegisterModalProps {
     isOpen: boolean;
@@ -218,6 +219,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     const [showPass, setShowPass] = useState(false);
     const [privacy, setPrivacy] = useState(false);
     const [terms, setTerms] = useState(false);
+    // When non-empty the form is replaced by the email confirmation screen.
+    const [registeredEmail, setRegisteredEmail] = useState('');
 
     const {
         register, handleSubmit, setValue, watch, reset, control,
@@ -285,6 +288,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
         setTerms(false);
         setSelectedSegment('REGULAR');
         setShowPass(false);
+        setRegisteredEmail('');
     };
 
     const handleClose = () => {
@@ -304,9 +308,14 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
             email: data.email,
             password: data.password,
             segment: selectedSegment === 'WHOLESALER' ? 'wholesale' : 'retail',
+            rut: data.rut ?? undefined,
         };
-        mutate({ user: newUser });
-        resetAll();
+        const emailToConfirm = data.email;
+        const onSuccess = () => {
+            resetAll();
+            setRegisteredEmail(emailToConfirm);
+        };
+        mutate({ user: newUser }, { onSuccess });
     };
 
     const canSubmit = privacy && terms && !isPending;
@@ -340,6 +349,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                         className="relative w-full max-w-[1020px] my-8 rounded-[28px] overflow-hidden bg-white grid md:grid-cols-[1fr_1.35fr]"
                         style={{ boxShadow: '0 30px 80px -20px rgba(0,31,54,0.55), 0 8px 24px -8px rgba(0,31,54,0.25)' }}
                     >
+                        {/* Email confirmation screen — shown after successful registration */}
+                        {registeredEmail && (
+                            <EmailConfirmationScreen
+                                email={registeredEmail}
+                                onClose={handleClose}
+                            />
+                        )}
+
+                        {/* Branded panel — hidden when showing confirmation */}
+                        {!registeredEmail && <>
                         {/* Branded panel */}
                         <div className="relative yp-gradient-radial text-white p-7 lg:p-9 hidden md:flex flex-col justify-between overflow-hidden">
                             <div className="absolute inset-0 grid-bg opacity-50" />
@@ -698,6 +717,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </form>
                         </div>
+                        </>}
                     </motion.div>
                 </div>
             )}
