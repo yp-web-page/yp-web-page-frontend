@@ -29,9 +29,15 @@ function parseLoginError(error: AxiosError<LoginErrorResponse>): LoginErrorInfo 
     }
 
     if (status === 429) {
+        const seconds = data?.retryAfter;
+        const wait = seconds
+            ? seconds >= 60
+                ? `${Math.ceil(seconds / 60)} minuto${Math.ceil(seconds / 60) !== 1 ? 's' : ''}`
+                : `${seconds} segundo${seconds !== 1 ? 's' : ''}`
+            : 'un momento';
         return {
             type: 'too_many_requests',
-            message: 'Demasiados intentos seguidos. Espera un momento antes de intentar de nuevo.',
+            message: `Demasiados intentos. Espera ${wait} antes de intentar de nuevo.`,
         };
     }
 
