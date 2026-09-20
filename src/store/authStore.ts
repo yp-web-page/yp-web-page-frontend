@@ -52,7 +52,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         return () => channel?.close();
     },
 
-    setAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
+    setAuthenticated: (value: boolean) => {
+        set({ isAuthenticated: value });
+        if (value) broadcastAuth('login');
+    },
 
     login: (data: LoginFormInputs) => {
         if (!data.email || !data.password || get().isAuthenticated) return;
