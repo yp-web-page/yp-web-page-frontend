@@ -1,24 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import { config } from '../config';
 
-export const CUSTOMER_TOKEN_KEY = 'customer_token';
-
-export function getCustomerToken(): string | null {
-    return localStorage.getItem(CUSTOMER_TOKEN_KEY);
-}
-
-export function setCustomerToken(token: string): void {
-    localStorage.setItem(CUSTOMER_TOKEN_KEY, token);
-}
-
-export function clearCustomerToken(): void {
-    localStorage.removeItem(CUSTOMER_TOKEN_KEY);
-}
-
 /**
  * Axios client for authenticated customer endpoints on the ERP storefront.
- * Uses Bearer token from localStorage — completely separate from the legacy
- * apiClient and its session cookie / Java backend token.
+ * Authentication is handled via httpOnly cookie (customer_session) — the browser
+ * attaches it automatically on every request. No token is stored in JS memory.
  */
 const customerClient: AxiosInstance = axios.create({
     baseURL: config.erpBaseURL,
@@ -27,22 +13,15 @@ const customerClient: AxiosInstance = axios.create({
         Accept: 'application/json',
     },
     timeout: 10000,
-});
-
-customerClient.interceptors.request.use((cfg) => {
-    const token = getCustomerToken();
-    if (token) {
-        cfg.headers.Authorization = `Bearer ${token}`;
-    }
-    return cfg;
+    withCredentials: true,
 });
 
 customerClient.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response?.status === 401) {
-            // Access the store directly — no global window events needed.
-            // useAuthStore.getState() works outside React components.
+        // Avoid infinite loop: don't trigger logout if the logout call itself returns 401.
+        const isLogoutRequest = (error.config?.url as string | undefined)?.includes('/logout');
+        if (error.response?.status === 401 && !isLogoutRequest) {
             import('../store/authStore').then(({ useAuthStore }) => {
                 useAuthStore.getState().logout();
             });
