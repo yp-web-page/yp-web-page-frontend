@@ -340,15 +340,29 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegi
                                     </Button>
                                 </div>
 
-                                {errorInfo && (
-                                    <div className={`px-4 py-3 rounded-2xl text-[12.5px] font-semibold leading-snug ${
-                                        errorInfo.type === 'account_locked' || errorInfo.type === 'too_many_requests'
-                                            ? 'bg-orange-50 text-orange-700 border border-orange-200'
-                                            : 'bg-red-50 text-red-600 border border-red-200'
-                                    }`}>
-                                        {errorInfo.message}
-                                    </div>
-                                )}
+                                {errorInfo && (() => {
+                                    const isWarning = errorInfo.type === 'account_locked' || errorInfo.type === 'too_many_requests' || errorInfo.type === 'account_disabled';
+                                    const isInfo = errorInfo.type === 'email_not_verified';
+                                    const iconName = isWarning ? 'warning' : isInfo ? 'mail' : 'error';
+                                    const styles = isWarning
+                                        ? 'bg-accent/10 border-accent/40 text-yp-deep'
+                                        : isInfo
+                                        ? 'bg-yp-paper border-yp-line text-yp-deep'
+                                        : 'bg-red-50 border-red-200 text-red-700';
+                                    const iconStyles = isWarning
+                                        ? 'bg-accent text-yp-deep'
+                                        : isInfo
+                                        ? 'bg-yp-bright/15 text-yp-bright'
+                                        : 'bg-red-100 text-red-600';
+                                    return (
+                                        <div className={`flex items-start gap-3 px-4 py-3 rounded-2xl border leading-snug ${styles}`}>
+                                            <div className={`size-5 rounded-full grid place-items-center shrink-0 mt-0.5 ${iconStyles}`}>
+                                                <Icon name={iconName} className="h-2.5 w-2.5" />
+                                            </div>
+                                            <span className="text-[12.5px] font-semibold">{errorInfo.message}</span>
+                                        </div>
+                                    );
+                                })()}
 
                                 <Button
                                     type="submit"

@@ -1,42 +1,80 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useForm } from 'react-hook-form';
+import { AxiosError } from 'axios';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import erpClient from '../../api/erpClient';
 
-type Status = 'pending' | 'verifying' | 'success' | 'error' | 'missing_token';
-type ResendStatus = 'idle' | 'sending' | 'sent' | 'error' | 'too_many';
-
-interface ResendFormInputs {
-    email: string;
-}
+type ActivationStatus = 'loading' | 'pending' | 'expired' | 'verifying' | 'success' | 'error';
+type ResendStatus = 'idle' | 'sending' | 'sent' | 'already_verified' | 'too_many' | 'error';
 
 const ActiveUserAccount: React.FC = () => {
     const navigate = useNavigate();
     const token = useMemo(() => new URLSearchParams(window.location.search).get('token') || '', []);
-    const [status, setStatus] = useState<Status>(token ? 'pending' : 'missing_token');
+    const [activationStatus, setActivationStatus] = useState<ActivationStatus>(token ? 'loading' : 'expired');
     const [resendStatus, setResendStatus] = useState<ResendStatus>('idle');
 
-    const { register, handleSubmit, formState: { errors } } = useForm<ResendFormInputs>();
+    // Listen for cross-tab verification signal — immediate, no refetch wait.
+    useEffect(() => {
+        if (!token) return;
+        const handler = (event: StorageEvent) => {
+            if (event.key === 'yanca_email_verified' && event.newValue === token) {
+                navigate('/', { replace: true });
+            }
+        };
+        window.addEventListener('storage', handler);
+        return () => window.removeEventListener('storage', handler);
+    }, [token, navigate]);
+
+    // Load token info from server — email resolved server-side, never from the URL.
+    const { data: tokenInfo } = useQuery({
+        queryKey: ['activation-info', token],
+        queryFn: async () => {
+            const res = await erpClient.get<{
+                status: 'pending' | 'already_verified' | 'expired';
+                maskedEmail?: string;
+            }>(`/customers/activation-info?token=${encodeURIComponent(token)}`);
+            return res.data;
+        },
+        enabled: !!token,
+        refetchOnWindowFocus: true,
+        refetchInterval: 30_000,
+        gcTime: 0,
+    });
+
+    useEffect(() => {
+        if (!tokenInfo) return;
+        if (tokenInfo.status === 'already_verified') {
+            // Account already active — don't show the page, go straight to home.
+            navigate('/', { replace: true });
+            return;
+        }
+        if (tokenInfo.status === 'expired') setActivationStatus('expired');
+        else setActivationStatus('pending');
+    }, [tokenInfo, navigate]);
 
     const handleConfirm = useCallback(() => {
-        setStatus('verifying');
+        setActivationStatus('verifying');
         erpClient
             .get(`/customers/verify-email?token=${encodeURIComponent(token)}`)
-            .then(() => setStatus('success'))
-            .catch(() => setStatus('error'));
+            .then(() => {
+                // Signal other tabs that this token was verified.
+                localStorage.setItem('yanca_email_verified', token);
+                setActivationStatus('success');
+            })
+            .catch(() => setActivationStatus('error'));
     }, [token]);
 
-    const handleResend = useCallback((data: ResendFormInputs) => {
+    const handleResend = useCallback(() => {
         setResendStatus('sending');
         erpClient
-            .post('/customers/resend-verification', { email: data.email })
-            .then(() => setResendStatus('sent'))
-            .catch((err) => {
+            .post<{ message: string }>('/customers/resend-by-token', { token })
+            .then((res) => {
+                setResendStatus(res.data.message === 'already_verified' ? 'already_verified' : 'sent');
+            })
+            .catch((err: AxiosError) => {
                 setResendStatus(err.response?.status === 429 ? 'too_many' : 'error');
             });
-    }, []);
-
-    const showResend = status === 'error' || status === 'missing_token';
+    }, [token]);
 
     return (
         <div className="min-h-screen flex flex-col md:flex-row">
@@ -50,16 +88,19 @@ const ActiveUserAccount: React.FC = () => {
                     Activación de cuenta
                 </h2>
 
-                {status === 'pending' && (
+                {activationStatus === 'loading' && (
+                    <p className="text-sm mt-6 text-center text-gray-400">Verificando enlace...</p>
+                )}
+
+                {activationStatus === 'pending' && (
                     <>
                         <p className="text-sm md:text-base mt-6 text-center">
-                            Estás a un paso de activar tu cuenta. Haz clic para completar el proceso.
+                            Estás activando la cuenta asociada a{' '}
+                            <strong>{tokenInfo?.maskedEmail}</strong>.
+                            Haz clic en el botón para completar el proceso.
                         </p>
-                        <button
-                            type="button"
-                            onClick={handleConfirm}
-                            className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient text-white"
-                        >
+                        <button type="button" onClick={handleConfirm}
+                            className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient text-white">
                             Activar cuenta
                         </button>
                         <p className="text-xs md:text-sm mt-6 max-w-sm text-center">
@@ -68,90 +109,57 @@ const ActiveUserAccount: React.FC = () => {
                     </>
                 )}
 
-                {status === 'verifying' && (
-                    <p className="text-sm md:text-base mt-6 text-center">Verificando tu cuenta...</p>
+                {activationStatus === 'verifying' && (
+                    <p className="text-sm mt-6 text-center">Verificando tu cuenta...</p>
                 )}
 
-                {status === 'success' && (
+                {activationStatus === 'success' && (
                     <>
                         <p className="text-sm md:text-base mt-6 text-center text-green-600 font-semibold">
-                            ¡Tu cuenta ha sido activada exitosamente! 🎉
+                            ✓ Tu cuenta está activada. Ya puedes iniciar sesión.
                         </p>
-                        <p className="text-sm mt-2 text-center">
-                            Ya puedes iniciar sesión con tu correo y contraseña.
-                        </p>
-                        <button
-                            type="button"
-                            onClick={() => navigate('/')}
-                            className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient text-white"
-                        >
+                        <button type="button" onClick={() => navigate('/')}
+                            className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient text-white">
                             Ir al inicio
                         </button>
                     </>
                 )}
 
-                {showResend && (
+                {(activationStatus === 'error' || activationStatus === 'expired') && (
                     <>
                         <p className="text-sm md:text-base mt-6 text-center text-red-500 font-semibold">
-                            {status === 'missing_token'
-                                ? 'El enlace de activación no es válido.'
-                                : 'El enlace ha expirado o ya fue utilizado.'}
+                            {activationStatus === 'expired'
+                                ? 'El enlace ha expirado o ya fue utilizado.'
+                                : 'No se pudo activar la cuenta. El enlace puede haber expirado.'}
                         </p>
-
-                        {resendStatus === 'sent' ? (
-                            <p className="text-sm mt-6 text-center text-green-600 font-semibold">
-                                ¡Correo enviado! Revisa tu bandeja de entrada y spam.
+                        {resendStatus === 'sent' && (
+                            <p className="text-sm mt-4 text-center text-green-600 font-semibold">
+                                ¡Nuevo enlace enviado! Revisa tu correo y carpeta de spam.
                             </p>
-                        ) : (
-                            <>
-                                <p className="text-sm mt-4 text-center text-gray-500">
-                                    ¿Necesitas un nuevo enlace? Ingresa tu correo:
-                                </p>
-                                <form
-                                    onSubmit={handleSubmit(handleResend)}
-                                    className="w-full sm:w-[60%] md:w-[40%] mx-auto mt-4 flex flex-col gap-3"
-                                >
-                                    <input
-                                        type="email"
-                                        placeholder="tu@correo.com"
-                                        {...register('email', {
-                                            required: 'El correo es requerido',
-                                            pattern: {
-                                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                                message: 'Correo inválido',
-                                            },
-                                        })}
-                                        className="w-full px-4 py-2.5 border border-gray-300 rounded-full text-sm outline-none focus:border-blue-500"
-                                    />
-                                    {errors.email && (
-                                        <p className="text-xs text-red-500 text-center">{errors.email.message}</p>
-                                    )}
-                                    {resendStatus === 'too_many' && (
-                                        <p className="text-xs text-orange-500 text-center">
-                                            Demasiados intentos. Espera una hora antes de intentarlo de nuevo.
-                                        </p>
-                                    )}
-                                    {resendStatus === 'error' && (
-                                        <p className="text-xs text-red-500 text-center">
-                                            No se pudo enviar el correo. Intenta de nuevo.
-                                        </p>
-                                    )}
-                                    <button
-                                        type="submit"
-                                        disabled={resendStatus === 'sending'}
-                                        className="w-full py-2.5 rounded-full font-bold text-sm blue-deep-gradient text-white disabled:opacity-60"
-                                    >
-                                        {resendStatus === 'sending' ? 'Enviando...' : 'Reenviar correo de activación'}
-                                    </button>
-                                </form>
-                            </>
                         )}
-
-                        <button
-                            type="button"
-                            onClick={() => navigate('/')}
-                            className="text-sm text-blue-500 underline mt-6"
-                        >
+                        {resendStatus === 'already_verified' && (
+                            <p className="text-sm mt-4 text-center text-green-600 font-semibold">
+                                ✓ Tu cuenta ya está activada. Puedes iniciar sesión.
+                            </p>
+                        )}
+                        {resendStatus === 'too_many' && (
+                            <p className="text-sm mt-4 text-center text-orange-500">
+                                Demasiados intentos. Espera una hora antes de intentarlo de nuevo.
+                            </p>
+                        )}
+                        {resendStatus === 'error' && (
+                            <p className="text-sm mt-4 text-center text-red-500">
+                                No se pudo enviar. Intenta de nuevo más tarde.
+                            </p>
+                        )}
+                        {token && resendStatus === 'idle' && (
+                            <button type="button" onClick={handleResend}
+                                className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-6 blue-deep-gradient text-white">
+                                Reenviar correo de activación
+                            </button>
+                        )}
+                        <button type="button" onClick={() => navigate('/')}
+                            className="text-sm text-blue-500 underline mt-6">
                             Volver al inicio
                         </button>
                     </>

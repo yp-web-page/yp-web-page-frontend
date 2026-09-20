@@ -8,10 +8,14 @@ import { useAuthStore } from '../store/authStore';
  */
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const init = useAuthStore((s) => s.init);
+    const startCrossTabSync = useAuthStore((s) => s.startCrossTabSync);
     const { openModal } = useModal();
 
     useEffect(() => {
         init();
+        // Returns cleanup — removes the storage listener on unmount.
+        // This prevents duplicate listeners in React StrictMode (double-invoke).
+        return startCrossTabSync();
     }, []);
 
     useEffect(() => {

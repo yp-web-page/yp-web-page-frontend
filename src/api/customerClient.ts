@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { config } from '../config';
 
-const CUSTOMER_TOKEN_KEY = 'customer_token';
+export const CUSTOMER_TOKEN_KEY = 'customer_token';
 
 export function getCustomerToken(): string | null {
     return localStorage.getItem(CUSTOMER_TOKEN_KEY);
