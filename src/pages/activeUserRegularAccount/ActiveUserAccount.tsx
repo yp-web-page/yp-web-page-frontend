@@ -4,6 +4,8 @@ import { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import erpClient from '../../api/erpClient';
 
+type TokenStatus = 'pending' | 'already_verified' | 'not_found' | 'expired';
+
 type ActivationStatus = 'loading' | 'pending' | 'expired' | 'verifying' | 'success' | 'error';
 type ResendStatus = 'idle' | 'sending' | 'sent' | 'already_verified' | 'too_many' | 'error';
 
@@ -30,7 +32,7 @@ const ActiveUserAccount: React.FC = () => {
         queryKey: ['activation-info', token],
         queryFn: async () => {
             const res = await erpClient.get<{
-                status: 'pending' | 'already_verified' | 'expired';
+                status: TokenStatus;
                 maskedEmail?: string;
             }>(`/customers/activation-info?token=${encodeURIComponent(token)}`);
             return res.data;
@@ -43,8 +45,7 @@ const ActiveUserAccount: React.FC = () => {
 
     useEffect(() => {
         if (!tokenInfo) return;
-        if (tokenInfo.status === 'already_verified') {
-            // Account already active — don't show the page, go straight to home.
+        if (tokenInfo.status === 'already_verified' || tokenInfo.status === 'not_found') {
             navigate('/', { replace: true });
             return;
         }
