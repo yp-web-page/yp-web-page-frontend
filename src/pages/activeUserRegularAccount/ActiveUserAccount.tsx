@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { AxiosError } from 'axios';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import erpClient from '../../api/erpClient';
 
 type ActivationStatus = 'loading' | 'pending' | 'expired' | 'verifying' | 'success' | 'error';
