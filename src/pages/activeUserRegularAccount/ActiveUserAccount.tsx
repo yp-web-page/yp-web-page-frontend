@@ -4,6 +4,14 @@ import { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import erpClient from '../../api/erpClient';
 
+const TOKEN_STATUS = {
+    PENDING: 'pending',
+    ALREADY_VERIFIED: 'already_verified',
+    NOT_FOUND: 'not_found',
+    EXPIRED: 'expired',
+} as const;
+type TokenStatus = typeof TOKEN_STATUS[keyof typeof TOKEN_STATUS];
+
 type ActivationStatus = 'loading' | 'pending' | 'expired' | 'verifying' | 'success' | 'error';
 type ResendStatus = 'idle' | 'sending' | 'sent' | 'already_verified' | 'too_many' | 'error';
 
@@ -30,7 +38,7 @@ const ActiveUserAccount: React.FC = () => {
         queryKey: ['activation-info', token],
         queryFn: async () => {
             const res = await erpClient.get<{
-                status: 'pending' | 'already_verified' | 'expired';
+                status: TokenStatus;
                 maskedEmail?: string;
             }>(`/customers/activation-info?token=${encodeURIComponent(token)}`);
             return res.data;
@@ -43,12 +51,11 @@ const ActiveUserAccount: React.FC = () => {
 
     useEffect(() => {
         if (!tokenInfo) return;
-        if (tokenInfo.status === 'already_verified') {
-            // Account already active — don't show the page, go straight to home.
+        if (tokenInfo.status === TOKEN_STATUS.ALREADY_VERIFIED || tokenInfo.status === TOKEN_STATUS.NOT_FOUND) {
             navigate('/', { replace: true });
             return;
         }
-        if (tokenInfo.status === 'expired') setActivationStatus('expired');
+        if (tokenInfo.status === TOKEN_STATUS.EXPIRED) setActivationStatus('expired');
         else setActivationStatus('pending');
     }, [tokenInfo, navigate]);
 
