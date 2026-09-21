@@ -29,15 +29,15 @@ const EmailConfirmationScreen: React.FC<EmailConfirmationScreenProps> = ({
                 Revisa tu correo
             </h2>
             <p className="mt-3 text-[13.5px] text-yp-muted max-w-[380px]">
-                Enviamos un enlace de activación a{' '}
+                Enviamos un enlace de verificación a{' '}
                 <strong className="text-yp-deep">{email}</strong>.
-                Haz clic en el enlace para activar tu cuenta.
+                Haz clic en el enlace para verificar tu cuenta.
             </p>
 
             {isAlreadyVerified ? (
                 <div className="mt-6">
                     <p className="text-[12.5px] text-emerald-600 font-semibold">
-                        ✓ Tu cuenta ya está activada.
+                        ✓ Tu cuenta ya está verificada.
                     </p>
                     <p className="text-[12px] text-yp-muted mt-1">
                         Puedes iniciar sesión con tu correo y contraseña.
@@ -65,7 +65,7 @@ const EmailConfirmationScreen: React.FC<EmailConfirmationScreenProps> = ({
                                 disabled={isPending}
                                 className="mt-2 px-6 py-2.5 rounded-full bg-yp-paper border border-yp-line hover:border-yp-deep/30 text-yp-deep font-bold text-[12.5px] transition disabled:opacity-60"
                             >
-                                {isPending ? 'Verificando...' : 'Reenviar correo de activación'}
+                                {isPending ? 'Verificando...' : 'Reenviar correo de verificación'}
                             </Button>
                             {isTooMany && (
                                 <p className="mt-2 text-[11px] text-orange-500">
