@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useRegisterUser from '../../hooks/useRegisterUser';
 import { useModal } from '../../context/ModalContext';
-import { MESSAGE } from '../../constants/message';
 import RegisterUser from '../../types/RegisterUser';
 import Icon from '../icon/Icon';
 import Button from '../Button';
 import EmailConfirmationScreen from '../EmailConfirmationScreen';
+import FloatField from '../ui/FloatField';
 
 interface RegisterModalProps {
     isOpen: boolean;
@@ -22,7 +22,6 @@ interface RegisterFormInputs {
     name: string;
     phone: string;
     email: string;
-    rut: File | null;
     username: string;
     password: string;
 }
@@ -31,186 +30,6 @@ const MAX = { name: 50, phone: 10, email: 50, username: 50, password: 20 };
 const MIN_USER = 5;
 const MIN_PASS = 8;
 
-type FieldProps = {
-    id: string;
-    label: string;
-    type?: string;
-    value: string;
-    onChange: (v: string) => void;
-    iconName: string;
-    error?: string;
-    maxLen?: number;
-    showCounter?: boolean;
-    right?: React.ReactNode;
-    prefix?: string;
-    onlyNumbers?: boolean;
-};
-
-const Field: React.FC<FieldProps> = ({
-    id, label, type = 'text', value, onChange, iconName, error,
-    maxLen, showCounter, right, prefix, onlyNumbers,
-}) => {
-    const [focused, setFocused] = useState(false);
-    const filled = !!value;
-    const float = focused || filled;
-    const hasError = !!error;
-
-    const handleChange = (raw: string) => {
-        let v = raw;
-        if (onlyNumbers) v = v.replace(/[^0-9]/g, '');
-        if (maxLen) v = v.slice(0, maxLen);
-        onChange(v);
-    };
-
-    return (
-        <div>
-            <div
-                className={`relative bg-white rounded-2xl border transition-all ${
-                    hasError
-                        ? 'border-red-500'
-                        : focused
-                        ? 'border-yp-deep ring-4 ring-yp-deep/10'
-                        : 'border-yp-line hover:border-yp-bright/40'
-                }`}
-            >
-                <div className="flex items-center">
-                    <div className={`pl-4 transition-colors ${hasError ? 'text-red-500' : focused ? 'text-yp-deep' : 'text-yp-muted'}`}>
-                        <Icon name={iconName} className="h-[17px] w-[17px]" />
-                    </div>
-                    <div className="relative flex-1 pl-3 pr-3">
-                        <label
-                            htmlFor={id}
-                            className={`absolute left-3 pointer-events-none transition-all ${
-                                float
-                                    ? `top-1.5 text-[9.5px] font-mono tracking-[0.15em] uppercase ${hasError ? 'text-red-500' : 'text-yp-bright'}`
-                                    : 'top-1/2 -translate-y-1/2 text-[11px] text-yp-muted'
-                            }`}
-                        >
-                            {label}
-                        </label>
-                        <div className="flex items-center pt-[22px] pb-2">
-                            {prefix && float && (
-                                <span className="text-[14px] font-semibold text-yp-muted mr-1.5 select-none">{prefix}</span>
-                            )}
-                            <input
-                                id={id}
-                                type={type}
-                                value={value}
-                                onChange={(e) => handleChange(e.target.value)}
-                                onFocus={() => setFocused(true)}
-                                onBlur={() => setFocused(false)}
-                                inputMode={onlyNumbers ? 'numeric' : undefined}
-                                className="w-full bg-transparent outline-none text-[14px] font-semibold text-yp-deep pr-1"
-                            />
-                        </div>
-                    </div>
-                    {right && <div className="pr-3">{right}</div>}
-                </div>
-            </div>
-            <div className="mt-1.5 px-1 flex items-start justify-between gap-3 min-h-[14px]">
-                <div className="flex-1">
-                    {hasError && <div className="font-mono text-[10.5px] text-red-500 tracking-wide">{error}</div>}
-                </div>
-                {showCounter && maxLen && (
-                    <div
-                        className={`font-mono text-[10px] tracking-wider shrink-0 ${
-                            value.length >= maxLen ? 'text-red-500' : 'text-yp-muted'
-                        }`}
-                    >
-                        {value.length}/{maxLen}
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-};
-
-const FileField: React.FC<{ file: File | null; onChange: (f: File | null) => void; error?: string }> = ({
-    file, onChange, error,
-}) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [dragging, setDragging] = useState(false);
-
-    const handleFile = (f?: File | null) => {
-        if (!f) return;
-        if (!f.name.toLowerCase().endsWith('.pdf')) return;
-        if (f.size > 5 * 1024 * 1024) return;
-        onChange(f);
-    };
-
-    return (
-        <div>
-            <input
-                ref={inputRef}
-                type="file"
-                accept=".pdf"
-                className="hidden"
-                onChange={(e) => handleFile(e.target.files?.[0])}
-            />
-            {file ? (
-                <div
-                    className={`bg-white rounded-2xl border-2 ${
-                        error ? 'border-red-500' : 'border-emerald-500/40'
-                    } p-3.5 flex items-center gap-3`}
-                >
-                    <div className="size-10 rounded-xl bg-emerald-500/10 grid place-items-center text-emerald-600 shrink-0">
-                        <Icon name="file" className="h-[18px] w-[18px]" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-[13.5px] text-yp-deep truncate">{file.name}</div>
-                        <div className="font-mono text-[10px] tracking-wider text-yp-muted mt-0.5">
-                            PDF · {(file.size / 1024).toFixed(0)} KB
-                        </div>
-                    </div>
-                    <Button
-                        type="button"
-                        onClick={() => onChange(null)}
-                        className="size-7 grid place-items-center rounded-lg text-yp-muted hover:text-red-500 hover:bg-yp-paper transition"
-                        aria-label="Quitar archivo"
-                    >
-                        <Icon name="close" className="h-3.5 w-3.5" />
-                    </Button>
-                </div>
-            ) : (
-                <button
-                    type="button"
-                    onDragOver={(e) => {
-                        e.preventDefault();
-                        setDragging(true);
-                    }}
-                    onDragLeave={() => setDragging(false)}
-                    onDrop={(e) => {
-                        e.preventDefault();
-                        setDragging(false);
-                        handleFile(e.dataTransfer.files?.[0]);
-                    }}
-                    onClick={() => inputRef.current?.click()}
-                    className={`w-full rounded-2xl border-2 border-dashed transition p-4 flex items-center gap-3 text-left ${
-                        dragging
-                            ? 'border-yp-deep bg-yp-paper'
-                            : error
-                            ? 'border-red-500'
-                            : 'border-yp-line bg-white hover:border-yp-bright/60 hover:bg-yp-paper'
-                    }`}
-                >
-                    <div className="size-10 rounded-xl bg-accent grid place-items-center text-yp-deep shrink-0">
-                        <Icon name="upload" className="h-[17px] w-[17px]" />
-                    </div>
-                    <div className="flex-1">
-                        <div className="font-mono text-[10px] tracking-[0.2em] text-yp-bright uppercase mb-0.5">
-                            ADJUNTAR RUT · OBLIGATORIO
-                        </div>
-                        <div className="text-[13px] font-semibold text-yp-deep">
-                            Arrastra el PDF aquí o haz click para buscar
-                        </div>
-                        <div className="text-[11px] text-yp-muted mt-0.5">Solo PDF · máx. 5 MB</div>
-                    </div>
-                </button>
-            )}
-            {error && <div className="mt-1 px-1 font-mono text-[10px] text-red-500 tracking-wide">{error}</div>}
-        </div>
-    );
-};
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     const { mutate, isPending } = useRegisterUser();
@@ -223,10 +42,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     const [registeredEmail, setRegisteredEmail] = useState('');
 
     const {
-        register, handleSubmit, setValue, watch, reset, control,
+        register, handleSubmit, setValue, watch, reset,
         formState: { errors },
     } = useForm<RegisterFormInputs>({
-        defaultValues: { name: '', phone: '', email: '', rut: null, username: '', password: '' },
+        defaultValues: { name: '', phone: '', email: '', username: '', password: '' },
     });
 
     register('name', {
@@ -283,7 +102,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     }, [isOpen, onClose]);
 
     const resetAll = () => {
-        reset({ name: '', phone: '', email: '', rut: null, username: '', password: '' });
+        reset({ name: '', phone: '', email: '', username: '', password: '' });
         setPrivacy(false);
         setTerms(false);
         setSelectedSegment('REGULAR');
@@ -298,17 +117,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
     const onSubmit = (data: RegisterFormInputs) => {
         if (!privacy || !terms || isPending) return;
-        if (selectedSegment === 'WHOLESALER' && !data.rut) {
-            openModal('notification', MESSAGE.MISSING_RUT_FILE, 'info');
-            return;
-        }
         const newUser: RegisterUser = {
             name: data.name,
             phone: data.phone,
             email: data.email,
             password: data.password,
             segment: selectedSegment === 'WHOLESALER' ? 'wholesale' : 'retail',
-            rut: data.rut ?? undefined,
         };
         const emailToConfirm = data.email;
         const onSuccess = () => {
@@ -483,7 +297,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                         01 · DATOS DE CONTACTO
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <Field
+                                        <FloatField
                                             id="name"
                                             label={selectedSegment === 'WHOLESALER' ? 'Nombre / Empresa' : 'Nombre completo'}
                                             iconName="user"
@@ -493,7 +307,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                             maxLen={MAX.name}
                                             showCounter={(v.name || '').length > 0}
                                         />
-                                        <Field
+                                        <FloatField
                                             id="phone"
                                             label="Celular"
                                             iconName="phone"
@@ -507,7 +321,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     </div>
                                     <div className="mt-3">
-                                        <Field
+                                        <FloatField
                                             id="email"
                                             label="Correo electrónico"
                                             type="email"
@@ -522,32 +336,22 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                 </div>
 
                                 {selectedSegment === 'WHOLESALER' && (
-                                    <div>
-                                        <div className="font-mono text-[9.5px] tracking-[0.25em] text-yp-muted mb-2.5">
-                                            02 · DOCUMENTO LEGAL
-                                        </div>
-                                        <Controller
-                                            name="rut"
-                                            control={control}
-                                            rules={{ required: 'Debes adjuntar el RUT' }}
-                                            render={({ field, fieldState }) => (
-                                                <FileField
-                                                    file={field.value as File | null}
-                                                    onChange={(f) => field.onChange(f)}
-                                                    error={fieldState.error?.message}
-                                                />
-                                            )}
-                                        />
+                                    <div className="flex items-start gap-3 px-4 py-3 rounded-2xl border border-accent/40 bg-accent/10">
+                                        <Icon name="info" className="h-4 w-4 text-yp-deep shrink-0 mt-0.5" />
+                                        <p className="text-[12.5px] text-yp-deep leading-snug">
+                                            Como publicista deberás adjuntar tu <strong>RUT</strong> desde tu perfil
+                                            una vez hayas activado tu cuenta.
+                                        </p>
                                     </div>
                                 )}
 
                                 {/* Credentials */}
                                 <div>
                                     <div className="font-mono text-[9.5px] tracking-[0.25em] text-yp-muted mb-2.5">
-                                        {selectedSegment === 'WHOLESALER' ? '03' : '02'} · CREDENCIALES DE ACCESO
+                                        02 · CREDENCIALES DE ACCESO
                                     </div>
                                     <div className="space-y-3">
-                                        <Field
+                                        <FloatField
                                             id="username"
                                             label="Nombre de usuario"
                                             iconName="at"
@@ -557,7 +361,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                                             maxLen={MAX.username}
                                             showCounter={(v.username || '').length > 0}
                                         />
-                                        <Field
+                                        <FloatField
                                             id="password"
                                             label="Contraseña"
                                             type={showPass ? 'text' : 'password'}

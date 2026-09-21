@@ -8,33 +8,46 @@ export interface RegisterCustomerParams {
     phone?: string;
     type?: 'person' | 'company';
     segment: 'retail' | 'wholesale';
-    /** Required when segment = 'wholesale'. */
-    rut?: File | null;
+}
+
+export interface CustomerAddress {
+    street?: string;
+    city?: string;
+    department?: string;
 }
 
 export interface CustomerProfile {
     id: string;
     name: string;
-    email: string | null;
-    phone: string | null;
     type: string;
     segment: string | null;
-    address: Record<string, unknown>;
+    taxId: string | null;
+    documentType: string | null;
+    email: string | null;
+    phone: string | null;
+    address: CustomerAddress;
+    invoicingEmail: string | null;
+    fiscalRegime: string | null;
+    fiscalResponsibilities: string[] | null;
+    emailVerified: boolean;
+    profileComplete: boolean;
+    rutVerified: boolean;
+    rutAttemptsLeft: number;
 }
 
-const registerCustomer = async (params: RegisterCustomerParams): Promise<void> => {
-    const formData = new FormData();
-    formData.append('name', params.name);
-    formData.append('email', params.email);
-    formData.append('password', params.password);
-    formData.append('segment', params.segment);
-    if (params.phone) formData.append('phone', params.phone);
-    if (params.type) formData.append('type', params.type);
-    if (params.rut) formData.append('rut', params.rut);
+export type UpdateCustomerProfileParams = Partial<Pick<CustomerProfile,
+    'name' | 'type' | 'taxId' | 'documentType' | 'phone' | 'address' |
+    'invoicingEmail' | 'fiscalRegime' | 'fiscalResponsibilities'
+>>;
 
-    await erpClient.post('/customers/register', formData, {
-        // Let the browser set Content-Type with the correct boundary for multipart/form-data.
-        headers: { 'Content-Type': undefined },
+const registerCustomer = async (params: RegisterCustomerParams): Promise<void> => {
+    await erpClient.post('/customers/register', {
+        name: params.name,
+        email: params.email,
+        password: params.password,
+        segment: params.segment,
+        ...(params.phone ? { phone: params.phone } : {}),
+        ...(params.type ? { type: params.type } : {}),
     });
 };
 
@@ -53,15 +66,63 @@ const getCustomerProfile = async (): Promise<CustomerProfile> => {
     return response.data;
 };
 
+const updateCustomerProfile = async (params: UpdateCustomerProfileParams): Promise<CustomerProfile> => {
+    const response = await customerClient.patch<CustomerProfile>('/customers/profile', params);
+    return response.data;
+};
+
 const resendVerificationEmail = async (email: string): Promise<string> => {
     const response = await erpClient.post<{ message: string }>('/customers/resend-verification', { email });
     return response.data.message;
 };
+
+type RutCode = 'not_a_rut' | 'file_too_large' | 'file_type_not_allowed' | 'unreadable_pdf' | 'model_unavailable' | 'not_configured';
+
+type RutValidationResult =
+    | { valid: true; skipped?: boolean }
+    | { valid: false; code: RutCode };
+
+type RutSubmitResult =
+    | { valid: true; alreadyVerified?: boolean; attemptsLeft: number }
+    | { valid: false; code: RutCode; attemptsLeft: number; disabled: boolean };
+
+const validateRut = async (file: File, signal?: AbortSignal): Promise<RutValidationResult> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await erpClient.post<RutValidationResult>(
+        '/customers/validate-rut',
+        formData,
+        { headers: { 'Content-Type': undefined }, signal },
+    );
+    return response.data;
+};
+
+const deleteRut = async (): Promise<void> => {
+    await customerClient.delete('/customers/rut');
+};
+
+const submitRut = async (file: File, signal?: AbortSignal): Promise<RutSubmitResult> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await customerClient.post<RutSubmitResult>(
+        '/customers/submit-rut',
+        formData,
+        // LLM validation can take up to 30s — override the default 10s client timeout.
+        { headers: { 'Content-Type': undefined }, signal, timeout: 45_000 },
+    );
+    return response.data;
+};
+
+export type { RutValidationResult, RutSubmitResult };
 
 export const serviceCustomer = {
     registerCustomer,
     loginCustomer,
     logoutCustomer,
     getCustomerProfile,
+    updateCustomerProfile,
     resendVerificationEmail,
+    validateRut,
+    submitRut,
+    deleteRut,
 };

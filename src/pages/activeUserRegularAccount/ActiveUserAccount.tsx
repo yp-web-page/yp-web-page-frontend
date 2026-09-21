@@ -86,7 +86,7 @@ const ActiveUserAccount: React.FC = () => {
             <div className="flex-1 flex flex-col justify-center items-center p-8 bg-indigo-50 text-xs text-gray-500">
                 <img src="/logo_favicon.png" alt="Logo" className="h-16 mb-6" />
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-500 text-center leading-tight max-w-[90%]">
-                    Activación de cuenta
+                    Verificación de cuenta
                 </h2>
 
                 {activationStatus === 'loading' && (
@@ -96,13 +96,13 @@ const ActiveUserAccount: React.FC = () => {
                 {activationStatus === 'pending' && (
                     <>
                         <p className="text-sm md:text-base mt-6 text-center">
-                            Estás activando la cuenta asociada a{' '}
+                            Estás verificando la cuenta asociada a{' '}
                             <strong>{tokenInfo?.maskedEmail}</strong>.
                             Haz clic en el botón para completar el proceso.
                         </p>
                         <button type="button" onClick={handleConfirm}
                             className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient text-white">
-                            Activar cuenta
+                            Verificar cuenta
                         </button>
                         <p className="text-xs md:text-sm mt-6 max-w-sm text-center">
                             Si no creaste esta cuenta, ignora este mensaje.
@@ -117,7 +117,7 @@ const ActiveUserAccount: React.FC = () => {
                 {activationStatus === 'success' && (
                     <>
                         <p className="text-sm md:text-base mt-6 text-center text-green-600 font-semibold">
-                            ✓ Tu cuenta está activada. Ya puedes iniciar sesión.
+                            ✓ Tu cuenta está verificada. Ya puedes iniciar sesión.
                         </p>
                         <button type="button" onClick={() => navigate('/')}
                             className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-8 blue-deep-gradient text-white">
@@ -131,7 +131,7 @@ const ActiveUserAccount: React.FC = () => {
                         <p className="text-sm md:text-base mt-6 text-center text-red-500 font-semibold">
                             {activationStatus === 'expired'
                                 ? 'El enlace ha expirado o ya fue utilizado.'
-                                : 'No se pudo activar la cuenta. El enlace puede haber expirado.'}
+                                : 'No se pudo verificar la cuenta. El enlace puede haber expirado.'}
                         </p>
                         {resendStatus === 'sent' && (
                             <p className="text-sm mt-4 text-center text-green-600 font-semibold">
@@ -140,7 +140,7 @@ const ActiveUserAccount: React.FC = () => {
                         )}
                         {resendStatus === 'already_verified' && (
                             <p className="text-sm mt-4 text-center text-green-600 font-semibold">
-                                ✓ Tu cuenta ya está activada. Puedes iniciar sesión.
+                                ✓ Tu cuenta ya está verificada. Puedes iniciar sesión.
                             </p>
                         )}
                         {resendStatus === 'too_many' && (
@@ -156,7 +156,7 @@ const ActiveUserAccount: React.FC = () => {
                         {token && resendStatus === 'idle' && (
                             <button type="button" onClick={handleResend}
                                 className="w-full sm:w-[60%] md:w-[30%] mx-auto block py-2.5 rounded-full font-bold text-sm mt-6 blue-deep-gradient text-white">
-                                Reenviar correo de activación
+                                Reenviar correo de verificación
                             </button>
                         )}
                         <button type="button" onClick={() => navigate('/')}
